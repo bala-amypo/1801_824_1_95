@@ -39,7 +39,10 @@ public class BudgetPlan{
        public Double getIncome(){
         return incomeTarget;
       }
-       public  void set(Double incomeTarget){
-        this.incomeTarget=incomeTarget;
+       public  void setExpense(Double expenseLimit){
+        this.expenseLimit=expenseLimit;
+      }
+      public Double getexpense(){
+        return expenseLimit;
       }
 }
