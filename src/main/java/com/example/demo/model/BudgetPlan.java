@@ -49,4 +49,15 @@ public class BudgetPlan{
       public Double getexpense(){
         return expenseLimit;
       }
+      public BudgetPlan(Long id,String user,int month,int year,Double incomeTarget,Double expenseLimit){
+        this.id=id;
+        this.user=user;
+        this.month=month;
+        this.year=year;
+        this.incomeTarget=incomeTarget;
+        this.expenseLimit=expenseLimit;
+      }
+      public BudgetPlan(){
+        
+      }
 }

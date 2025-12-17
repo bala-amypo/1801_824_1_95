@@ -1,1 +1,1 @@
-package com.ex
+package com.example.demo.model;
