@@ -1,9 +1,13 @@
 package com.example.demo.model;
 import jakarta.persistance.Entity;
+import jakarta.persistance.Id;
+import jakarta.persistance.size;
 @Entity
 public class BudgetPlan{
+    @Id
     private Long id;
     private String user;
+    @size(min=1,max=12,message="Follow the constraints ")
     private int month;
     private int year;
     private Double incomeTarget;
