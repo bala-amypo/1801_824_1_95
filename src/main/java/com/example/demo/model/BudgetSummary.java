@@ -45,7 +45,7 @@ public class BudgetSummary{
         this.status=status;
     }
     public LocalDateTime getGenerate(){
-        return LocalDateTime;
+        return generatedAt;
     }
     public void setGenerate(LocalDateTime generatedAt){
         this.generatedAt=generatedAt;
