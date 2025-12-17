@@ -4,5 +4,10 @@ import jakarta.persistance.Entity;
 public class BudgetPlan{
     private int id;
     private String user;
-    private 
+    private int month;
+    private int year;
+    private Double incomeTarget;
+    private Double expenseLimit;
+      
+      
 }
