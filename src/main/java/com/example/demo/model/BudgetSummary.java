@@ -19,5 +19,14 @@ public class BudgetSummary{
     public setId(Long id){
         this.id=id;
     }
-    public get
+    public getPlan(){
+        return budgetPlan;
+    }
+    public setPlan(String budgetPlan){
+        this budgetPlan=budgetPlan;
+    }
+    public getTotal(){
+        return totalIncome;
+    }
+    
 }
