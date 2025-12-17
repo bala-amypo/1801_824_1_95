@@ -28,5 +28,26 @@ public class BudgetSummary{
     public getTotal(){
         return totalIncome;
     }
-    
+    public setTotal(Double totalIncome)[
+        this.totalIncome=totalIncome;
+    ]
+    public getExpense(){
+        return totalExpense;
+    }
+    public setExpense(Double totalExpense){
+         this.totalExpense=totalExpense;
+    }
+    public getStatus(){
+        return status;
+    }
+    public setStatus(String status){
+        this.status=status;
+    }
+    public getGenerate(){
+        return LocalDateTime;
+    }
+    public setGenerate(LocalDateTime generatedAt){
+        this.generatedAt=generatedAt;
+    }
+    public BudgetSummary()
 }
