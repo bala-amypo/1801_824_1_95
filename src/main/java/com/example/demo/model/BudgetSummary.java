@@ -51,7 +51,7 @@ public class BudgetSummary{
     }
     public BudgetSummary(Long id,String budgetPlan,Double totalIncome,Double totalExpense,String status,LocalDateTime generatedAt){
         this.id=id;
-        this budgetPlan=budgetPlan;
+        this.budgetPlan=budgetPlan;
         this.totalIncome=totalIncome;
 this.totalExpense=totalExpense;
 this.status=status;
