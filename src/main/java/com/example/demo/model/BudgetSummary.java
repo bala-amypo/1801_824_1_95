@@ -1,6 +1,7 @@
 package com.example.demo.model;
 import jakarta.persistence.Entity;
-import jakarta.time.LocalDateTime;
+import jakarta.persistence.Id;
+import java.time.LocalDateTime;
 @Entity
 public class BudgetSummary{
     
@@ -12,7 +13,7 @@ public class BudgetSummary{
     private String status;
     private LocalDateTime generatedAt;
 
-    public int getId(){
+    public Long getId(){
         return id;
 
     }
