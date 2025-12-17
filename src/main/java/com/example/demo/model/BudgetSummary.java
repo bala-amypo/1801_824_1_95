@@ -19,34 +19,34 @@ public class BudgetSummary{
     public  void setId(Long id){
         this.id=id;
     }
-    public  getPlan(){
+    public  String getPlan(){
         return budgetPlan;
     }
-    public setPlan(String budgetPlan){
-        this budgetPlan=budgetPlan;
+    public  void setPlan(String budgetPlan){
+        this.budgetPlan=budgetPlan;
     }
-    public getTotal(){
+    public  Double getTotal(){
         return totalIncome;
     }
-    public setTotal(Double totalIncome){
+    public void setTotal(Double totalIncome){
         this.totalIncome=totalIncome;
 }
-    public getExpense(){
+    public Double getExpense(){
         return totalExpense;
     }
-    public setExpense(Double totalExpense){
+    public void setExpense(Double totalExpense){
          this.totalExpense=totalExpense;
     }
-    public getStatus(){
+    public String getStatus(){
         return status;
     }
-    public setStatus(String status){
+    public void setStatus(String status){
         this.status=status;
     }
-    public getGenerate(){
+    public LocalDateTime getGenerate(){
         return LocalDateTime;
     }
-    public setGenerate(LocalDateTime generatedAt){
+    public void setGenerate(LocalDateTime generatedAt){
         this.generatedAt=generatedAt;
     }
     public BudgetSummary(Long id,String budgetPlan,Double totalIncome,Double totalExpense,String status,LocalDateTime generatedAt){
