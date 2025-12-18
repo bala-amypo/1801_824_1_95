@@ -12,7 +12,7 @@ public class Category{
     private Long id;
     @Column(unique=true)
     private String name;
-    String type;
+    private String type;
 
     public void getId(){
         return id;
