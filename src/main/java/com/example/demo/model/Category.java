@@ -1,5 +1,7 @@
 package com.example.demo.model;
-import
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence
 
 
 
