@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
 import java.time.LocalDate;
 
+@Entity
 public class TransactionLog{
    @Id
    @GeneratedValue(strategy=GenerationType.IDENTITY)
