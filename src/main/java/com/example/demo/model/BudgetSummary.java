@@ -2,11 +2,12 @@ package com.example.demo.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import java.time.LocalDateTime;
+import jakarta 
 @Entity
 public class BudgetSummary{
     
     @Id
-    @GeneratedValue(strategy=GeneratedKey
+    @GeneratedValue(strategy=GeneratedType.IDENTITY)
     private Long id;
     private String budgetPlan;
     private Double totalIncome;
