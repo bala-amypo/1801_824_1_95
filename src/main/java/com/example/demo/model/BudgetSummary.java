@@ -3,12 +3,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import java.time.LocalDateTime;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GeneratedType;
+import jakarta.persistence.GenerationType;
 @Entity
 public class BudgetSummary{
     
     @Id
-    @GeneratedValue(strategy=GeneratedType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     private String budgetPlan;
     private Double totalIncome;

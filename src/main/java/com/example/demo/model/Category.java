@@ -2,34 +2,34 @@ package com.example.demo.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GeneratedType;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
 
 @Entity
 public class Category{
     @Id
-    @GeneratedValue(strategy=GeneratedType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     @Column(unique=true)
     private String name;
     private String type;
 
-    public void getId(){
+    public Long getId(){
         return id;
     }
-    public  Long setId(Long id){
+    public  void setId(Long id){
         this.id=id;
     }
-    public void getName(){
+    public String getName(){
         return name;
     }
-    public String setName(String name){
+    public void setName(String name){
         this.name=name;
     }
-    public void getType(){
+    public String getType(){
         return type;
     }
-    public  String setType(String type){
+    public void setType(String type){
         this.type=type;
     }
     public Category(Long id,String name,String type){
