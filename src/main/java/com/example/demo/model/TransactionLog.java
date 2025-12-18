@@ -39,6 +39,27 @@ public class TransactionLog{
    public Double getAmount(){
     return amount;
    }
-   public void setamount(Double )
+   public void setAmount(Double amount){
+    this.amount=amount;
+   }
+   public String getDescription(){
+    return description;
+   }
+   public void setDescription(String description){
+    this.description=description;
+   }
+   public LocalDate getTrans(){
+    return transactionDate;
+   }
+   public void setTrans(LocalDate transactionDate){
+    this.transactionDate=transactionDate;
+   }
+   public TransactionLog(Long id,String user,String category,Double amount,String description,LocalDate transactionDate){
+    this.id=id;
+    this.user=user;
+    this.category=category;
+    this.amount=amount;
+    this.description
+   }
 
 }
