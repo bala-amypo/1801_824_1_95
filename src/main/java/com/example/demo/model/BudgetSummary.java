@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 public class BudgetSummary{
     
     @Id
+    @GeneratedValue(strategy=GeneratedKey
     private Long id;
     private String budgetPlan;
     private Double totalIncome;
