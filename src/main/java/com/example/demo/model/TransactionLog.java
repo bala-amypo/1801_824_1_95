@@ -26,13 +26,13 @@ public class TransactionLog{
    public String getUser(){
     return user;
    }
-   public void setuser(String user){
+   public void setUser(String user){
     this.user=user;
    }
    public String getCategory(){
     return category;
    }
-   public void setCategory(Strin category){
+   public void setCategory(String category){
     this.category=category;
 
    }
@@ -59,7 +59,11 @@ public class TransactionLog{
     this.user=user;
     this.category=category;
     this.amount=amount;
-    this.description
+    this.description=description;
+    this.transactionDate=transactionDate;
+   }
+   public TransactionLog(){
+
    }
 
 }
