@@ -3,5 +3,5 @@ import jakarta.persistence.Service;
 import com.example.demo.model.Category;
 public interface CategoryService {
     public Category addCategory(Category category);
-    public 
+    public List<Category>getAllCategories();
 }
