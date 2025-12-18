@@ -1,7 +1,8 @@
 package com.example.demo.service;
 import jakarta.persistence.Service;
 import com.example.demo.model.BudgetSummary;
+@Service
 public interface BudgetSummaryService {
-    public BudgetSummary generateSummary(Long userId,BudgetPlan plan);
-    public BudgetSummary getSummary(Long userId,Integer month,Integer year);
+    public BudgetSummary generateSummary(Long budgetPlanId);
+    public BudgetSummary getSummary(Long budgetPlanId);
 }
