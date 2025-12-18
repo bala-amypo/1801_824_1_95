@@ -8,7 +8,7 @@ import jakarta.persistence.Column;
 public class User{
 
     @Id
-    @Generatedvalue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     private String name;
     @Column(unique=true)
@@ -45,13 +45,17 @@ public class User{
     public String getPass(){
         return password;
     }
-    public vois setPass(String password){
+    public void setPass(String password){
         this.password=password;
     }
     public User(Long id,String email,String password,String role,String name){
         this.id=id;
         this.name=name;
         this.role=role;
+        this.email=email;
         this.password=password;
+    }
+    public User(){
+
     }
 }
