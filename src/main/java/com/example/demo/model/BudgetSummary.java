@@ -2,7 +2,8 @@ package com.example.demo.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import java.time.LocalDateTime;
-import jakarta 
+import jakarta.persistence.GeneratedValue;
+
 @Entity
 public class BudgetSummary{
     
