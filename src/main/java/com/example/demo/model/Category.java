@@ -3,7 +3,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GeneratedType;
-
+import jakarta.persistence.Column;
 
 @Entity
 public class Category{
@@ -29,5 +29,15 @@ public class Category{
     public void getType(){
         return type;
     }
-    public setType(String type)
+    public  String setType(String type){
+        this.type=type;
+    }
+    public Category(Long id,String name,String type){
+        this.id=id;
+        this.name=name;
+        this.type=type;
+    }
+    public Category(){
+
+    }
 }
