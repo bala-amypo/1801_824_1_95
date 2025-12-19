@@ -14,7 +14,7 @@ public class Userimpl implements UserService{
 
     
     public User getByEmail(String email){
-     return ur.findByEmail(email).orElse(null);
+     return ur.getByEmail(email).orElse(null);
     }
     
 }
