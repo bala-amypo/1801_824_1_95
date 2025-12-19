@@ -9,7 +9,7 @@ public class Userimpl implements UserService{
     @Autowired
     UserRepository ur;
     public User register(User user){
-     return  ur.save(User);
+     return  ur.save(user);
     }
 
     

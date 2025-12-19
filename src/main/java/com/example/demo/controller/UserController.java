@@ -14,7 +14,8 @@ public class UserController {
     @AutoWired
     UserService us;
     @PostMapping("/postre")
-    public registercon(String User){
-        return us.regis
+    public  User registercon(@RequestBody User user){
+        return us.register(user);
     }
+    
 }
