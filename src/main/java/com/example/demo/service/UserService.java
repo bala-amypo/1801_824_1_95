@@ -6,6 +6,6 @@ public interface UserService{
     public User register(User user);
 
     
-     public User findByEmail(String email);
+     public User getByEmail(String email);
     
 }

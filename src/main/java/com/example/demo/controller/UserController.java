@@ -19,7 +19,7 @@ public class UserController {
     }
     @GetMapping("/{email}")
     public User emailget(@PathVariable String email){
-        return us.findByEmail(email);
+        return us.getByEmail(email);
     }
     
 }
