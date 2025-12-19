@@ -13,4 +13,8 @@ import org.springframework.beans.factory.annotation.AutoWired;
 public class UserController {
     @AutoWired
     UserService us;
+    @PostMapping("/postre")
+    public registercon(String User){
+        return us.regis
+    }
 }
