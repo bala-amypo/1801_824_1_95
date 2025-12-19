@@ -18,8 +18,8 @@ public class UserController {
         return us.register(user);
     }
     @GetMapping("/{email}")
-    public User emailget(@RequestBody User email){
-        return findByEmail(email);
+    public User emailget(@PathVariable String email){
+        return us.findByEmail(email);
     }
     
 }

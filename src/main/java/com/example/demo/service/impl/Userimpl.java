@@ -13,7 +13,7 @@ public class Userimpl implements UserService{
     }
 
     
-    public User findByEmail(String email){
+    public User findByemail(String email){
      return ur.findByEmail(email);
     }
     
