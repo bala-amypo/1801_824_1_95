@@ -4,7 +4,10 @@ import com.example.demo.model.User;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class Userimpl implements UserService{
     @Autowired
     UserRepository ur;
@@ -14,7 +17,7 @@ public class Userimpl implements UserService{
 
     
     public User findByEmails(User email){
-     return ur.getByEmail(email).orElse;
+     return ur.getByEmail(email).orElseThrow(()->new RuntimeException("User not found"));
     }
     
 }
