@@ -18,7 +18,7 @@ public class UserController {
         return us.register(user);
     }
     @GetMapping("/{email}")
-    public User getEmail(@PathVarialbe String email){
+    public User getEmail(@PathVariable String email){
         return us.findByEmails(email);
     }
     

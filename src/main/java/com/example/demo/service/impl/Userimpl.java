@@ -7,7 +7,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@RequiredArgsConstructor
+// @RequiredArgsConstructor
 public class Userimpl implements UserService{
     @Autowired
     UserRepository ur;
