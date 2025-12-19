@@ -1,5 +1,5 @@
 package com.example.demo.service;
-import jakarta.persistence.Service;
+import org.springframework
 import com.example.demo.model.BudgetPlan;
 @Service
 public interface BudgetPlanService {
