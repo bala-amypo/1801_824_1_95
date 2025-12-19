@@ -19,7 +19,7 @@ public class UserController {
     }
     @PostMapping("/email")
     public User emailget(@RequestBody User email){
-        return us.findByEmail(email);
+        return us.findByEmails(email);
     }
     
 }
