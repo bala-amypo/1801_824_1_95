@@ -13,9 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class UserController {
     @Autowired
     UserService us;
-    @PostMapping("/postre")
+    @PostMapping("/regiter")
     public  User registercon(@RequestBody User user){
         return us.register(user);
     }
+    @GetMapping("/email")
+    public User 
     
 }
