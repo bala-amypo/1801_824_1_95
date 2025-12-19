@@ -13,8 +13,8 @@ public class Userimpl implements UserService{
     }
 
     
-    public User getByEmail(String email){
-     return ur.getByEmail(email).orElse(null);
+    public User getByEmail(User email){
+     return ur.getByEmail(email);
     }
     
 }

@@ -17,8 +17,8 @@ public class UserController {
     public  User registercon(@RequestBody User user){
         return us.register(user);
     }
-    @GetMapping("/{email}")
-    public User emailget(@PathVariable String email){
+    @PostMapping("/email")
+    public User emailget(@RequestBody User email){
         return us.getByEmail(email);
     }
     
