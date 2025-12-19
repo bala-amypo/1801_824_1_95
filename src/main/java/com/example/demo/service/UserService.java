@@ -2,7 +2,7 @@ package com.example.demo.service;
  
 import com.example.demo.model.User;
  
-interface UserService{
+public interface UserService{
     public User register(User user);
 
     
