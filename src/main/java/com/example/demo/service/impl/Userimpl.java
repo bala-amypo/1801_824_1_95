@@ -3,16 +3,18 @@ import com.example.demo.repository.UserRepository;
 import com.example.demo.model.User;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import java.util.List;
 @Service
 public class Userimpl implements UserService{
-    
+    @Autowired
+    UserRepository ur;
     public User register(User user){
-     
-
+     return  ur.save(User);
     }
 
     
-    public User findByEmail(String email);
+    public User findByEmail(String email){
+     return ur.findByEmail(email);
+    }
     
 }
