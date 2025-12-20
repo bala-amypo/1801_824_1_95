@@ -11,7 +11,7 @@ public interface CategoryService {
       return cr.save(category)
     }
     public List<Category>getAllCategories(){
-      return 
+      return getAll().orElseThrow(()->new RuntimeException("User not found"))
     }
 
 }
