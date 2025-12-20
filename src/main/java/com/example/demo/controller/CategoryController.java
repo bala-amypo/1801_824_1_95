@@ -13,13 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class UserController {
     @Autowired
     CategoryService cs;
-    @PostMapping("/")
-    public  User (@RequestBody User user){
-        return cs.register(user);
+    @PostMapping("/addcat")
+    public  Category create(@RequestBody Category cat){
+        return cs.addCategory();
     }
-    @GetMapping("/{}")
-    public User (@PathVariable String email){
-        return cs.findByEmails(email);
+    @GetMapping("/getall")
+    public List<Category> listall(){
+        return cs.getAllCategory();
     }
     
 }
