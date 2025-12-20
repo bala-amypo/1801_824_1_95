@@ -1,13 +1,17 @@
-// package com.example.demo.service;
-//  import java.util.List;
-// import com.example.demo.model.Category;
-//  import com.example.demo.repository.CategoryRepository;
-// public interface CategoryService {
-//     public Category addCategory(Category category){
+package com.example.demo.service;
+ import java.util.List;
+import com.example.demo.model.Category;
+ import com.example.demo.repository.CategoryRepository;
+ import org.springframework.beans.factory.annotation.Autowired;
+ @Service
+public interface CategoryService {
+    @Autowired
+    CategoryRepository cr;
+    public Category addCategory(Category category){
+      return cr.save(category)
+    }
+    public List<Category>getAllCategories(){
+      return 
+    }
 
-//     }
-//     public List<Category>getAllCategories(){
-
-//     }
-
-// }
+}
