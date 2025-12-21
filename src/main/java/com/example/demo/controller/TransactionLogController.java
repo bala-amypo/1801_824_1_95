@@ -14,9 +14,14 @@ public class TransactionLogController  {
     @Autowired
     TransactionService ts;
     @PostMapping("/{userId}")
-    public TransactioLog addtrans(@RequestBody)
+    public TransactioLog addtrans(@RequestBody TransactionLog userId){
+        return 
+    }
     
-    @GetMapping("/{email}")
+    @GetMapping("/{userId}")
+    public List<TransactionLog getall(@PathVariable TransactionLog userId) {
+
+    }
     
     
 }
