@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
-public class UserController {
+public class CategoryController {
     @Autowired
     CategoryService cs;
     @PostMapping("/addcat")

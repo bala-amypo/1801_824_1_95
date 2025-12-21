@@ -3,8 +3,9 @@ package com.example.demo.service;
 import com.example.demo.model.Category;
  import com.example.demo.repository.CategoryRepository;
  import org.springframework.beans.factory.annotation.Autowired;
+ import com.example.demo.service.CategoryService;
  @Service
-public interface CategoryService {
+public class CategoryService implements CategoryService {
     @Autowired
     CategoryRepository cr;
     public Category addCategory(Category category){
