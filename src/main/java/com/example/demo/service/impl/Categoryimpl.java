@@ -12,7 +12,7 @@ public class Categoryimpl implements CategoryService {
     public Category addCategory(Category category){
       return cr.save(category);
     }
-    public List<Category>getAllCategories(){
+    public List<Category>getAllCategory(){
       return cr.getAll().orElseThrow(()->new RuntimeException("User not found"));
     }
 
