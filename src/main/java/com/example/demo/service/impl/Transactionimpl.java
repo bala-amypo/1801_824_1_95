@@ -14,3 +14,4 @@ public class Transactionimpl implements TransactionService{
     public List<TransactionLog> getUserTransactions(Long userId){
         return tr.findUserId(userId);
 }
+}
