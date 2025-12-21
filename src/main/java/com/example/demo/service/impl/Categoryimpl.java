@@ -13,7 +13,7 @@ public class Categoryimpl implements CategoryService {
       return cr.save(category);
     }
     public List<Category>getAllCategory(){
-      return cr.findAll().orElseThrow(()->new RuntimeException("f"));
+      return cr.findAll();
     }
 
 }
