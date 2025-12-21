@@ -4,7 +4,13 @@ import com.example.demo.repository.TransactionLogRepository;
 import com.example.demo.model.TransactionLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+@Service
 public class Transactionimpl implements TransactionService{
-    public TransactionLog addTransaction(Long userId,TransactionLog log);
-    public List<TransactionLog> getUserTransactions(Long userId);
+    @Autowired
+    TransactionLogRepository tr;
+    public TransactionLog addTransaction(Long userId,TransactionLog log){
+         return tr.save(userId);
+    }
+    public List<TransactionLog> getUserTransactions(Long userId){
+        return tr.findUserId(userId);
 }
