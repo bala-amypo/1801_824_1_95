@@ -9,8 +9,8 @@ public class Transactionimpl implements TransactionService{
     @Autowired
     TransactionLogRepository tr;
     public TransactionLog addTransaction(Long id,TransactionLog log){
-         log.setId(id);
-       return tr.save(log);
+      //    log.setId(id);
+      //  return tr.save(log);
     
     }
     public List<TransactionLog> getUserTransactions(Long id){
