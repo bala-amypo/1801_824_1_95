@@ -9,7 +9,7 @@ public class Transactionimpl implements TransactionService{
     @Autowired
     TransactionLogRepository tr;
     public TransactionLog addTransaction(Long id,TransactionLog log){
-        // log.setUserId(id);
+         log.setId(id);
        return tr.save(log);
     
     }
