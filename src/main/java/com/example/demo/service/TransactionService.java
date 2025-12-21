@@ -3,6 +3,6 @@ import java.util.List;
 import com.example.demo.model.TransactionLog;
  
 public interface TransactionService{
-    public TransactionLog addTransaction(Long userId,TransactionLog log);
-    public List<TransactionLog> getUserTransactions(Long userId);
+    public TransactionLog addTransaction(Long id,TransactionLog log);
+    public List<TransactionLog> getUserTransactions(Long id);
 }
