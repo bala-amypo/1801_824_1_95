@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 public class Transactionimpl implements TransactionService{
     @Autowired
     TransactionLogRepository tr;
-    public TransactionLog addTransaction(Long id,TransactionLog log){
-         log.setId(id);
+    public TransactionLog addTransaction(String user,TransactionLog log){
+         log.setId(user);
        return tr.save(log);
     
     }
-    public List<TransactionLog> getUserTransactions(Long id){
-        return tr.findByUserId(id);
+    public List<TransactionLog> getUserTransactions(String user){
+        return tr.findByUserId(user);
 }
 }
