@@ -8,10 +8,10 @@ public interface CategoryService {
     @Autowired
     CategoryRepository cr;
     public Category addCategory(Category category){
-      return cr.save(category)
+      return cr.save(category);
     }
     public List<Category>getAllCategories(){
-      return getAll().orElseThrow(()->new RuntimeException("User not found"))
+      return cr.getAll().orElseThrow(()->new RuntimeException("User not found"));
     }
 
 }
