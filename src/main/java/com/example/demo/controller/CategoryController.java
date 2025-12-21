@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class CategoryController {
     @Autowired
     CategoryService cs;
-    @PostMapping("/addcat")
+    @PostMapping("/addcategory")
     public  Category create(@RequestBody Category cat){
         return cs.addCategory(cat);
     }
