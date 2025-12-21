@@ -19,7 +19,7 @@ public class TransactionLogController {
      
     @PostMapping("/{id}")
     public TransactionLog addTransaction(
-            @PathVariable String id,
+            @PathVariable Long id,
             @RequestBody TransactionLog log) {
 
         return ts.addTransaction(id, log);
@@ -27,7 +27,7 @@ public class TransactionLogController {
 
     
     @GetMapping("/{id}")
-    public List<TransactionLog> getAll(@PathVariable String id) {
+    public List<TransactionLog> getAll(@PathVariable Long id) {
         return ts.getUserTransactions(id);
     }
 }
