@@ -15,7 +15,7 @@ public class CategoryController {
     CategoryService cs;
     @PostMapping("/addcat")
     public  Category create(@RequestBody Category cat){
-        return cs.addCategory();
+        return cs.addCategory(cat);
     }
     @GetMapping("/getall")
     public List<Category> listall(){
