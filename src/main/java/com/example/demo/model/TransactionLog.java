@@ -12,9 +12,17 @@ public class TransactionLog{
    @Id
    @GeneratedValue(strategy=GenerationType.IDENTITY)
    private Long id;
-   private String user;
-   private String category;
+   // private String user;
+   // private String category;
    private Double amount;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    // 🔗 MANY TRANSACTIONS → ONE CATEGORY
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
    private String description;
    private LocalDate transactionDate;
 
