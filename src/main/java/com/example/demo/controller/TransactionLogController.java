@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 import java.util.List;
-import com.example.demo.service.UserService;
-import com.example.demo.model.User;
+import com.example.demo.service.TransactionService;
+import com.example.demo.model.TransactionLog;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,16 +10,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
-public class UserController {
+public class TransactionLogController  {
     @Autowired
-    UserService us;
-    @PostMapping("/regiter")
-    public  User registercon(@RequestBody User user){
-        return us.register(user);
-    }
+    TransactionService ts;
+    @PostMapping("/{userId}")
+    public TransactioLog addtrans(@RequestBody)
+    
     @GetMapping("/{email}")
-    public User getEmail(@PathVariable String email){
-        return us.findByEmails(email);
-    }
+    
     
 }
