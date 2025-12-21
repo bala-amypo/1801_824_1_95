@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 import java.util.List;
-import com.example.demo.CategoryService;
+import com.example.demo.service.CategoryService;
 import com.example.demo.model.Category;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;

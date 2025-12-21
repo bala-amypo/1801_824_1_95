@@ -5,7 +5,7 @@ import com.example.demo.model.Category;
  import org.springframework.beans.factory.annotation.Autowired;
  import com.example.demo.service.CategoryService;
  @Service
-public class CategoryService implements CategoryService {
+public class Categoryimpl implements CategoryService {
     @Autowired
     CategoryRepository cr;
     public Category addCategory(Category category){
