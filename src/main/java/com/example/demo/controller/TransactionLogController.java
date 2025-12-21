@@ -9,4 +9,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 
+@RestController
  
+public class TransactionLogController {
+
+    @Autowired
+    TransactionService ts;
+
+     
+    @PostMapping("/{userId}")
+    public TransactionLog addTransaction(
+            @PathVariable Long userId,
+            @RequestBody TransactionLog log) {
+
+        return ts.addTransaction(userId, log);
+    }
+
+    
+    @GetMapping("/{userId}")
+    public List<TransactionLog> getAll(@PathVariable Long userId) {
+        return ts.getUserTransactions(userId);
+    }
+}
