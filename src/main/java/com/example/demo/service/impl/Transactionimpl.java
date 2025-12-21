@@ -11,6 +11,6 @@ public class Transactionimpl implements TransactionService{
     public TransactionLog addTransaction(Long userId,TransactionLog log){
          return tr.save(userId);
     }
-    public List<TransactionLog> getUserTransactions(Long userId){
+    public List<TransactionLog> getUserTransaction(Long userId){
         return tr.findUserId(userId);
 }

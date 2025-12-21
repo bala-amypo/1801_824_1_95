@@ -15,12 +15,12 @@ public class TransactionLogController  {
     TransactionService ts;
     @PostMapping("/{userId}")
     public TransactioLog addtrans(@RequestBody TransactionLog userId){
-        return 
+        return ts.addTransaction(userId);
     }
     
     @GetMapping("/{userId}")
     public List<TransactionLog getall(@PathVariable TransactionLog userId) {
-
+         return ts.getUserTransaction(userId);
     }
     
     
