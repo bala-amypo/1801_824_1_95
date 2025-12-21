@@ -6,4 +6,3 @@ import java.util.List;
 public interface TransactionLogRepository extends JpaRepository<TransactionLog,Long>{
       List<TransactionLog> findByUserId(Long id);
 }
-List<TemperatureSensorLog> findByshipmentId
