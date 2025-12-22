@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
- @RequestMapping("/transactions")
+@RequestMapping("/transactions")
 public class TransactionLogController {
 
     @Autowired
