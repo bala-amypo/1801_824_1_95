@@ -14,6 +14,7 @@ public class TransactionLog{
    @Id
    @GeneratedValue(strategy=GenerationType.IDENTITY)
    private Long id;
+   @ManyToOne
    private String user;
    private String category;
    private Double amount;
