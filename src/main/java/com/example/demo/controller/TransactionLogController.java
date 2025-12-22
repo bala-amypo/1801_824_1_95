@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
- 
+ @RequestMapping("/transactions")
 public class TransactionLogController {
 
     @Autowired
@@ -27,7 +27,7 @@ public class TransactionLogController {
 
     
     @GetMapping("/{user}")
-    public TransactionLog getAll(@PathVariable String user) {
+    public List<TransactionLog> getAll(@PathVariable String user) {
         return ts.getUserTransactions(user);
     }
 }
