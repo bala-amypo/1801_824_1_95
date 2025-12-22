@@ -4,11 +4,14 @@ import jakarta.persistence.Id;
 import jakarta.validation.constraints.Size;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 @Entity
 public class BudgetPlan{
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
+    
     private String user;
    // @Size(min=1,max=12,message="Follow the constraints ")
     private int month;
