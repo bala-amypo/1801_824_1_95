@@ -10,6 +10,7 @@ public class BudgetSummary{
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
+    @OneToOne(name="budgetplan_id")
     private String budgetPlan;
     private Double totalIncome;
     private Double totalExpense;
