@@ -31,16 +31,16 @@ public class TransactionLog{
    public void setId(Long id){
     this.id=id;
    }
-   public String getUser(){
+   public User getUser(){
     return user;
    }
-   public void setUser(String user){
+   public void setUser(User user){
     this.user=user;
    }
-   public String getCategory(){
+   public Category getCategory(){
     return category;
    }
-   public void setCategory(String category){
+   public void setCategory(Category category){
     this.category=category;
 
    }
@@ -62,7 +62,7 @@ public class TransactionLog{
    public void setTrans(LocalDate transactionDate){
     this.transactionDate=transactionDate;
    }
-   public TransactionLog(Long id,String user,String category,Double amount,String description,LocalDate transactionDate){
+   public TransactionLog(Long id,User user,Category category,Double amount,String description,LocalDate transactionDate){
     this.id=id;
     this.user=user;
     this.category=category;
