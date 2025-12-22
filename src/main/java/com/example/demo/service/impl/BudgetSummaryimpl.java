@@ -13,9 +13,9 @@ public class BudgetSummarimpl implements BudgetSummaryService {
    @Autowired
     BudgetSummaryRepository br;
     public BudgetSummary generateSummary(Long budgetPlanId){
-         return br. 
+         return br.save(budgetPlanId); 
     }
     public BudgetSummary getSummary(Long budgetPlanId){
-
+          return br.findById(budgetPlanId);
 }
 }
