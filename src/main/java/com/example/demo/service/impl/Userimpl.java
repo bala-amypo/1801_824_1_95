@@ -17,7 +17,7 @@ public class Userimpl implements UserService{
 
     
     public User findByEmails(String email){
-     return ur.findByEmail(email).orElseThrow(()->new RuntimeException("User not found"));
+     return ur.findByEmail(email).orElse(null);
     }
     
 }
