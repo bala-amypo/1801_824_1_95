@@ -1,5 +1,8 @@
 package com.example.demo.model;
+import com.example.model.BudgetPlan;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Id;
 import java.time.LocalDateTime;
 import jakarta.persistence.GeneratedValue;
@@ -10,8 +13,9 @@ public class BudgetSummary{
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(name="budgetplan_id")
-    private String budgetPlan;
+    @OneToOne
+    @JoinColumn(name="budgetplan_id")
+    private BudgetPlan budgetPlan;
     private Double totalIncome;
     private Double totalExpense;
     private String status;
