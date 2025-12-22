@@ -27,7 +27,7 @@ public class TransactionLogController {
 
     
     @GetMapping("/{user}")
-    public TransactionLog getAll(@PathVariable String user) {
+    public List<TransactionLog> getAll(@PathVariable String user) {
         return ts.getUserTransactions(user);
     }
 }
