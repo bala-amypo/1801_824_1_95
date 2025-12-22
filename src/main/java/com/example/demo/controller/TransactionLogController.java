@@ -17,17 +17,17 @@ public class TransactionLogController {
     TransactionService ts;
 
      
-    @PostMapping("/{id}")
+    @PostMapping("/{user}")
     public TransactionLog addTransaction(
-            @PathVariable Long id,
+            @PathVariable String user,
             @RequestBody TransactionLog log) {
 
-        return ts.addTransaction(id, log);
+        return ts.addTransaction(user, log);
     }
 
     
-    @GetMapping("/{id}")
-    public List<TransactionLog> getAll(@PathVariable Long id) {
-        return ts.getUserTransactions(id);
+    @GetMapping("/{user}")
+    public List<TransactionLog> getAll(@PathVariable String user) {
+        return ts.getUserTransactions(user);
     }
 }
