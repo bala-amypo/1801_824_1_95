@@ -14,9 +14,13 @@ public class TransactionLog{
    @Id
    @GeneratedValue(strategy=GenerationType.IDENTITY)
    private Long id;
+    @ManyToOne
+   @JoinColumn(name = "user_id", nullable = false)
+   private User user;
+
    @ManyToOne
-   private String user;
-   private String category;
+   @JoinColumn(name = "category_id", nullable = false)
+   private Category category;
    private Double amount;
    private String description;
    private LocalDate transactionDate;

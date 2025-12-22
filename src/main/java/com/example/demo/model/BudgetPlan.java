@@ -12,7 +12,9 @@ public class BudgetPlan{
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     
-    private String user;
+   @ManyToOne
+@JoinColumn(name = "user_id", nullable = false)
+private User user;
    // @Size(min=1,max=12,message="Follow the constraints ")
     private int month;
     private int year;
@@ -25,12 +27,13 @@ public class BudgetPlan{
       public Long getId(){
         return id;
       }
-      public void setUser(String user){
-        this.user=user;
-      }
-      public String getUser(){
-        return user;
-      }
+     public User getUser() {
+    return user;
+}
+
+public void setUser(User user) {
+    this.user = user;
+}
       public  void setMonth(int month){
         this.month=month;
       }
@@ -55,7 +58,7 @@ public class BudgetPlan{
       public Double getexpense(){
         return expenseLimit;
       }
-      public BudgetPlan(Long id,String user,int month,int year,Double incomeTarget,Double expenseLimit){
+      public BudgetPlan(Long id,User user,int month,int year,Double incomeTarget,Double expenseLimit){
         this.id=id;
         this.user=user;
         this.month=month;

@@ -1,5 +1,5 @@
 package com.example.demo.model;
-import com.example.model.BudgetPlan;
+import com.example.demo.model.BudgetPlan;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.JoinColumn;
