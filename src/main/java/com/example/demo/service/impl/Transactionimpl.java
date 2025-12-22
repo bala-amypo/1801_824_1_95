@@ -15,6 +15,6 @@ public class Transactionimpl implements TransactionService{
     
     }
     public List<TransactionLog> getUserTransactions(String user){
-        return tr.findByUserId(user);
+        return tr.findByUser(user);
 }
 }
