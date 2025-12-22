@@ -14,7 +14,7 @@ public class BudgetSummary{
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     @OneToOne
-    @JoinColumn(name="budgetplan_id")
+    @JoinColumn(name = "budgetplan_id")
     private BudgetPlan budgetPlan;
     private Double totalIncome;
     private Double totalExpense;
@@ -28,11 +28,12 @@ public class BudgetSummary{
     public  void setId(Long id){
         this.id=id;
     }
-    public  String getPlan(){
+      public BudgetPlan getBudgetPlan() {
         return budgetPlan;
     }
-    public  void setPlan(String budgetPlan){
-        this.budgetPlan=budgetPlan;
+
+    public void setBudgetPlan(BudgetPlan budgetPlan) {
+        this.budgetPlan = budgetPlan;
     }
     public  Double getTotal(){
         return totalIncome;
@@ -58,7 +59,7 @@ public class BudgetSummary{
     public void setGenerate(LocalDateTime generatedAt){
         this.generatedAt=generatedAt;
     }
-    public BudgetSummary(Long id,String budgetPlan,Double totalIncome,Double totalExpense,String status,LocalDateTime generatedAt){
+    public BudgetSummary(Long id,BudgetPlan budgetPlan,Double totalIncome,Double totalExpense,String status,LocalDateTime generatedAt){
         this.id=id;
         this.budgetPlan=budgetPlan;
         this.totalIncome=totalIncome;
