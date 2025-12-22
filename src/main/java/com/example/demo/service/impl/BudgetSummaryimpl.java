@@ -9,7 +9,7 @@ import com.example.demo.model.BudgetSummary;
  
 import com.example.demo.model.BudgetSummary;
  @Service
-public class BudgetSummarimpl implements BudgetSummaryService {
+public class BudgetSummaryimpl implements BudgetSummaryService {
    @Autowired
     BudgetSummaryRepository br;
     public BudgetSummary generateSummary(Long budgetPlanId){
