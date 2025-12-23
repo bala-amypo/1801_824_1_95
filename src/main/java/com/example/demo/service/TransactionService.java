@@ -4,5 +4,5 @@ import com.example.demo.model.TransactionLog;
  
 public interface TransactionService{
     public TransactionLog addTransaction(String user,TransactionLog log);
-    public List<TransactionLog> getUserTransactions(String user);
+    public List<TransactionLog> getUserTransactions(User user);
 }
