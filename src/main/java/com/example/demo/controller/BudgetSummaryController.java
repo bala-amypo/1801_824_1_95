@@ -1,26 +1,27 @@
-// package com.example.demo.controller;
-// import java.util.List;
-// import com.example.demo.service.CategoryService;
-// import com.example.demo.model.Category;
-// import org.springframework.web.bind.annotation.RestController;
-// import org.springframework.web.bind.annotation.RequestBody;
-// import org.springframework.web.bind.annotation.PostMapping;
-// import org.springframework.web.bind.annotation.GetMapping;
-// import org.springframework.web.bind.annotation.PathVariable;
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.web.bind.annotation.RequestMapping;
-// @RestController
-// @RequestMapping("/Category")
-// public class CategoryController {
-//     @Autowired
-//     CategoryService cs;
-//     @PostMapping("/addcategory")
-//     public  Category create(@RequestBody Category cat){
-//         return cs.addCategory(cat);
-//     }
-//     @GetMapping("/getall")
-//     public List<Category> listall(){
-//         return cs.getAllCategory();
-//     }
-    
-// }
+ package com.example.demo.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import com.example.demo.model.BudgetSummary;
+import com.example.demo.service.BudgetSummaryService;
+
+@RestController
+@RequestMapping("/summary")
+public class BudgetSummaryController {
+
+    @Autowired
+    private BudgetSummaryService budgetSummaryService;
+
+    // POST /summary/generate/{budgetPlanId}
+    @PostMapping("/generate/{budgetPlanId}")
+    public BudgetSummary generateSummary(@PathVariable Long budgetPlanId) {
+        return budgetSummaryService.generateSummary(budgetPlanId);
+    }
+
+    // GET /summary/{budgetPlanId}
+    @GetMapping("/{budgetPlanId}")
+    public BudgetSummary getSummary(@PathVariable Long budgetPlanId) {
+        return budgetSummaryService.getSummary(budgetPlanId);
+    }
+}
