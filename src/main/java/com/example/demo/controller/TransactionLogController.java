@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 import java.util.List;
+import com.example.demo.model.User;
 import com.example.demo.service.TransactionService;
 import com.example.demo.model.TransactionLog;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +21,7 @@ public class TransactionLogController {
      
     @PostMapping("/{user}")
     public TransactionLog addTransaction(
-            @PathVariable String user,
+            @PathVariable User user,
             @RequestBody TransactionLog log) {
 
         return ts.addTransaction(user, log);
@@ -28,7 +29,7 @@ public class TransactionLogController {
 
     
     @GetMapping("/{user}")
-    public List<TransactionLog> getAll(@PathVariable String user) {
+    public List<TransactionLog> getAll(@PathVariable User user) {
         return ts.getUserTransactions(user);
     }
 }
