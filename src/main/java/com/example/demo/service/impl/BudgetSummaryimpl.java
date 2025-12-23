@@ -13,10 +13,10 @@ import com.example.demo.model.BudgetSummary;
 public class BudgetSummaryimpl implements BudgetSummaryService {
    @Autowired
     BudgetSummaryRepository br;
-    public BudgetSummary generateSummary(BudgetPlan budgetPlanId){
+    public BudgetSummary generateSummary(Long budgetPlanId){
          return br.save(budgetPlanId); 
     }
-    public BudgetSummary getSummary(BudgetPlan budgetPlanId){
+    public BudgetSummary getSummary(Long budgetPlanId){
           return br.findById(budgetPlanId);
 }
 }
