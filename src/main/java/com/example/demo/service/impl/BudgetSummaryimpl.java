@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
- import java.util.List;
- import com.example.demo.model.BudgetPlan;
+import java.util.List;
+import com.example.demo.model.BudgetPlan;
 import com.example.demo.model.BudgetSummary;
  import com.example.demo.repository.BudgetSummaryRepository;
  import org.springframework.beans.factory.annotation.Autowired;
