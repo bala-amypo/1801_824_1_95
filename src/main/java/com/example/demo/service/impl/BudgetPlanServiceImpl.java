@@ -85,6 +85,21 @@ public class BudgetPlanServiceImpl implements BudgetPlanService {
         plan.setUser(user);
         return planRepo.save(plan);
     }
+@Override
+public BudgetPlan createBudgetPlan(Long userId, BudgetPlan plan) {
+
+    User user = userRepo.findById(userId)
+            .orElseThrow(() -> new BadRequestException("User not found"));
+
+    if (planRepo.existsByUserAndMonthAndYear(
+            user, plan.getMonth(), plan.getYear())) {
+        throw new BadRequestException("Duplicate budget plan");
+    }
+
+    plan.validate();
+    plan.setUser(user);
+    return planRepo.save(plan);
+}
 
     @Override
     public BudgetPlan getBudgetPlan(Long userId, Integer month, Integer year) {
