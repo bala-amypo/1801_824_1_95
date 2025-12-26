@@ -26,20 +26,21 @@
 // }
 package com.example.demo.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
 import com.example.demo.model.Category;
 import com.example.demo.service.CategoryService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/Category")
 public class CategoryController {
 
-    @Autowired
-    private CategoryService service;
+    private final CategoryService service;
+
+    public CategoryController(CategoryService service) {
+        this.service = service;
+    }
 
     @PostMapping("/addcategory")
     public Category addCategory(@RequestBody Category category) {
@@ -47,7 +48,7 @@ public class CategoryController {
     }
 
     @GetMapping("/getall")
-    public List<Category> getAll() {
+    public List<Category> getAllCategories() {
         return service.getAllCategories();
     }
 }

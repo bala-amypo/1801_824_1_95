@@ -51,16 +51,16 @@ public class TransactionLogController {
         this.service = service;
     }
 
-    @PostMapping("/{user}")
+    @PostMapping("/{userId}")
     public TransactionLog addTransaction(
-            @PathVariable Long user,
+            @PathVariable Long userId,
             @RequestBody TransactionLog log
     ) {
-        return service.addTransaction(user, log);
+        return service.addTransaction(userId, log);
     }
 
-    @GetMapping("/{user}")
-    public List<TransactionLog> getTransactions(@PathVariable Long user) {
-        return service.getTransactions(user);
+    @GetMapping("/user/{userId}")
+    public List<TransactionLog> getUserTransactions(@PathVariable Long userId) {
+        return service.getUserTransactions(userId);
     }
 }
