@@ -55,6 +55,8 @@ public class BudgetSummaryServiceImpl implements BudgetSummaryService {
                 .orElseThrow(() ->
                         new BadRequestException("Budget plan not found"));
 
-        return summaryRepo.findByBudgetPlan(plan);
+        return summaryRepo.findByBudgetPlan(plan)
+        .orElse(null);
+
     }
 }
