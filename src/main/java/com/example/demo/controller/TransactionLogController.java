@@ -33,3 +33,30 @@
 //         return ts.getUserTransactions(user);
 //     }
 // }
+
+package com.example.demo.controller;
+
+import java.util.List;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.model.TransactionLog;
+import com.example.demo.service.TransactionService;
+
+@RestController
+@RequestMapping("/transactions")
+public class TransactionLogController {
+
+    @Autowired
+    private TransactionService service;
+
+    @PostMapping("/{user}")
+    public TransactionLog add(@PathVariable Long user,
+                              @RequestBody TransactionLog log) {
+        return service.addTransaction(user, log);
+    }
+
+    @GetMapping("/{user}")
+    public List<TransactionLog> get(@PathVariable Long user) {
+        return service.getTransactions(user);
+    }
+}

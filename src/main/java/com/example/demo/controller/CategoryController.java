@@ -24,3 +24,30 @@
 //     }
     
 // }
+
+
+package com.example.demo.controller;
+
+import java.util.List;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.model.Category;
+import com.example.demo.service.CategoryService;
+
+@RestController
+@RequestMapping("/Category")
+public class CategoryController {
+
+    @Autowired
+    private CategoryService service;
+
+    @PostMapping("/addcategory")
+    public Category add(@RequestBody Category c) {
+        return service.addCategory(c);
+    }
+
+    @GetMapping("/getall")
+    public List<Category> getAll() {
+        return service.getAll();
+    }
+}

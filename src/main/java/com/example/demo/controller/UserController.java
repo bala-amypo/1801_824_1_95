@@ -25,3 +25,29 @@
 //     }
     
 // }
+
+
+package com.example.demo.controller;
+
+import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.model.User;
+import com.example.demo.service.UserService;
+
+@RestController
+@RequestMapping("/User")
+public class UserController {
+
+    @Autowired
+    private UserService service;
+
+    @PostMapping("/regiter")
+    public User register(@RequestBody User user) {
+        return service.register(user);
+    }
+
+    @GetMapping("/{email}")
+    public User getByEmail(@PathVariable String email) {
+        return service.getByEmail(email);
+    }
+}

@@ -91,3 +91,41 @@
 // //           return br.findById(budgetPlanId);
 // // }
 // // }
+package com.example.demo.service.impl;
+
+import java.time.LocalDateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.example.demo.model.*;
+import com.example.demo.repository.*;
+import com.example.demo.service.BudgetSummaryService;
+
+@Service
+public class BudgetSummaryimpl implements BudgetSummaryService {
+
+    @Autowired
+    private BudgetSummaryRepository summaryRepo;
+
+    @Autowired
+    private BudgetPlanRepository planRepo;
+
+    public BudgetSummary generateSummary(Long budgetPlanId) {
+        BudgetPlan plan = planRepo.findById(budgetPlanId).orElseThrow();
+        BudgetSummary summary = new BudgetSummary();
+        summary.setBudgetPlan(plan);
+        summary.setTotal(0.0);
+        summary.setExpense(0.0);
+        summary.setStatus("UNDER_LIMIT");
+        summary.setGenerate(LocalDateTime.now());
+        return summaryRepo.save(summary);
+    }
+
+    public BudgetSummary getSummary(Long budgetPlanId) {
+        return summaryRepo.findAll()
+                .stream()
+                .filter(s -> s.getBudgetPlan().getId().equals(budgetPlanId))
+                .findFirst()
+                .orElseThrow();
+    }
+}
+    
