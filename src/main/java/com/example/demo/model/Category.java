@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 @Entity
 public class Category {
 
-    // 🔥 REQUIRED CONSTANTS (tests use these)
     public static final String TYPE_INCOME = "INCOME";
     public static final String TYPE_EXPENSE = "EXPENSE";
 
@@ -13,54 +12,37 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String name;
 
-    @Column(nullable = false)
     private String type;
 
-    // ✅ Required no-arg constructor
+    // ✅ REQUIRED BY JPA + TEST
     public Category() {}
 
-    // 🔥 Required constructor (tests use this)
+    // ✅ REQUIRED BY TEST
     public Category(String name, String type) {
         this.name = name;
         this.type = type;
     }
 
-    // Getters & setters (tests use setters)
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {   // 🔥 used in tests
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {   // 🔥 used in tests
-        this.name = name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {   // 🔥 used in tests
-        this.type = type;
-    }
-
-    // 🔥 REQUIRED BY SERVICE
+    // ✅ REQUIRED BY TEST
     public void validateType() {
         if (!TYPE_INCOME.equals(type) && !TYPE_EXPENSE.equals(type)) {
-            throw new RuntimeException("Invalid category type");
+            throw new IllegalArgumentException("Invalid category type");
         }
     }
-}
 
+    // ---------- getters & setters ----------
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String getType() { return type; }
+    public void setType(String type) { this.type = type; }
+}
 
 
 // package com.example.demo.model;

@@ -22,70 +22,38 @@ public class TransactionLog {
 
     public TransactionLog() {}
 
+    // ✅ REQUIRED BY TEST
+    public void validate() {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Amount must be > 0");
+        }
+        if (transactionDate.isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("Future date not allowed");
+        }
+    }
+
     // ---------- getters & setters ----------
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
 
-    public User getUser() {
-        return user;
-    }
+    public Category getCategory() { return category; }
+    public void setCategory(Category category) { this.category = category; }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+    public double getAmount() { return amount; }
+    public void setAmount(double amount) { this.amount = amount; }
 
-    public Category getCategory() {
-        return category;
-    }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public LocalDate getTransactionDate() {
-        return transactionDate;
-    }
-
+    public LocalDate getTransactionDate() { return transactionDate; }
     public void setTransactionDate(LocalDate transactionDate) {
         this.transactionDate = transactionDate;
     }
-
-    // ---------- 🔥 REQUIRED BY TEST ----------
-    public void validate() {
-        if (amount <= 0) {
-            throw new RuntimeException("Amount must be greater than zero");
-        }
-
-        if (transactionDate == null) {
-            throw new RuntimeException("Transaction date is required");
-        }
-
-        if (transactionDate.isAfter(LocalDate.now())) {
-            throw new RuntimeException("Transaction date cannot be in the future");
-        }
-    }
 }
+
 
 // package com.example.demo.model;
 // import jakarta.persistence.Entity;
