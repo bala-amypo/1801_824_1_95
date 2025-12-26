@@ -26,27 +26,28 @@
 // }
 package com.example.demo.controller;
 
-import com.example.demo.model.User;
-import com.example.demo.service.UserService;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.demo.model.Category;
+import com.example.demo.service.CategoryService;
+
 @RestController
-@RequestMapping("/User")
-public class UserController {
+@RequestMapping("/Category")
+public class CategoryController {
 
-    private final UserService service;
+    @Autowired
+    private CategoryService service;
 
-    public UserController(UserService service) {
-        this.service = service;
+    @PostMapping("/addcategory")
+    public Category addCategory(@RequestBody Category category) {
+        return service.addCategory(category);
     }
 
-    @PostMapping("/regiter")
-    public User register(@RequestBody User user) {
-        return service.register(user);
-    }
-
-    @GetMapping("/{email}")
-    public User getByEmail(@PathVariable String email) {
-        return service.getByEmail(email);
+    @GetMapping("/getall")
+    public List<Category> getAll() {
+        return service.getAllCategories();
     }
 }

@@ -20,7 +20,10 @@
 package com.example.demo.service.impl;
 
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.example.demo.model.Category;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.service.CategoryService;
@@ -28,11 +31,8 @@ import com.example.demo.service.CategoryService;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    private final CategoryRepository repo;
-
-    public CategoryServiceImpl(CategoryRepository repo) {
-        this.repo = repo;
-    }
+    @Autowired
+    private CategoryRepository repo;
 
     @Override
     public Category addCategory(Category category) {
@@ -40,7 +40,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Category> getAll() {
+    public List<Category> getAllCategories() {
         return repo.findAll();
     }
 }
