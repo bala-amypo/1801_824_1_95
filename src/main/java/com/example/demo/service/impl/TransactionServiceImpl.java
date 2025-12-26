@@ -1,24 +1,3 @@
-// package com.example.demo.service;
-// import java.util.List;
-// import com.example.demo.model.User; 
-// import com.example.demo.repository.TransactionLogRepository;
-// import com.example.demo.model.TransactionLog;
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.stereotype.Service;
-// @Service
-// public class Transactionimpl implements TransactionService{
-//     @Autowired
-//     TransactionLogRepository tr;
-//     public TransactionLog addTransaction(User user,TransactionLog log){
-//          log.setUser(user);
-//        return tr.save(log);
-     
-    
-//     }
-//     public List<TransactionLog> getUserTransactions(User user){
-//         return tr.findByUser(user);
-// }
-// }
 package com.example.demo.service.impl;
 
 import java.util.List;
@@ -45,9 +24,13 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public TransactionLog addTransaction(Long userId, TransactionLog log) {
+    public TransactionLog addTransaction(TransactionLog log) {
 
-        User user = userRepo.findById(userId)
+        if (log.getUser() == null || log.getUser().getId() == null) {
+            throw new BadRequestException("User is required");
+        }
+
+        User user = userRepo.findById(log.getUser().getId())
                 .orElseThrow(() -> new BadRequestException("User not found"));
 
         log.setUser(user);
@@ -65,4 +48,3 @@ public class TransactionServiceImpl implements TransactionService {
         return logRepo.findByUser(user);
     }
 }
-
