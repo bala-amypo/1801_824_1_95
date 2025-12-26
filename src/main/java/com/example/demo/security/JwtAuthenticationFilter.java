@@ -1,14 +1,20 @@
 package com.example.demo.security;
 
 import jakarta.servlet.*;
+import jakarta.servlet.http.*;
+import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 
-public class JwtAuthenticationFilter implements Filter {
+@Component
+public class JwtAuthenticationFilter extends GenericFilter {
 
-    public void doFilter(ServletRequest req,
-                         ServletResponse res,
+    @Override
+    public void doFilter(ServletRequest request,
+                         ServletResponse response,
                          FilterChain chain)
             throws IOException, ServletException {
-        chain.doFilter(req, res);
+
+        chain.doFilter(request, response);
     }
 }
