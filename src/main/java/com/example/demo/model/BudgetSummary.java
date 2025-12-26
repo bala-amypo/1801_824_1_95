@@ -25,11 +25,13 @@ public class BudgetSummary {
     public BudgetSummary() {}
 
     // 🔥 REQUIRED BY TESTS
-    public BudgetSummary(BudgetPlan plan,
+    public BudgetSummary(Long id,
+                         BudgetPlan plan,
                          double income,
                          double expense,
                          String status,
                          LocalDateTime time) {
+        this.id = id;
         this.budgetPlan = plan;
         this.totalIncome = income;
         this.totalExpense = expense;
@@ -37,10 +39,18 @@ public class BudgetSummary {
         this.generatedAt = time;
     }
 
-    // ===== REQUIRED GETTERS =====
+    // ===== REQUIRED METHODS =====
 
     public BudgetPlan getBudgetPlan() {
         return budgetPlan;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public double getTotalIncome() {
@@ -49,10 +59,6 @@ public class BudgetSummary {
 
     public double getTotalExpense() {
         return totalExpense;
-    }
-
-    public String getStatus() {
-        return status;
     }
 
     public LocalDateTime getGeneratedAt() {
