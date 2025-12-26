@@ -15,12 +15,24 @@ public class JwtTokenProvider {
     private final String secret = "secret-key";
     private final long validity = 3600000;
 
-    // ✅ REQUIRED by tests (NO-ARG constructor)
+    // ✅ REQUIRED: no-arg constructor
     public JwtTokenProvider() {}
 
-    public String generateToken(Authentication authentication) {
+    // ✅ REQUIRED by tests
+    public String generateToken(Authentication auth) {
+        return generateToken(auth, validity, auth.getName(), "USER");
+    }
+
+    // ✅ REQUIRED by tests (OVERLOAD)
+    public String generateToken(Authentication auth,
+                                long userId,
+                                String email,
+                                String role) {
+
         return Jwts.builder()
-                .setSubject(authentication.getName())
+                .setSubject(email)
+                .claim("userId", userId)
+                .claim("role", role)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + validity))
                 .signWith(SignatureAlgorithm.HS256, secret)
@@ -36,15 +48,25 @@ public class JwtTokenProvider {
         }
     }
 
+    // ✅ REQUIRED
+    public Long getUserIdFromToken(String token) {
+        return getClaims(token).get("userId", Long.class);
+    }
+
+    // ✅ REQUIRED
     public String getEmailFromToken(String token) {
-        Claims claims = Jwts.parser()
+        return getClaims(token).getSubject();
+    }
+
+    // ✅ REQUIRED
+    public String getRoleFromToken(String token) {
+        return getClaims(token).get("role", String.class);
+    }
+
+    private Claims getClaims(String token) {
+        return Jwts.parser()
                 .setSigningKey(secret)
                 .parseClaimsJws(token)
                 .getBody();
-        return claims.getSubject();
-    }
-
-    public String getRoleFromToken(String token) {
-        return "USER";
     }
 }

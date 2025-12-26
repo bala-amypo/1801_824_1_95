@@ -5,7 +5,7 @@ import com.example.demo.model.TransactionLog;
 
 public interface TransactionService {
 
-    TransactionLog addTransaction(TransactionLog log);
+    TransactionLog addTransaction(Long userId, TransactionLog log);
 
     List<TransactionLog> getUserTransactions(Long userId);
 }

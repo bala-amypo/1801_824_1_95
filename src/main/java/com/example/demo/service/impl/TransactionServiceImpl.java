@@ -24,14 +24,11 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public TransactionLog addTransaction(TransactionLog log) {
+    public TransactionLog addTransaction(Long userId, TransactionLog log) {
 
-        if (log.getUser() == null || log.getUser().getId() == null) {
-            throw new BadRequestException("User is required");
-        }
-
-        User user = userRepo.findById(log.getUser().getId())
-                .orElseThrow(() -> new BadRequestException("User not found"));
+        User user = userRepo.findById(userId)
+                .orElseThrow(() ->
+                        new BadRequestException("User not found"));
 
         log.setUser(user);
         log.validate();
@@ -41,9 +38,9 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public List<TransactionLog> getUserTransactions(Long userId) {
-
         User user = userRepo.findById(userId)
-                .orElseThrow(() -> new BadRequestException("User not found"));
+                .orElseThrow(() ->
+                        new BadRequestException("User not found"));
 
         return logRepo.findByUser(user);
     }
