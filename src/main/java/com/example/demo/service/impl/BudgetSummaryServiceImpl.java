@@ -18,10 +18,13 @@ public class BudgetSummaryServiceImpl implements BudgetSummaryService {
     private final BudgetPlanRepository planRepo;
 
     public BudgetSummaryServiceImpl(BudgetSummaryRepository summaryRepo,
-                                    BudgetPlanRepository planRepo) {
-        this.summaryRepo = summaryRepo;
-        this.planRepo = planRepo;
-    }
+                                BudgetPlanRepository planRepo,
+                                TransactionLogRepository logRepo) {
+    this.summaryRepo = summaryRepo;
+    this.planRepo = planRepo;
+    this.logRepo = logRepo;
+}
+
 
     @Override
     public BudgetSummary generateSummary(Long planId) {
