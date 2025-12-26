@@ -1,6 +1,7 @@
- package com.example.demo.model;
+package com.example.demo.model;
 
 import jakarta.persistence.*;
+import com.example.demo.exception.BadRequestException;
 
 @Entity
 public class BudgetPlan {
@@ -29,7 +30,6 @@ public class BudgetPlan {
         this.expenseLimit = expenseLimit;
     }
 
-    // ✅ REQUIRED getters (tests depend on these)
     public Long getId() { return id; }
     public User getUser() { return user; }
     public int getMonth() { return month; }
@@ -37,24 +37,21 @@ public class BudgetPlan {
     public double getIncomeTarget() { return incomeTarget; }
     public double getExpenseLimit() { return expenseLimit; }
 
-    public void setId(Long id) { this.id = id; }
     public void setUser(User user) { this.user = user; }
 
-    // ✅ Used by summary tests
     public double getTotalAmount() {
         return incomeTarget - expenseLimit;
     }
 
-    // ✅ REQUIRED by validation tests
     public void validate() {
         if (month < 1 || month > 12) {
-            throw new IllegalArgumentException("Invalid month");
+            throw new BadRequestException("Invalid month");
         }
         if (incomeTarget <= 0) {
-            throw new IllegalArgumentException("Income must be positive");
+            throw new BadRequestException("Income must be positive");
         }
         if (expenseLimit < 0) {
-            throw new IllegalArgumentException("Expense cannot be negative");
+            throw new BadRequestException("Expense cannot be negative");
         }
     }
 }

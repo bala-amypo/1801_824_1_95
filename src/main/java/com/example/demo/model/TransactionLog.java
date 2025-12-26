@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import com.example.demo.exception.BadRequestException;
 
 @Entity
 public class TransactionLog {
@@ -17,43 +18,25 @@ public class TransactionLog {
     private Category category;
 
     private double amount;
-    private String description;
     private LocalDate transactionDate;
 
     public TransactionLog() {}
 
-    public TransactionLog(Long id, User user, Category category,
-                          double amount, String description, LocalDate date) {
-        this.id = id;
-        this.user = user;
-        this.category = category;
-        this.amount = amount;
-        this.description = description;
-        this.transactionDate = date;
-    }
-
-    // ✅ REQUIRED getters
     public Long getId() { return id; }
     public User getUser() { return user; }
     public Category getCategory() { return category; }
     public double getAmount() { return amount; }
     public LocalDate getTransactionDate() { return transactionDate; }
 
-    public void setId(Long id) { this.id = id; }
-    public void setUser(User user) { this.user = user; }
-    public void setAmount(double amount) { this.amount = amount; }
-    public void setTransactionDate(LocalDate date) { this.transactionDate = date; }
-
-    // ✅ REQUIRED by tests
     public void validate() {
         if (amount <= 0) {
-            throw new IllegalArgumentException("Transaction amount must be positive");
+            throw new BadRequestException("Transaction amount must be positive");
         }
         if (transactionDate.isAfter(LocalDate.now())) {
-            throw new IllegalArgumentException("Future date not allowed");
+            throw new BadRequestException("Future date not allowed");
         }
         if (user == null || category == null) {
-            throw new IllegalArgumentException("User and Category required");
+            throw new BadRequestException("User and Category required");
         }
     }
 }
