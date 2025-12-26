@@ -4,15 +4,14 @@ import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class CustomUserDetailsService
+        implements UserDetailsService {
 
-    @Override
-    public UserDetails loadUserByUsername(String email)
+    public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
 
-        // Dummy user for testing (JWT tests don’t validate DB here)
         return User.builder()
-                .username(email)
+                .username(username)
                 .password("password")
                 .roles("USER")
                 .build();

@@ -25,3 +25,29 @@
 //         return budgetSummaryService.getSummary(budgetPlanId);
 //     }
 // }
+
+
+package com.example.demo.controller;
+
+import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.model.BudgetSummary;
+import com.example.demo.service.BudgetSummaryService;
+
+@RestController
+@RequestMapping("/summary")
+public class BudgetSummaryController {
+
+    @Autowired
+    private BudgetSummaryService service;
+
+    @PostMapping("/generate/{budgetPlanId}")
+    public BudgetSummary generate(@PathVariable Long budgetPlanId) {
+        return service.generateSummary(budgetPlanId);
+    }
+
+    @GetMapping("/{budgetPlanId}")
+    public BudgetSummary get(@PathVariable Long budgetPlanId) {
+        return service.getSummary(budgetPlanId);
+    }
+}
