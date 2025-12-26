@@ -34,8 +34,14 @@
 //         return budgetPlanService.getBudgetPlan(userId, month, year);
 //     }
 // }
+package com.example.demo.controller;
+
+import org.springframework.web.bind.annotation.*;
+import com.example.demo.model.BudgetPlan;
+import com.example.demo.service.BudgetPlanService;
+
 @RestController
-@RequestMapping("/budgetplan")
+@RequestMapping("/budgets")
 public class BudgetPlanController {
 
     private final BudgetPlanService service;
@@ -57,3 +63,4 @@ public class BudgetPlanController {
         return service.getBudgetPlan(userId, month, year);
     }
 }
+
