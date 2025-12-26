@@ -1,45 +1,80 @@
-package com.example.demo.service.impl;
+package com.example.demo.model;
 
-import com.example.demo.model.User;
-import com.example.demo.repository.UserRepository;
-import com.example.demo.service.UserService;
+import jakarta.persistence.*;
+import java.time.LocalDate;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
+@Entity
+public class TransactionLog {
 
-@Service
-public class UserServiceImpl implements UserService {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private final UserRepository repo;
-    private final PasswordEncoder passwordEncoder;
+    @ManyToOne(optional = false)
+    private User user;
 
-    // ✅ REQUIRED CONSTRUCTOR (tests use it)
-    public UserServiceImpl(UserRepository repo,
-                           PasswordEncoder passwordEncoder) {
-        this.repo = repo;
-        this.passwordEncoder = passwordEncoder;
+    @ManyToOne(optional = false)
+    private Category category;
+
+    private double amount;
+
+    private String description;
+
+    private LocalDate transactionDate;
+
+    // ✅ Required by tests
+    public TransactionLog() {}
+
+    // Getters & setters (tests USE these setters)
+    public Long getId() {
+        return id;
     }
 
-    @Override
-    public User register(User user) {
-
-        if (repo.existsByEmail(user.getEmail())) {
-            throw new RuntimeException("Email already exists");
-        }
-
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole("USER");
-
-        return repo.save(user);
+    public void setId(Long id) {   // 🔥 test uses setId
+        this.id = id;
     }
 
-    // ✅ MUST match interface exactly
-    @Override
-    public User getByEmail(String email) {
-        return repo.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {   // 🔥 test uses setUser
+        this.user = user;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {   // 🔥 test uses setAmount
+        this.amount = amount;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public LocalDate getTransactionDate() {
+        return transactionDate;
+    }
+
+    public void setTransactionDate(LocalDate transactionDate) { // 🔥 test uses this
+        this.transactionDate = transactionDate;
     }
 }
+
 
 // package com.example.demo.model;
 // import jakarta.persistence.Entity;

@@ -3,10 +3,9 @@ package com.example.demo.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "categories")
 public class Category {
 
-    // 🔑 REQUIRED BY TEST
+    // 🔥 REQUIRED CONSTANTS (tests use these)
     public static final String TYPE_INCOME = "INCOME";
     public static final String TYPE_EXPENSE = "EXPENSE";
 
@@ -20,21 +19,21 @@ public class Category {
     @Column(nullable = false)
     private String type;
 
-    // ✅ REQUIRED: no-arg constructor
+    // ✅ Required no-arg constructor
     public Category() {}
 
-    // ✅ REQUIRED: constructor used in tests
+    // 🔥 Required constructor (tests use this)
     public Category(String name, String type) {
         this.name = name;
         this.type = type;
     }
 
-    // ✅ Getters & Setters (tests use setters)
+    // Getters & setters (tests use setters)
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {   // TEST USES setId()
+    public void setId(Long id) {   // 🔥 used in tests
         this.id = id;
     }
 
@@ -42,7 +41,7 @@ public class Category {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name) {   // 🔥 used in tests
         this.name = name;
     }
 
@@ -50,17 +49,18 @@ public class Category {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(String type) {   // 🔥 used in tests
         this.type = type;
     }
 
-    // ✅ REQUIRED BY SERVICE
+    // 🔥 REQUIRED BY SERVICE
     public void validateType() {
         if (!TYPE_INCOME.equals(type) && !TYPE_EXPENSE.equals(type)) {
             throw new RuntimeException("Invalid category type");
         }
     }
 }
+
 
 
 // package com.example.demo.model;
