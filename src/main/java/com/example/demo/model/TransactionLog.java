@@ -40,6 +40,18 @@ public class TransactionLog {
     public void setUser(User user) {
     this.user = user;
 }
+public Long getId() {
+    return id;
+}
+
+public Category getCategory() {
+    return category;
+}
+
+public User getUser() {
+    return user;
+}
+
 
 public void validate() {
     if (amount <= 0) {
