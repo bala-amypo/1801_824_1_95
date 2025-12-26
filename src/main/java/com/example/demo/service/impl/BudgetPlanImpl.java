@@ -42,32 +42,24 @@
 //                 .orElseThrow(() -> new RuntimeException("BudgetPlan not found"));
 //     }
 // }
-
 package com.example.demo.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import com.example.demo.model.*;
-import com.example.demo.repository.*;
+import com.example.demo.model.BudgetPlan;
+import com.example.demo.model.User;
+import com.example.demo.repository.BudgetPlanRepository;
 import com.example.demo.service.BudgetPlanService;
+import org.springframework.stereotype.Service;
 
 @Service
 public class BudgetPlanImpl implements BudgetPlanService {
 
-    @Autowired
-    private BudgetPlanRepository planRepo;
+    private final BudgetPlanRepository repo;
 
-    @Autowired
-    private UserRepository userRepo;
-
-    public BudgetPlan createBudgetPlan(Long userId, BudgetPlan plan) {
-        User user = userRepo.findById(userId).orElseThrow();
-        plan.setUser(user);
-        return planRepo.save(plan);
+    public BudgetPlanImpl(BudgetPlanRepository repo) {
+        this.repo = repo;
     }
 
-    public BudgetPlan getBudgetPlan(Long userId, Integer month, Integer year) {
-        return planRepo.findByUserIdAndMonthAndYear(userId, month, year)
-                .orElseThrow();
+    public BudgetPlan create(User user, int month, int year, double income) {
+        return repo.save(new BudgetPlan(user, month, year, income));
     }
 }

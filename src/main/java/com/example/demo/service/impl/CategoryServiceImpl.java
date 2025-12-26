@@ -18,27 +18,29 @@
 
 // }
 
-
 package com.example.demo.service.impl;
 
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import com.example.demo.model.Category;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.service.CategoryService;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    @Autowired
-    private CategoryRepository repo;
+    private final CategoryRepository repo;
+
+    public CategoryServiceImpl(CategoryRepository repo) {
+        this.repo = repo;
+    }
 
     public Category addCategory(Category category) {
         return repo.save(category);
     }
 
-    public List<Category> getAll() {
+    public List<Category> getAllCategories() {
         return repo.findAll();
     }
 }

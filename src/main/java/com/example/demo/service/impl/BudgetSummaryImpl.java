@@ -93,39 +93,22 @@
 // // }
 package com.example.demo.service.impl;
 
-import java.time.LocalDateTime;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import com.example.demo.model.*;
-import com.example.demo.repository.*;
+import com.example.demo.model.BudgetPlan;
+import com.example.demo.model.BudgetSummary;
+import com.example.demo.repository.BudgetSummaryRepository;
 import com.example.demo.service.BudgetSummaryService;
+import org.springframework.stereotype.Service;
 
 @Service
 public class BudgetSummaryImpl implements BudgetSummaryService {
 
-    @Autowired
-    private BudgetSummaryRepository summaryRepo;
+    private final BudgetSummaryRepository repo;
 
-    @Autowired
-    private BudgetPlanRepository planRepo;
-
-    public BudgetSummary generateSummary(Long budgetPlanId) {
-        BudgetPlan plan = planRepo.findById(budgetPlanId).orElseThrow();
-        BudgetSummary summary = new BudgetSummary();
-        summary.setBudgetPlan(plan);
-        summary.setTotal(0.0);
-        summary.setExpense(0.0);
-        summary.setStatus("UNDER_LIMIT");
-        summary.setGenerate(LocalDateTime.now());
-        return summaryRepo.save(summary);
+    public BudgetSummaryImpl(BudgetSummaryRepository repo) {
+        this.repo = repo;
     }
 
-    public BudgetSummary getSummary(Long budgetPlanId) {
-        return summaryRepo.findAll()
-                .stream()
-                .filter(s -> s.getBudgetPlan().getId().equals(budgetPlanId))
-                .findFirst()
-                .orElseThrow();
+    public BudgetSummary generate(BudgetPlan plan) {
+        return repo.save(new BudgetSummary(plan));
     }
 }
-    
