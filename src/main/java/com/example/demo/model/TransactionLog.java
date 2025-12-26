@@ -31,7 +31,7 @@ public class TransactionLog {
         this.transactionDate = date;
     }
 
-    public User getUser() { return user; }
+  
     public double getAmount() { return amount; }
 
     public void setId(Long id) { this.id = id; }
