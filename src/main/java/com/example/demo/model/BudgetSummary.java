@@ -1,86 +1,60 @@
 package com.example.demo.model;
 
+import com.example.demo.exception.BadRequestException;
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
-public class BudgetSummary {
-
-    public static final String STATUS_UNDER_LIMIT = "UNDER_LIMIT";
-    public static final String STATUS_OVER_LIMIT = "OVER_LIMIT";
+public class BudgetPlan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    private BudgetPlan budgetPlan;
+    @ManyToOne(optional = false)
+    private User user;
 
-    private double totalIncome;
-    private double totalExpense;
-    private String status;
-    private LocalDateTime generatedAt;
+    private int month;
+    private int year;
+    private double incomeTarget;
+    private double expenseLimit;
 
-    public BudgetSummary() {}
+    // ----- Constructors -----
+    public BudgetPlan() {}
 
-    public BudgetSummary(Long id, BudgetPlan plan, double income,
-                         double expense, String status, LocalDateTime time) {
+    public BudgetPlan(Long id, User user, int month, int year,
+                      double incomeTarget, double expenseLimit) {
         this.id = id;
-        this.budgetPlan = plan;
-        this.totalIncome = income;
-        this.totalExpense = expense;
-        this.status = status;
-        this.generatedAt = time;
+        this.user = user;
+        this.month = month;
+        this.year = year;
+        this.incomeTarget = incomeTarget;
+        this.expenseLimit = expenseLimit;
     }
 
-    // ✅ REQUIRED GETTERS (TEST USES THESE)
-    public Long getId() {
-        return id;
-    }
+    // ----- Getters -----
+    public Long getId() { return id; }
+    public User getUser() { return user; }
+    public int getMonth() { return month; }
+    public int getYear() { return year; }
+    public double getIncomeTarget() { return incomeTarget; }
+    public double getExpenseLimit() { return expenseLimit; }
 
-    public String getStatus() {
-        return status;
-    }
+    // ----- Setters -----
+    public void setId(Long id) { this.id = id; }
+    public void setUser(User user) { this.user = user; }
+    public void setIncomeTarget(double incomeTarget) { this.incomeTarget = incomeTarget; }
+    public void setExpenseLimit(double expenseLimit) { this.expenseLimit = expenseLimit; }
 
-    public double getTotalIncome() {
-        return totalIncome;
-    }
-
-    public double getTotalExpense() {
-        return totalExpense;
-    }
-
-    public BudgetPlan getBudgetPlan() {
-        return budgetPlan;
-    }
-
-    public LocalDateTime getGeneratedAt() {
-        return generatedAt;
-    }
-
-    // ✅ REQUIRED SETTERS
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public void setBudgetPlan(BudgetPlan plan) {
-        this.budgetPlan = plan;
-    }
-
-    public void setTotalIncome(double income) {
-        this.totalIncome = income;
-    }
-
-    public void setTotalExpense(double expense) {
-        this.totalExpense = expense;
-    }
-
-    // ✅ REQUIRED BY TEST
-    public void onCreate() {
-        this.generatedAt = LocalDateTime.now();
+    // ----- Business Logic -----
+    public void validate() {
+        if (month < 1 || month > 12) {
+            throw new BadRequestException("Invalid month");
+        }
+        if (incomeTarget < 0 || expenseLimit < 0) {
+            throw new BadRequestException("Amounts cannot be negative");
+        }
     }
 }
-
 
 // package com.example.demo.model;
 // import com.example.demo.model.BudgetPlan;

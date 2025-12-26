@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.example.demo.exception.BadRequestException;
 import jakarta.persistence.*;
 
 @Entity
@@ -9,7 +10,7 @@ public class BudgetPlan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private User user;
 
     private int month;
@@ -17,6 +18,7 @@ public class BudgetPlan {
     private double incomeTarget;
     private double expenseLimit;
 
+    // ----- Constructors -----
     public BudgetPlan() {}
 
     public BudgetPlan(Long id, User user, int month, int year,
@@ -29,40 +31,27 @@ public class BudgetPlan {
         this.expenseLimit = expenseLimit;
     }
 
-    // ✅ REQUIRED GETTERS (TEST USES THESE)
-    public Long getId() {
-        return id;
-    }
+    // ----- Getters -----
+    public Long getId() { return id; }
+    public User getUser() { return user; }
+    public int getMonth() { return month; }
+    public int getYear() { return year; }
+    public double getIncomeTarget() { return incomeTarget; }
+    public double getExpenseLimit() { return expenseLimit; }
 
-    public User getUser() {
-        return user;
-    }
+    // ----- Setters -----
+    public void setId(Long id) { this.id = id; }
+    public void setUser(User user) { this.user = user; }
+    public void setIncomeTarget(double incomeTarget) { this.incomeTarget = incomeTarget; }
+    public void setExpenseLimit(double expenseLimit) { this.expenseLimit = expenseLimit; }
 
-    public int getMonth() {
-        return month;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public double getTotalAmount() {
-        return incomeTarget - expenseLimit;
-    }
-
-    // ✅ REQUIRED SETTERS
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    // ✅ REQUIRED BY TEST
+    // ----- Business Logic -----
     public void validate() {
         if (month < 1 || month > 12) {
-            throw new IllegalArgumentException("Invalid month");
+            throw new BadRequestException("Invalid month");
+        }
+        if (incomeTarget < 0 || expenseLimit < 0) {
+            throw new BadRequestException("Amounts cannot be negative");
         }
     }
 }
