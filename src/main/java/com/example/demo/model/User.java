@@ -3,7 +3,6 @@ package com.example.demo.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "users")
 public class User {
 
     public static final String ROLE_USER = "USER";
@@ -20,10 +19,12 @@ public class User {
 
     private String password;
 
-    private String role = ROLE_USER;
+    private String role;
 
+    // REQUIRED by JPA
     public User() {}
 
+    // REQUIRED by TEST
     public User(Long id, String name, String email, String password, String role) {
         this.id = id;
         this.name = name;
@@ -32,6 +33,7 @@ public class User {
         this.role = role;
     }
 
+    // REQUIRED by TEST
     public User(String name, String email, String password, String role) {
         this.name = name;
         this.email = email;
@@ -55,7 +57,6 @@ public class User {
     public String getRole() { return role; }
     public void setRole(String role) { this.role = role; }
 }
-
 
 // package com.example.demo.model;
 // import jakarta.persistence.Entity;

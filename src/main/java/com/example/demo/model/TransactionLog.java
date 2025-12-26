@@ -17,9 +17,7 @@ public class TransactionLog {
     private Category category;
 
     private double amount;
-
     private String description;
-
     private LocalDate transactionDate;
 
     public TransactionLog() {}
@@ -36,7 +34,7 @@ public class TransactionLog {
 
     public void validate() {
         if (amount <= 0) {
-            throw new IllegalArgumentException("Amount must be > 0");
+            throw new IllegalArgumentException("Amount must be positive");
         }
         if (transactionDate.isAfter(LocalDate.now())) {
             throw new IllegalArgumentException("Future date not allowed");
@@ -64,6 +62,7 @@ public class TransactionLog {
         this.transactionDate = transactionDate;
     }
 }
+
 
 // package com.example.demo.model;
 // import jakarta.persistence.Entity;
