@@ -37,6 +37,22 @@ public class TransactionLog {
     public void setId(Long id) { this.id = id; }
     public void setAmount(double amount) { this.amount = amount; }
     public void setTransactionDate(LocalDate date) { this.transactionDate = date; }
+    public void setUser(User user) {
+    this.user = user;
+}
+
+public void validate() {
+    if (amount <= 0) {
+        throw new IllegalArgumentException("Transaction amount must be positive");
+    }
+    if (user == null) {
+        throw new IllegalArgumentException("User is required");
+    }
+    if (category == null) {
+        throw new IllegalArgumentException("Category is required");
+    }
+}
+
 }
 
 
