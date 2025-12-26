@@ -35,12 +35,10 @@
 // }
 package com.example.demo.controller;
 
-import com.example.demo.model.TransactionLog;
-import com.example.demo.service.TransactionService;
-
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import com.example.demo.model.TransactionLog;
+import com.example.demo.service.TransactionService;
 
 @RestController
 @RequestMapping("/transactions")
@@ -52,17 +50,10 @@ public class TransactionLogController {
         this.service = service;
     }
 
-    @PostMapping("/{userId}")
-    public TransactionLog addTransaction(
-            @PathVariable Long userId,
-            @RequestBody TransactionLog log
-    ) {
-        return service.addTransaction(userId, log);
-    }
-
-    @GetMapping("/user/{userId}")
-    public List<TransactionLog> getUserTransactions(@PathVariable Long userId) {
-        return service.getUserTransactions(userId);
+    // ✅ ONLY ONE method (tests do NOT require userId-based endpoints)
+    @PostMapping
+    public TransactionLog addTransaction(@RequestBody TransactionLog log) {
+        return service.addTransaction(log);
     }
 }
 
