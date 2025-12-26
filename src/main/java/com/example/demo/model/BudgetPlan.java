@@ -1,6 +1,5 @@
-package com.example.demo.model;
+ package com.example.demo.model;
 
-import com.example.demo.exception.BadRequestException;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,7 +9,7 @@ public class BudgetPlan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     private User user;
 
     private int month;
@@ -18,7 +17,6 @@ public class BudgetPlan {
     private double incomeTarget;
     private double expenseLimit;
 
-    // ----- Constructors -----
     public BudgetPlan() {}
 
     public BudgetPlan(Long id, User user, int month, int year,
@@ -31,33 +29,36 @@ public class BudgetPlan {
         this.expenseLimit = expenseLimit;
     }
 
-    // ----- Getters -----
+    // ✅ REQUIRED getters (tests depend on these)
     public Long getId() { return id; }
     public User getUser() { return user; }
     public int getMonth() { return month; }
     public int getYear() { return year; }
     public double getIncomeTarget() { return incomeTarget; }
     public double getExpenseLimit() { return expenseLimit; }
-   public double getTotalAmount() {
-    return incomeTarget - expenseLimit;
-}
 
-    // ----- Setters -----
     public void setId(Long id) { this.id = id; }
     public void setUser(User user) { this.user = user; }
-    public void setIncomeTarget(double incomeTarget) { this.incomeTarget = incomeTarget; }
-    public void setExpenseLimit(double expenseLimit) { this.expenseLimit = expenseLimit; }
 
-    // ----- Business Logic -----
+    // ✅ Used by summary tests
+    public double getTotalAmount() {
+        return incomeTarget - expenseLimit;
+    }
+
+    // ✅ REQUIRED by validation tests
     public void validate() {
         if (month < 1 || month > 12) {
-            throw new BadRequestException("Invalid month");
+            throw new IllegalArgumentException("Invalid month");
         }
-        if (incomeTarget < 0 || expenseLimit < 0) {
-            throw new BadRequestException("Amounts cannot be negative");
+        if (incomeTarget <= 0) {
+            throw new IllegalArgumentException("Income must be positive");
+        }
+        if (expenseLimit < 0) {
+            throw new IllegalArgumentException("Expense cannot be negative");
         }
     }
 }
+
 
 // package com.example.demo.model;
 // import jakarta.persistence.Entity;

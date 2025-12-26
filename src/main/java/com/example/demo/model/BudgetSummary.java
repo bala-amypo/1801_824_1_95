@@ -13,16 +13,14 @@ public class BudgetSummary {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(optional = false)
+    @OneToOne
     private BudgetPlan budgetPlan;
 
     private double totalIncome;
     private double totalExpense;
     private String status;
-
     private LocalDateTime generatedAt;
 
-    // ----- Constructors -----
     public BudgetSummary() {}
 
     public BudgetSummary(Long id, BudgetPlan plan, double income,
@@ -35,13 +33,7 @@ public class BudgetSummary {
         this.generatedAt = time;
     }
 
-    // ----- Lifecycle -----
-    @PrePersist
-    public void onCreate() {
-        this.generatedAt = LocalDateTime.now();
-    }
-
-    // ----- Getters -----
+    // ✅ REQUIRED getters
     public Long getId() { return id; }
     public BudgetPlan getBudgetPlan() { return budgetPlan; }
     public double getTotalIncome() { return totalIncome; }
@@ -49,12 +41,13 @@ public class BudgetSummary {
     public String getStatus() { return status; }
     public LocalDateTime getGeneratedAt() { return generatedAt; }
 
-    // ----- Setters -----
+    // setters
     public void setBudgetPlan(BudgetPlan plan) { this.budgetPlan = plan; }
     public void setTotalIncome(double income) { this.totalIncome = income; }
     public void setTotalExpense(double expense) { this.totalExpense = expense; }
     public void setStatus(String status) { this.status = status; }
 }
+
 
 // package com.example.demo.model;
 // import com.example.demo.model.BudgetPlan;
