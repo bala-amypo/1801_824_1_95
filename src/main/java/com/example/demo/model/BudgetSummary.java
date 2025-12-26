@@ -1,3 +1,12 @@
+package com.example.demo.model;
+import com.example.demo.model.BudgetPlan;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Id;
+import java.time.LocalDateTime;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 @Entity
 public class BudgetSummary {
 
