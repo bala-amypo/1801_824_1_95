@@ -52,7 +52,7 @@ import com.example.demo.repository.*;
 import com.example.demo.service.BudgetPlanService;
 
 @Service
-public class BudgetPlanimpl implements BudgetPlanService {
+public class BudgetPlanImpl implements BudgetPlanService {
 
     @Autowired
     private BudgetPlanRepository planRepo;

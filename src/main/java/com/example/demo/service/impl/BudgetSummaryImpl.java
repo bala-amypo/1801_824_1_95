@@ -101,7 +101,7 @@ import com.example.demo.repository.*;
 import com.example.demo.service.BudgetSummaryService;
 
 @Service
-public class BudgetSummaryimpl implements BudgetSummaryService {
+public class BudgetSummaryImpl implements BudgetSummaryService {
 
     @Autowired
     private BudgetSummaryRepository summaryRepo;
