@@ -26,11 +26,9 @@
 //     }
 // }
 
-
 package com.example.demo.controller;
 
 import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.example.demo.model.BudgetSummary;
 import com.example.demo.service.BudgetSummaryService;
 
@@ -38,16 +36,21 @@ import com.example.demo.service.BudgetSummaryService;
 @RequestMapping("/summary")
 public class BudgetSummaryController {
 
-    @Autowired
-    private BudgetSummaryService service;
+    private final BudgetSummaryService service;
 
+    public BudgetSummaryController(BudgetSummaryService service) {
+        this.service = service;
+    }
+
+    // POST /summary/generate/{budgetPlanId}
     @PostMapping("/generate/{budgetPlanId}")
-    public BudgetSummary generate(@PathVariable Long budgetPlanId) {
+    public BudgetSummary generateSummary(@PathVariable Long budgetPlanId) {
         return service.generateSummary(budgetPlanId);
     }
 
+    // GET /summary/{budgetPlanId}
     @GetMapping("/{budgetPlanId}")
-    public BudgetSummary get(@PathVariable Long budgetPlanId) {
+    public BudgetSummary getSummary(@PathVariable Long budgetPlanId) {
         return service.getSummary(budgetPlanId);
     }
 }

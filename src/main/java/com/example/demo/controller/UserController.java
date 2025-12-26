@@ -26,28 +26,30 @@
     
 // }
 
+package com.example.demo.service.impl;
 
-package com.example.demo.controller;
-
-import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import com.example.demo.model.User;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
 
-@RestController
-@RequestMapping("/User")
-public class UserController {
+@Service
+public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserService service;
+    private final UserRepository repo;
 
-    @PostMapping("/regiter")
-    public User register(@RequestBody User user) {
-        return service.register(user);
+    public UserServiceImpl(UserRepository repo) {
+        this.repo = repo;
     }
 
-    @GetMapping("/{email}")
-    public User getByEmail(@PathVariable String email) {
-        return service.getByEmail(email);
+    @Override
+    public User register(User user) {
+        return repo.save(user);
+    }
+
+    @Override
+    public User getByEmail(String email) {
+        return repo.findByEmail(email).orElseThrow();
     }
 }
+
