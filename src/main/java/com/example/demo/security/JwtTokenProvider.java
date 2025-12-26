@@ -123,13 +123,13 @@ public class JwtTokenProvider {
     private final String secretKey;
     private final long validityInMs;
 
-    // ✅ Used by tests (explicit constructor)
+    // ✅ Constructor used by tests
     public JwtTokenProvider(String secretKey, long validityInMs) {
         this.secretKey = secretKey;
         this.validityInMs = validityInMs;
     }
 
-    // ✅ Default constructor (Spring + fallback)
+    // ✅ Default constructor
     public JwtTokenProvider() {
         this.secretKey = "test-secret-key";
         this.validityInMs = 3600000;
@@ -139,20 +139,12 @@ public class JwtTokenProvider {
     // TOKEN GENERATION
     // =========================
 
-    // Basic token (subject = username)
+    // ❗ DO NOT use username here
     public String generateToken(Authentication authentication) {
-        Date now = new Date();
-        Date expiry = new Date(now.getTime() + validityInMs);
-
-        return Jwts.builder()
-                .setSubject(authentication.getName())
-                .setIssuedAt(now)
-                .setExpiration(expiry)
-                .signWith(SignatureAlgorithm.HS256, secretKey)
-                .compact();
+        return generateToken(authentication, 0L, null, null);
     }
 
-    // ✅ MAIN TOKEN USED BY TESTS
+    // ✅ MAIN method expected by tests
     public String generateToken(Authentication authentication,
                                 long userId,
                                 String email,
@@ -162,9 +154,10 @@ public class JwtTokenProvider {
         Date expiry = new Date(now.getTime() + validityInMs);
 
         return Jwts.builder()
-                .setSubject(String.valueOf(userId))   // ✅ userId as subject
-                .claim("email", email)                // ✅ email claim
-                .claim("role", role)                  // ✅ NO ROLE_ prefix
+                // ✅ subject MUST be userId
+                .setSubject(userId > 0 ? String.valueOf(userId) : authentication.getName())
+                .claim("email", email)
+                .claim("role", role) // ❌ NO ROLE_ PREFIX
                 .setIssuedAt(now)
                 .setExpiration(expiry)
                 .signWith(SignatureAlgorithm.HS256, secretKey)
@@ -176,8 +169,7 @@ public class JwtTokenProvider {
     // =========================
 
     public Long getUserIdFromToken(String token) {
-        Claims claims = parseClaims(token);
-        return Long.parseLong(claims.getSubject());
+        return Long.parseLong(parseClaims(token).getSubject());
     }
 
     public String getEmailFromToken(String token) {
