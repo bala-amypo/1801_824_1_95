@@ -22,18 +22,21 @@ public class BudgetSummary {
     private LocalDateTime generatedAt;
 
     public BudgetSummary() {}
+ 
+    public BudgetSummary(Long id,
+                     BudgetPlan plan,
+                     double income,
+                     double expense,
+                     String status,
+                     LocalDateTime time) {
+    this.id = id;
+    this.budgetPlan = plan;
+    this.totalIncome = income;
+    this.totalExpense = expense;
+    this.status = status;
+    this.generatedAt = time;
+}
 
-    public BudgetSummary(BudgetPlan plan,
-                         double income,
-                         double expense,
-                         String status,
-                         LocalDateTime time) {
-        this.budgetPlan = plan;
-        this.totalIncome = income;
-        this.totalExpense = expense;
-        this.status = status;
-        this.generatedAt = time;
-    }
 
     public Long getId() {
         return id;
