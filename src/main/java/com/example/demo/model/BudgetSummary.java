@@ -1,64 +1,73 @@
-package com.example.demo.service.impl;
+package com.example.demo.model;
 
 import java.time.LocalDateTime;
 
-import org.springframework.stereotype.Service;
+import jakarta.persistence.*;
 
-import com.example.demo.exception.BadRequestException;
-import com.example.demo.model.BudgetPlan;
-import com.example.demo.model.BudgetSummary;
-import com.example.demo.repository.BudgetPlanRepository;
-import com.example.demo.repository.BudgetSummaryRepository;
-import com.example.demo.service.BudgetSummaryService;
+@Entity
+public class BudgetSummary {
 
-@Service
-public class BudgetSummaryServiceImpl implements BudgetSummaryService {
+    public static final String STATUS_UNDER_LIMIT = "UNDER_LIMIT";
+    public static final String STATUS_OVER_LIMIT = "OVER_LIMIT";
 
-    private final BudgetSummaryRepository summaryRepo;
-    private final BudgetPlanRepository planRepo;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public BudgetSummaryServiceImpl(BudgetSummaryRepository summaryRepo,
-                                    BudgetPlanRepository planRepo) {
-        this.summaryRepo = summaryRepo;
-        this.planRepo = planRepo;
+    @OneToOne
+    private BudgetPlan budgetPlan;
+
+    private double totalIncome;
+    private double totalExpense;
+    private String status;
+    private LocalDateTime generatedAt;
+
+    public BudgetSummary() {}
+
+    // 🔥 REQUIRED BY TESTS
+    public BudgetSummary(Long id,
+                         BudgetPlan plan,
+                         double income,
+                         double expense,
+                         String status,
+                         LocalDateTime time) {
+        this.id = id;
+        this.budgetPlan = plan;
+        this.totalIncome = income;
+        this.totalExpense = expense;
+        this.status = status;
+        this.generatedAt = time;
     }
 
-    @Override
-    public BudgetSummary generateSummary(Long planId) {
+    // ===== REQUIRED METHODS =====
 
-        BudgetPlan plan = planRepo.findById(planId)
-                .orElseThrow(() ->
-                        new BadRequestException("Budget plan not found"));
-
-        double income = plan.getTotalAmount() + plan.getExpenseLimit();
-        double expense = plan.getExpenseLimit();
-
-        String status = expense <= plan.getExpenseLimit()
-                ? BudgetSummary.STATUS_UNDER_LIMIT
-                : BudgetSummary.STATUS_OVER_LIMIT;
-
-        // 🔥 FIXED CONSTRUCTOR CALL
-        BudgetSummary summary = new BudgetSummary(
-                null,
-                plan,
-                income,
-                expense,
-                status,
-                LocalDateTime.now()
-        );
-
-        return summaryRepo.save(summary);
+    public BudgetPlan getBudgetPlan() {
+        return budgetPlan;
     }
 
-    @Override
-    public BudgetSummary getSummary(Long planId) {
+    public String getStatus() {
+        return status;
+    }
 
-        BudgetPlan plan = planRepo.findById(planId)
-                .orElseThrow(() ->
-                        new BadRequestException("Budget plan not found"));
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-        return summaryRepo.findByBudgetPlan(plan)
-                .orElse(null);
+    public double getTotalIncome() {
+        return totalIncome;
+    }
+
+    public double getTotalExpense() {
+        return totalExpense;
+    }
+
+    public LocalDateTime getGeneratedAt() {
+        return generatedAt;
+    }
+
+    // 🔥 TEST CALLS THIS
+    public void onCreate() {
+        this.generatedAt = LocalDateTime.now();
     }
 }
 
