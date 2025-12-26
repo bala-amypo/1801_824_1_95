@@ -33,7 +33,18 @@ public class BudgetSummary {
         this.generatedAt = time;
     }
 
-    // ✅ REQUIRED getters
+    // ✅ ADD THIS (tests expect it)
+    public void onCreate() {
+        this.generatedAt = LocalDateTime.now();
+
+        if (totalExpense > budgetPlan.getExpenseLimit()) {
+            this.status = STATUS_OVER_LIMIT;
+        } else {
+            this.status = STATUS_UNDER_LIMIT;
+        }
+    }
+
+    // getters
     public Long getId() { return id; }
     public BudgetPlan getBudgetPlan() { return budgetPlan; }
     public double getTotalIncome() { return totalIncome; }
@@ -45,7 +56,6 @@ public class BudgetSummary {
     public void setBudgetPlan(BudgetPlan plan) { this.budgetPlan = plan; }
     public void setTotalIncome(double income) { this.totalIncome = income; }
     public void setTotalExpense(double expense) { this.totalExpense = expense; }
-    public void setStatus(String status) { this.status = status; }
 }
 
 
