@@ -17,23 +17,26 @@ public class Category {
 
     private String type;
 
-    // ✅ REQUIRED BY JPA + TEST
     public Category() {}
 
-    // ✅ REQUIRED BY TEST
+    public Category(Long id, String name, String type) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+    }
+
     public Category(String name, String type) {
         this.name = name;
         this.type = type;
     }
 
-    // ✅ REQUIRED BY TEST
     public void validateType() {
         if (!TYPE_INCOME.equals(type) && !TYPE_EXPENSE.equals(type)) {
             throw new IllegalArgumentException("Invalid category type");
         }
     }
 
-    // ---------- getters & setters ----------
+    // getters & setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

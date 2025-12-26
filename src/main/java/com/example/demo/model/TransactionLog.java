@@ -17,12 +17,23 @@ public class TransactionLog {
     private Category category;
 
     private double amount;
+
     private String description;
+
     private LocalDate transactionDate;
 
     public TransactionLog() {}
 
-    // ✅ REQUIRED BY TEST
+    public TransactionLog(Long id, User user, Category category,
+                          double amount, String description, LocalDate date) {
+        this.id = id;
+        this.user = user;
+        this.category = category;
+        this.amount = amount;
+        this.description = description;
+        this.transactionDate = date;
+    }
+
     public void validate() {
         if (amount <= 0) {
             throw new IllegalArgumentException("Amount must be > 0");
@@ -32,7 +43,7 @@ public class TransactionLog {
         }
     }
 
-    // ---------- getters & setters ----------
+    // getters & setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -53,7 +64,6 @@ public class TransactionLog {
         this.transactionDate = transactionDate;
     }
 }
-
 
 // package com.example.demo.model;
 // import jakarta.persistence.Entity;

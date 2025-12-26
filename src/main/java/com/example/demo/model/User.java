@@ -24,14 +24,22 @@ public class User {
 
     public User() {}
 
-    public User(String name, String email, String password) {
+    public User(Long id, String name, String email, String password, String role) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
-        this.role = ROLE_USER;
+        this.role = role;
     }
 
-    // -------- getters & setters ----------
+    public User(String name, String email, String password, String role) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+
+    // getters & setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -47,7 +55,6 @@ public class User {
     public String getRole() { return role; }
     public void setRole(String role) { this.role = role; }
 }
-
 
 
 // package com.example.demo.model;
