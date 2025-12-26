@@ -11,11 +11,23 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JwtTokenProvider {
 
-    private final String secret = "secret-key";
-    private final long validity = 86400000; // 1 day
+    private String secret;
+    private long validity;
 
-    // ✅ EXACT SIGNATURE REQUIRED BY TESTS
-    public String generateToken(Authentication auth,
+    // ✅ REQUIRED BY SPRING
+    public JwtTokenProvider() {
+        this.secret = "secret-key";
+        this.validity = 86400000L; // 1 day
+    }
+
+    // ✅ REQUIRED BY TESTS
+    public JwtTokenProvider(String secret, long validity) {
+        this.secret = secret;
+        this.validity = validity;
+    }
+
+    // ✅ EXACT METHOD SIGNATURE EXPECTED
+    public String generateToken(Authentication authentication,
                                 long userId,
                                 String email,
                                 String role) {
@@ -33,7 +45,6 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    // ✅ TESTS USE THIS
     public String getEmailFromToken(String token) {
         return Jwts.parser()
                 .setSigningKey(secret)
