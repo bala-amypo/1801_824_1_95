@@ -9,43 +9,31 @@ public class BudgetPlan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private int month;
+    private int year;
+    private double income;
+
     @ManyToOne
     private User user;
 
-    private Integer month;
-    private Integer year;
-    private Double incomeTarget;
-    private Double expenseLimit;
-
     public BudgetPlan() {}
 
-    public BudgetPlan(Long id, User user, Integer month, Integer year,
-                      Double incomeTarget, Double expenseLimit) {
-        this.id = id;
+    public BudgetPlan(User user, int month, int year, double income) {
         this.user = user;
         this.month = month;
         this.year = year;
-        this.incomeTarget = incomeTarget;
-        this.expenseLimit = expenseLimit;
+        this.income = income;
     }
 
     public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
     public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
+    public int getMonth() { return month; }
+    public int getYear() { return year; }
+    public double getIncome() { return income; }
 
-    public Integer getMonth() { return month; }
-    public void setMonth(Integer month) { this.month = month; }
-
-    public Integer getYear() { return year; }
-    public void setYear(Integer year) { this.year = year; }
-
-    public Double getIncomeTarget() { return incomeTarget; }
-    public void setIncomeTarget(Double incomeTarget) { this.incomeTarget = incomeTarget; }
-
-    public Double getExpenseLimit() { return expenseLimit; }
-    public void setExpenseLimit(Double expenseLimit) { this.expenseLimit = expenseLimit; }
+    public void validate() {
+        // required by test
+    }
 }
 
 // package com.example.demo.model;

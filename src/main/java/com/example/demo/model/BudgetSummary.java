@@ -1,4 +1,3 @@
-
 package com.example.demo.model;
 
 import jakarta.persistence.*;
@@ -7,47 +6,34 @@ import java.time.LocalDateTime;
 @Entity
 public class BudgetSummary {
 
+    public static final String STATUS_UNDER_LIMIT = "UNDER_LIMIT";
+    public static final String STATUS_OVER_LIMIT = "OVER_LIMIT";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     private BudgetPlan budgetPlan;
 
-    private Double total;
-    private Double expense;
+    private double totalExpense;
     private String status;
-    private LocalDateTime generate;
+    private LocalDateTime generatedAt;
 
     public BudgetSummary() {}
 
-    public BudgetSummary(Long id, BudgetPlan budgetPlan, Double total,
-                         Double expense, String status, LocalDateTime generate) {
-        this.id = id;
-        this.budgetPlan = budgetPlan;
-        this.total = total;
-        this.expense = expense;
-        this.status = status;
-        this.generate = generate;
+    public BudgetSummary(BudgetPlan plan) {
+        this.budgetPlan = plan;
+        this.status = STATUS_UNDER_LIMIT;
+        this.generatedAt = LocalDateTime.now();
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
     public BudgetPlan getBudgetPlan() { return budgetPlan; }
-    public void setBudgetPlan(BudgetPlan budgetPlan) { this.budgetPlan = budgetPlan; }
-
-    public Double getTotal() { return total; }
-    public void setTotal(Double total) { this.total = total; }
-
-    public Double getExpense() { return expense; }
-    public void setExpense(Double expense) { this.expense = expense; }
-
     public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
 
-    public LocalDateTime getGenerate() { return generate; }
-    public void setGenerate(LocalDateTime generate) { this.generate = generate; }
+    public void onCreate() {
+        this.generatedAt = LocalDateTime.now();
+    }
 }
 
 // package com.example.demo.model;

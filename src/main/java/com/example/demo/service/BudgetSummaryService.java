@@ -9,8 +9,8 @@
 package com.example.demo.service;
 
 import com.example.demo.model.BudgetSummary;
+import com.example.demo.model.BudgetPlan;
 
 public interface BudgetSummaryService {
-    BudgetSummary generateSummary(Long budgetPlanId);
-    BudgetSummary getSummary(Long budgetPlanId);
+    BudgetSummary generate(BudgetPlan plan);
 }
