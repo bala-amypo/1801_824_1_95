@@ -9,10 +9,13 @@
 
 package com.example.demo.service;
 
-import com.example.demo.model.Category;
 import java.util.List;
+import com.example.demo.model.Category;
 
 public interface CategoryService {
+
     Category addCategory(Category category);
+
+    // REQUIRED
     List<Category> getAllCategories();
 }
