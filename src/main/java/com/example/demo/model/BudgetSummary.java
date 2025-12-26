@@ -1,8 +1,3 @@
-package com.example.demo.model;
-
-import jakarta.persistence.*;
-import java.time.LocalDateTime;
-
 @Entity
 public class BudgetSummary {
 
@@ -23,45 +18,31 @@ public class BudgetSummary {
 
     public BudgetSummary() {}
 
-    public BudgetSummary(Long id, BudgetPlan plan, double income,
-                         double expense, String status, LocalDateTime time) {
-        this.id = id;
-        this.budgetPlan = plan;
-        this.totalIncome = income;
-        this.totalExpense = expense;
-        this.status = status;
-        this.generatedAt = time;
-    }
-
-    // ===== REQUIRED GETTERS =====
+    // ✅ ADD THESE
     public Long getId() { return id; }
-    public BudgetPlan getBudgetPlan() { return budgetPlan; }
-    public double getTotalIncome() { return totalIncome; }
-    public double getTotalExpense() { return totalExpense; }
     public String getStatus() { return status; }
-    public LocalDateTime getGeneratedAt() { return generatedAt; }
 
-    // ===== REQUIRED SETTERS =====
-    public void setBudgetPlan(BudgetPlan plan) { this.budgetPlan = plan; }
-    public void setTotalIncome(double income) { this.totalIncome = income; }
-    public void setTotalExpense(double expense) { this.totalExpense = expense; }
-
-    // ✅ THIS IS THE MISSING METHOD
     public void setStatus(String status) {
         this.status = status;
     }
 
-    // ===== REQUIRED BY TESTS =====
-    public void onCreate() {
-        this.generatedAt = LocalDateTime.now();
+    public void setGeneratedAt(LocalDateTime time) {
+        this.generatedAt = time;
+    }
 
-        if (totalExpense > budgetPlan.getExpenseLimit()) {
-            this.status = STATUS_OVER_LIMIT;
-        } else {
-            this.status = STATUS_UNDER_LIMIT;
-        }
+    public void setBudgetPlan(BudgetPlan plan) {
+        this.budgetPlan = plan;
+    }
+
+    public void setTotalIncome(double income) {
+        this.totalIncome = income;
+    }
+
+    public void setTotalExpense(double expense) {
+        this.totalExpense = expense;
     }
 }
+
 
 // package com.example.demo.model;
 // import com.example.demo.model.BudgetPlan;
