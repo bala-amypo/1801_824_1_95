@@ -21,10 +21,10 @@ public class BudgetSummary {
     private String status;
     private LocalDateTime generatedAt;
 
-    // ✅ REQUIRED no-args constructor
+    // ✅ REQUIRED BY JPA
     public BudgetSummary() {}
 
-    // ✅ REQUIRED constructor (USED BY SERVICE + TESTS)
+    // ✅ REQUIRED BY SERVICE
     public BudgetSummary(BudgetPlan plan,
                          double income,
                          double expense,
@@ -37,7 +37,22 @@ public class BudgetSummary {
         this.generatedAt = time;
     }
 
-    // ✅ REQUIRED getters/setters
+    // ✅ REQUIRED BY TESTS (WITH ID)
+    public BudgetSummary(Long id,
+                         BudgetPlan plan,
+                         double income,
+                         double expense,
+                         String status,
+                         LocalDateTime time) {
+        this.id = id;
+        this.budgetPlan = plan;
+        this.totalIncome = income;
+        this.totalExpense = expense;
+        this.status = status;
+        this.generatedAt = time;
+    }
+
+    // ===== GETTERS =====
     public Long getId() { return id; }
     public BudgetPlan getBudgetPlan() { return budgetPlan; }
     public double getTotalIncome() { return totalIncome; }
@@ -45,10 +60,12 @@ public class BudgetSummary {
     public String getStatus() { return status; }
     public LocalDateTime getGeneratedAt() { return generatedAt; }
 
+    // ===== SETTERS =====
     public void setStatus(String status) {
         this.status = status;
     }
 }
+
 
 // package com.example.demo.model;
 // import com.example.demo.model.BudgetPlan;
