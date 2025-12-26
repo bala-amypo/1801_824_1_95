@@ -24,8 +24,24 @@
 //     }
     
 // }
+package com.example.demo.controller;
+
+/* ===== JAVA ===== */
+import java.util.List;
+
+/* ===== SPRING ===== */
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+/* ===== PROJECT ===== */
+import com.example.demo.model.Category;
+import com.example.demo.service.CategoryService;
+
 @RestController
-@RequestMapping("/Category")
+@RequestMapping("/categories")
 public class CategoryController {
 
     private final CategoryService service;
@@ -34,12 +50,12 @@ public class CategoryController {
         this.service = service;
     }
 
-    @PostMapping("/addcategory")
-    public Category add(@RequestBody Category category) {
+    @PostMapping
+    public Category addCategory(@RequestBody Category category) {
         return service.addCategory(category);
     }
 
-    @GetMapping("/getall")
+    @GetMapping
     public List<Category> getAll() {
         return service.getAllCategories();
     }

@@ -27,12 +27,20 @@
 // }
 package com.example.demo.controller;
 
-import org.springframework.web.bind.annotation.*;
+/* ===== REQUIRED SPRING IMPORTS ===== */
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+
+/* ===== PROJECT IMPORTS ===== */
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 
 @RestController
-@RequestMapping("/User")
+@RequestMapping("/user")
 public class UserController {
 
     private final UserService service;
