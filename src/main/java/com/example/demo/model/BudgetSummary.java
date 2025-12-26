@@ -33,7 +33,25 @@ public class BudgetSummary {
         this.generatedAt = time;
     }
 
-    // ✅ ADD THIS (tests expect it)
+    // ===== REQUIRED GETTERS =====
+    public Long getId() { return id; }
+    public BudgetPlan getBudgetPlan() { return budgetPlan; }
+    public double getTotalIncome() { return totalIncome; }
+    public double getTotalExpense() { return totalExpense; }
+    public String getStatus() { return status; }
+    public LocalDateTime getGeneratedAt() { return generatedAt; }
+
+    // ===== REQUIRED SETTERS =====
+    public void setBudgetPlan(BudgetPlan plan) { this.budgetPlan = plan; }
+    public void setTotalIncome(double income) { this.totalIncome = income; }
+    public void setTotalExpense(double expense) { this.totalExpense = expense; }
+
+    // ✅ THIS IS THE MISSING METHOD
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    // ===== REQUIRED BY TESTS =====
     public void onCreate() {
         this.generatedAt = LocalDateTime.now();
 
@@ -43,21 +61,7 @@ public class BudgetSummary {
             this.status = STATUS_UNDER_LIMIT;
         }
     }
-
-    // getters
-    public Long getId() { return id; }
-    public BudgetPlan getBudgetPlan() { return budgetPlan; }
-    public double getTotalIncome() { return totalIncome; }
-    public double getTotalExpense() { return totalExpense; }
-    public String getStatus() { return status; }
-    public LocalDateTime getGeneratedAt() { return generatedAt; }
-
-    // setters
-    public void setBudgetPlan(BudgetPlan plan) { this.budgetPlan = plan; }
-    public void setTotalIncome(double income) { this.totalIncome = income; }
-    public void setTotalExpense(double expense) { this.totalExpense = expense; }
 }
-
 
 // package com.example.demo.model;
 // import com.example.demo.model.BudgetPlan;
