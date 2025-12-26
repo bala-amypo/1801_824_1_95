@@ -12,50 +12,58 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JwtTokenProvider {
 
-    private final String secret = "secret-key-for-tests";
-    private final long expiration = 3600000; // 1 hour
+    // 🔥 tests expect default constructor
+    public JwtTokenProvider() {}
 
-    // ✅ REQUIRED: no-args constructor
-    public JwtTokenProvider() {
-    }
+    private final String SECRET = "test-secret-key";
+    private final long EXPIRATION = 86400000; // 1 day
 
-    // ✅ REQUIRED BY TEST
+    // ================== TOKEN GENERATION ==================
+
     public String generateToken(Authentication auth,
-                                long userId,
-                                String email,
+                                Long userId,
                                 String role) {
 
         return Jwts.builder()
-                .setSubject(String.valueOf(userId))
-                .claim("email", email)
+                .setSubject(auth.getName())           // email
+                .claim("userId", userId)
                 .claim("role", role)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(SignatureAlgorithm.HS256, secret)
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
+                .signWith(SignatureAlgorithm.HS256, SECRET)
                 .compact();
     }
 
+    // ================== READ FROM TOKEN ==================
+
     public Long getUserIdFromToken(String token) {
-        Claims claims = parseClaims(token);
-        return Long.parseLong(claims.getSubject());
+        return getClaims(token).get("userId", Long.class);
+    }
+
+    public String getEmailFromToken(String token) {
+        return getClaims(token).getSubject();
     }
 
     public String getRoleFromToken(String token) {
-        return parseClaims(token).get("role", String.class);
+        return getClaims(token).get("role", String.class);
     }
+
+    // ================== VALIDATION ==================
 
     public boolean validateToken(String token) {
         try {
-            parseClaims(token);
+            getClaims(token);
             return true;
         } catch (Exception e) {
             return false;
         }
     }
 
-    private Claims parseClaims(String token) {
+    // ================== INTERNAL ==================
+
+    private Claims getClaims(String token) {
         return Jwts.parser()
-                .setSigningKey(secret)
+                .setSigningKey(SECRET)
                 .parseClaimsJws(token)
                 .getBody();
     }

@@ -1,7 +1,8 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
+
+import jakarta.persistence.*;
 
 @Entity
 public class BudgetSummary {
@@ -21,10 +22,9 @@ public class BudgetSummary {
     private String status;
     private LocalDateTime generatedAt;
 
-    // ✅ REQUIRED BY JPA
     public BudgetSummary() {}
 
-    // ✅ REQUIRED BY SERVICE
+    // 🔥 REQUIRED BY TESTS
     public BudgetSummary(BudgetPlan plan,
                          double income,
                          double expense,
@@ -37,32 +37,31 @@ public class BudgetSummary {
         this.generatedAt = time;
     }
 
-    // ✅ REQUIRED BY TESTS (WITH ID)
-    public BudgetSummary(Long id,
-                         BudgetPlan plan,
-                         double income,
-                         double expense,
-                         String status,
-                         LocalDateTime time) {
-        this.id = id;
-        this.budgetPlan = plan;
-        this.totalIncome = income;
-        this.totalExpense = expense;
-        this.status = status;
-        this.generatedAt = time;
+    // ===== REQUIRED GETTERS =====
+
+    public BudgetPlan getBudgetPlan() {
+        return budgetPlan;
     }
 
-    // ===== GETTERS =====
-    public Long getId() { return id; }
-    public BudgetPlan getBudgetPlan() { return budgetPlan; }
-    public double getTotalIncome() { return totalIncome; }
-    public double getTotalExpense() { return totalExpense; }
-    public String getStatus() { return status; }
-    public LocalDateTime getGeneratedAt() { return generatedAt; }
+    public double getTotalIncome() {
+        return totalIncome;
+    }
 
-    // ===== SETTERS =====
-    public void setStatus(String status) {
-        this.status = status;
+    public double getTotalExpense() {
+        return totalExpense;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public LocalDateTime getGeneratedAt() {
+        return generatedAt;
+    }
+
+    // 🔥 TEST CALLS THIS
+    public void onCreate() {
+        this.generatedAt = LocalDateTime.now();
     }
 }
 
