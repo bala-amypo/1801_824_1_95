@@ -103,7 +103,7 @@ import com.example.demo.repository.BudgetSummaryRepository;
 import com.example.demo.service.BudgetSummaryService;
 
 @Service
-public class BudgetSummaryServiceImpl implements BudgetSummaryService {
+public class BudgetSummaryImpl implements BudgetSummaryService {
 
     private final BudgetSummaryRepository summaryRepo;
     private final BudgetPlanRepository planRepo;

@@ -53,7 +53,7 @@ import com.example.demo.repository.UserRepository;
 import com.example.demo.service.BudgetPlanService;
 
 @Service
-public class BudgetPlanServiceImpl implements BudgetPlanService {
+public class BudgetPlanImpl implements BudgetPlanService {
 
     private final BudgetPlanRepository planRepo;
     private final UserRepository userRepo;
