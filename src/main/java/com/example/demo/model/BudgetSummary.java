@@ -21,64 +21,34 @@ public class BudgetSummary {
     private String status;
     private LocalDateTime generatedAt;
 
+    // ✅ REQUIRED no-args constructor
     public BudgetSummary() {}
- 
-    public BudgetSummary(Long id,
-                     BudgetPlan plan,
-                     double income,
-                     double expense,
-                     String status,
-                     LocalDateTime time) {
-    this.id = id;
-    this.budgetPlan = plan;
-    this.totalIncome = income;
-    this.totalExpense = expense;
-    this.status = status;
-    this.generatedAt = time;
-}
 
-
-    public Long getId() {
-        return id;
-    }
-
-    public BudgetPlan getBudgetPlan() {
-        return budgetPlan;
-    }
-
-    public double getTotalIncome() {
-        return totalIncome;
-    }
-
-    public double getTotalExpense() {
-        return totalExpense;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public LocalDateTime getGeneratedAt() {
-        return generatedAt;
-    }
-
-    public void setBudgetPlan(BudgetPlan plan) {
+    // ✅ REQUIRED constructor (USED BY SERVICE + TESTS)
+    public BudgetSummary(BudgetPlan plan,
+                         double income,
+                         double expense,
+                         String status,
+                         LocalDateTime time) {
         this.budgetPlan = plan;
-    }
-
-    public void setTotalIncome(double income) {
         this.totalIncome = income;
+        this.totalExpense = expense;
+        this.status = status;
+        this.generatedAt = time;
     }
 
-    public void setTotalExpense(double expense) {
-        this.totalExpense = expense;
-    }
+    // ✅ REQUIRED getters/setters
+    public Long getId() { return id; }
+    public BudgetPlan getBudgetPlan() { return budgetPlan; }
+    public double getTotalIncome() { return totalIncome; }
+    public double getTotalExpense() { return totalExpense; }
+    public String getStatus() { return status; }
+    public LocalDateTime getGeneratedAt() { return generatedAt; }
 
     public void setStatus(String status) {
         this.status = status;
     }
 }
-
 
 // package com.example.demo.model;
 // import com.example.demo.model.BudgetPlan;
