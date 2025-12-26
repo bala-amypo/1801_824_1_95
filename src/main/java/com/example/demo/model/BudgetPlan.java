@@ -42,6 +42,9 @@ public class BudgetPlan {
     public Integer getMonth() { return month; }
     public Integer getYear() { return year; }
     public User getUser() { return user; }
+    public void setId(Long id) {
+    this.id = id;
+}
 }
 
 
