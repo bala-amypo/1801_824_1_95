@@ -1,3 +1,55 @@
+
+package com.example.demo.model;
+
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+public class BudgetSummary {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToOne
+    private BudgetPlan budgetPlan;
+
+    private Double total;
+    private Double expense;
+    private String status;
+    private LocalDateTime generate;
+
+    public BudgetSummary() {}
+
+    public BudgetSummary(Long id, BudgetPlan budgetPlan, Double total,
+                         Double expense, String status, LocalDateTime generate) {
+        this.id = id;
+        this.budgetPlan = budgetPlan;
+        this.total = total;
+        this.expense = expense;
+        this.status = status;
+        this.generate = generate;
+    }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public BudgetPlan getBudgetPlan() { return budgetPlan; }
+    public void setBudgetPlan(BudgetPlan budgetPlan) { this.budgetPlan = budgetPlan; }
+
+    public Double getTotal() { return total; }
+    public void setTotal(Double total) { this.total = total; }
+
+    public Double getExpense() { return expense; }
+    public void setExpense(Double expense) { this.expense = expense; }
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+
+    public LocalDateTime getGenerate() { return generate; }
+    public void setGenerate(LocalDateTime generate) { this.generate = generate; }
+}
+
 // package com.example.demo.model;
 // import com.example.demo.model.BudgetPlan;
 // import jakarta.persistence.Entity;
