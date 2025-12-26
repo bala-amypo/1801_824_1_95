@@ -59,8 +59,8 @@ public class TransactionLogController {
         return service.addTransaction(userId, log);
     }
 
-    @GetMapping("/user/{userId}")
-    public List<TransactionLog> getUserTransactions(@PathVariable Long userId) {
-        return service.getUserTransactions(userId);
+    @GetMapping("/{userId}")
+    public List<TransactionLog> getTransactions(@PathVariable Long userId) {
+        return service.getTransactions(userId);
     }
 }
