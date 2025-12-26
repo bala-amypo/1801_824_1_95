@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import com.example.demo.exception.BadRequestException;
 
 @Entity
 public class BudgetPlan {
@@ -12,16 +13,16 @@ public class BudgetPlan {
     @ManyToOne
     private User user;
 
-    private int month;
-    private int year;
+    private Integer month;
+    private Integer year;
     private Double incomeTarget;
     private Double expenseLimit;
 
-    // REQUIRED: no-arg constructor
     public BudgetPlan() {}
 
-    // OPTIONAL constructor
-    public BudgetPlan(User user, int month, int year, Double incomeTarget, Double expenseLimit) {
+    public BudgetPlan(Long id, User user, Integer month,
+                      Integer year, Double incomeTarget, Double expenseLimit) {
+        this.id = id;
         this.user = user;
         this.month = month;
         this.year = year;
@@ -29,65 +30,20 @@ public class BudgetPlan {
         this.expenseLimit = expenseLimit;
     }
 
-    // ===== GETTERS =====
-    public Long getId() {
-        return id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public int getMonth() {
-        return month;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public Double getIncomeTarget() {
-        return incomeTarget;
-    }
-
-    public Double getExpenseLimit() {
-        return expenseLimit;
-    }
-
-    // ===== SETTERS (REQUIRED BY TESTS) =====
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public void setMonth(int month) {
-        this.month = month;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public void setIncomeTarget(Double incomeTarget) {
-        this.incomeTarget = incomeTarget;
-    }
-
-    public void setExpenseLimit(Double expenseLimit) {
-        this.expenseLimit = expenseLimit;
-    }
-
-    // ===== VALIDATION (TEST CALLS THIS) =====
     public void validate() {
-        if (month < 1 || month > 12) {
-            throw new IllegalArgumentException("Month must be between 1 and 12");
-        }
-        if (incomeTarget != null && incomeTarget < 0) {
-            throw new IllegalArgumentException("Income target cannot be negative");
-        }
-        if (expenseLimit != null && expenseLimit < 0) {
-            throw new IllegalArgumentException("Expense limit cannot be negative");
-        }
+        if (month < 1 || month > 12)
+            throw new BadRequestException("Invalid month");
+        if (incomeTarget < 0 || expenseLimit < 0)
+            throw new BadRequestException("Negative values not allowed");
     }
+
+    public void setUser(User user) { this.user = user; }
+    public Long getId() { return id; }
+    public Integer getMonth() { return month; }
+    public Integer getYear() { return year; }
+    public User getUser() { return user; }
 }
+
 
 // package com.example.demo.model;
 // import jakarta.persistence.Entity;

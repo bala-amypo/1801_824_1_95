@@ -13,27 +13,37 @@ public class BudgetSummary {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @OneToOne
     private BudgetPlan budgetPlan;
 
-    private double totalExpense;
+    private Double totalIncome;
+    private Double totalExpense;
     private String status;
     private LocalDateTime generatedAt;
 
     public BudgetSummary() {}
 
-    public BudgetSummary(BudgetPlan plan) {
+    public BudgetSummary(Long id, BudgetPlan plan,
+                         Double income, Double expense,
+                         String status, LocalDateTime generatedAt) {
+        this.id = id;
         this.budgetPlan = plan;
-        this.status = STATUS_UNDER_LIMIT;
-        this.generatedAt = LocalDateTime.now();
+        this.totalIncome = income;
+        this.totalExpense = expense;
+        this.status = status;
+        this.generatedAt = generatedAt;
     }
 
-    public BudgetPlan getBudgetPlan() { return budgetPlan; }
-    public String getStatus() { return status; }
-
+    @PrePersist
     public void onCreate() {
-        this.generatedAt = LocalDateTime.now();
+        generatedAt = LocalDateTime.now();
     }
+
+    public void setBudgetPlan(BudgetPlan plan) { this.budgetPlan = plan; }
+    public BudgetPlan getBudgetPlan() { return budgetPlan; }
+    public void setStatus(String status) { this.status = status; }
+    public String getStatus() { return status; }
+    public LocalDateTime getGeneratedAt() { return generatedAt; }
 }
 
 // package com.example.demo.model;

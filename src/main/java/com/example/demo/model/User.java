@@ -3,37 +3,46 @@ package com.example.demo.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "users")
 public class User {
 
-    public static final String ROLE_USER = "ROLE_USER";
+    public static final String ROLE_USER = "USER";
+    public static final String ROLE_ADMIN = "ADMIN";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
+
+    @Column(unique = true)
     private String email;
+
     private String password;
+
     private String role;
 
     public User() {}
 
-    public User(String name, String email, String password, String role) {
+    public User(Long id, String name, String email, String password, String role) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.role = role;
     }
 
+    // getters & setters
     public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
     public String getName() { return name; }
     public String getEmail() { return email; }
     public String getPassword() { return password; }
-    public String getRole() { return role; }
 
+    public String getRole() { return role; }
     public void setRole(String role) { this.role = role; }
 }
-
 
 
 

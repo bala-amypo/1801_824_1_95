@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import com.example.demo.exception.BadRequestException;
 
 @Entity
 public class TransactionLog {
@@ -10,31 +11,40 @@ public class TransactionLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private double amount;
-    private LocalDate transactionDate;
-
     @ManyToOne
     private User user;
 
     @ManyToOne
     private Category category;
 
+    private Double amount;
+    private String description;
+    private LocalDate transactionDate;
+
     public TransactionLog() {}
 
-    public TransactionLog(User user, Category category, double amount) {
+    public TransactionLog(Long id, User user, Category category,
+                          Double amount, String description, LocalDate transactionDate) {
+        this.id = id;
         this.user = user;
         this.category = category;
         this.amount = amount;
-        this.transactionDate = LocalDate.now();
+        this.description = description;
+        this.transactionDate = transactionDate;
     }
-
-    public User getUser() { return user; }
-    public Category getCategory() { return category; }
-    public double getAmount() { return amount; }
 
     public void validate() {
-        // required by test
+        if (amount <= 0)
+            throw new BadRequestException("Amount must be positive");
+        if (transactionDate.isAfter(LocalDate.now()))
+            throw new BadRequestException("Future date not allowed");
     }
+
+    public void setUser(User user) { this.user = user; }
+    public Long getId() { return id; }
+    public User getUser() { return user; }
+    public Category getCategory() { return category; }
+    public Double getAmount() { return amount; }
 }
 
 // package com.example.demo.model;
