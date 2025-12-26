@@ -17,5 +17,6 @@ public interface UserService {
 
     User register(User user);
 
+    // 🔥 TEST EXPECTS THIS EXACT NAME
     User getByEmail(String email);
 }

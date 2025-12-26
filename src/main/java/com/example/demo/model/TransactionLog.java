@@ -1,50 +1,44 @@
-package com.example.demo.model;
+package com.example.demo.service.impl;
 
-import jakarta.persistence.*;
-import java.time.LocalDate;
-import com.example.demo.exception.BadRequestException;
+import com.example.demo.model.User;
+import com.example.demo.repository.UserRepository;
+import com.example.demo.service.UserService;
 
-@Entity
-public class TransactionLog {
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Service
+public class UserServiceImpl implements UserService {
 
-    @ManyToOne
-    private User user;
+    private final UserRepository repo;
+    private final PasswordEncoder passwordEncoder;
 
-    @ManyToOne
-    private Category category;
-
-    private Double amount;
-    private String description;
-    private LocalDate transactionDate;
-
-    public TransactionLog() {}
-
-    public TransactionLog(Long id, User user, Category category,
-                          Double amount, String description, LocalDate transactionDate) {
-        this.id = id;
-        this.user = user;
-        this.category = category;
-        this.amount = amount;
-        this.description = description;
-        this.transactionDate = transactionDate;
+    // ✅ REQUIRED CONSTRUCTOR (tests use it)
+    public UserServiceImpl(UserRepository repo,
+                           PasswordEncoder passwordEncoder) {
+        this.repo = repo;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    public void validate() {
-        if (amount <= 0)
-            throw new BadRequestException("Amount must be positive");
-        if (transactionDate.isAfter(LocalDate.now()))
-            throw new BadRequestException("Future date not allowed");
+    @Override
+    public User register(User user) {
+
+        if (repo.existsByEmail(user.getEmail())) {
+            throw new RuntimeException("Email already exists");
+        }
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole("USER");
+
+        return repo.save(user);
     }
 
-    public void setUser(User user) { this.user = user; }
-    public Long getId() { return id; }
-    public User getUser() { return user; }
-    public Category getCategory() { return category; }
-    public Double getAmount() { return amount; }
+    // ✅ MUST match interface exactly
+    @Override
+    public User getByEmail(String email) {
+        return repo.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
 }
 
 // package com.example.demo.model;
