@@ -31,6 +31,9 @@ public class BudgetSummary {
         this.status = status;
         this.generatedAt = time;
     }
+public void setStatus(String status) {
+    this.status = status;
+}
 
     public void setBudgetPlan(BudgetPlan plan) { this.budgetPlan = plan; }
     public void setTotalIncome(double income) { this.totalIncome = income; }

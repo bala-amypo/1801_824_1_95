@@ -15,6 +15,13 @@ public class BudgetPlan {
     private int year;
     private double incomeTarget;
     private double expenseLimit;
+public void setUser(User user) {
+    this.user = user;
+}
+
+public double getTotalAmount() {
+    return incomeTarget - expenseLimit;
+}
 
     public BudgetPlan() {}
 
