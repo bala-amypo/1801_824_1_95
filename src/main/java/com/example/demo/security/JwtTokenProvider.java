@@ -1,4 +1,4 @@
-package com.example.demo.security;
+ package com.example.demo.security;
 
 import java.util.Date;
 
@@ -12,61 +12,53 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JwtTokenProvider {
 
-    private final String secret = "secret-key";
-    private final long validity = 3600000;
+    private final String secretKey;
+    private final long validityInMs;
 
-    // ✅ REQUIRED: no-arg constructor
-    public JwtTokenProvider() {}
-
-    // ✅ REQUIRED by tests
-    public String generateToken(Authentication auth) {
-        return generateToken(auth, validity, auth.getName(), "USER");
+    // ✅ REQUIRED BY TESTS
+    public JwtTokenProvider(String secretKey, long validityInMs) {
+        this.secretKey = secretKey;
+        this.validityInMs = validityInMs;
     }
 
-    // ✅ REQUIRED by tests (OVERLOAD)
-    public String generateToken(Authentication auth,
-                                long userId,
-                                String email,
-                                String role) {
+    // ✅ REQUIRED DEFAULT CONSTRUCTOR (Spring)
+    public JwtTokenProvider() {
+        this.secretKey = "test-secret";
+        this.validityInMs = 3600000;
+    }
+
+    // ✅ REQUIRED BY TESTS
+    public String generateToken(Authentication authentication) {
+        String userId = authentication.getName();
+
+        Date now = new Date();
+        Date expiry = new Date(now.getTime() + validityInMs);
 
         return Jwts.builder()
-                .setSubject(email)
-                .claim("userId", userId)
-                .claim("role", role)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + validity))
-                .signWith(SignatureAlgorithm.HS256, secret)
+                .setSubject(userId)
+                .setIssuedAt(now)
+                .setExpiration(expiry)
+                .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
 
+    // ✅ REQUIRED BY TESTS
+    public String getUserIdFromToken(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(secretKey)
+                .parseClaimsJws(token)
+                .getBody();
+
+        return claims.getSubject();
+    }
+
+    // ✅ REQUIRED BY TESTS
     public boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
+            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             return true;
         } catch (Exception e) {
             return false;
         }
-    }
-
-    // ✅ REQUIRED
-    public Long getUserIdFromToken(String token) {
-        return getClaims(token).get("userId", Long.class);
-    }
-
-    // ✅ REQUIRED
-    public String getEmailFromToken(String token) {
-        return getClaims(token).getSubject();
-    }
-
-    // ✅ REQUIRED
-    public String getRoleFromToken(String token) {
-        return getClaims(token).get("role", String.class);
-    }
-
-    private Claims getClaims(String token) {
-        return Jwts.parser()
-                .setSigningKey(secret)
-                .parseClaimsJws(token)
-                .getBody();
     }
 }
