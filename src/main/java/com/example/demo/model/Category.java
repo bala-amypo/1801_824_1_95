@@ -1,13 +1,14 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "categories")
 public class Category {
+
+    // 🔑 REQUIRED BY TEST
+    public static final String TYPE_INCOME = "INCOME";
+    public static final String TYPE_EXPENSE = "EXPENSE";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,27 +17,24 @@ public class Category {
     @Column(unique = true, nullable = false)
     private String name;
 
-    // Expected values: INCOME or EXPENSE
     @Column(nullable = false)
     private String type;
 
-    // ---------------- CONSTRUCTORS ----------------
+    // ✅ REQUIRED: no-arg constructor
+    public Category() {}
 
-    public Category() {
-    }
-
+    // ✅ REQUIRED: constructor used in tests
     public Category(String name, String type) {
         this.name = name;
         this.type = type;
     }
 
-    // ---------------- GETTERS & SETTERS ----------------
-
+    // ✅ Getters & Setters (tests use setters)
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Long id) {   // TEST USES setId()
         this.id = id;
     }
 
@@ -56,19 +54,10 @@ public class Category {
         this.type = type;
     }
 
-    // ---------------- VALIDATION METHOD ----------------
-    // REQUIRED because CategoryServiceImpl calls validateType()
-
+    // ✅ REQUIRED BY SERVICE
     public void validateType() {
-        if (type == null) {
-            throw new RuntimeException("Category type cannot be null");
-        }
-
-        if (!type.equalsIgnoreCase("INCOME") &&
-            !type.equalsIgnoreCase("EXPENSE")) {
-            throw new RuntimeException(
-                "Category type must be either INCOME or EXPENSE"
-            );
+        if (!TYPE_INCOME.equals(type) && !TYPE_EXPENSE.equals(type)) {
+            throw new RuntimeException("Invalid category type");
         }
     }
 }
