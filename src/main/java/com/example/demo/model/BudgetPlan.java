@@ -1,7 +1,6 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-
 @Entity
 public class BudgetPlan {
 
@@ -19,7 +18,6 @@ public class BudgetPlan {
 
     public BudgetPlan() {}
 
-    // REQUIRED BY TEST
     public BudgetPlan(Long id, User user, int month, int year,
                       double incomeTarget, double expenseLimit) {
         this.id = id;
@@ -30,6 +28,10 @@ public class BudgetPlan {
         this.expenseLimit = expenseLimit;
     }
 
+    public User getUser() { return user; }
+    public int getMonth() { return month; }
+    public int getYear() { return year; }
+
     public void setId(Long id) { this.id = id; }
 
     public void validate() {
@@ -37,7 +39,6 @@ public class BudgetPlan {
             throw new IllegalArgumentException("Invalid month");
     }
 }
-
 
 // package com.example.demo.model;
 // import jakarta.persistence.Entity;

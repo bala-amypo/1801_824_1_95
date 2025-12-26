@@ -2,7 +2,6 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
-
 @Entity
 public class TransactionLog {
 
@@ -22,7 +21,6 @@ public class TransactionLog {
 
     public TransactionLog() {}
 
-    // REQUIRED BY TEST
     public TransactionLog(Long id, User user, Category category,
                           double amount, String description, LocalDate date) {
         this.id = id;
@@ -32,6 +30,9 @@ public class TransactionLog {
         this.description = description;
         this.transactionDate = date;
     }
+
+    public User getUser() { return user; }
+    public double getAmount() { return amount; }
 
     public void setId(Long id) { this.id = id; }
     public void setAmount(double amount) { this.amount = amount; }

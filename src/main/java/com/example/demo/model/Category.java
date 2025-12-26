@@ -32,6 +32,12 @@ public class Category {
 
     public String getType() { return type; }
     public void setType(String type) { this.type = type; }
+    public void validateType() {
+    if (!TYPE_INCOME.equals(type) && !TYPE_EXPENSE.equals(type)) {
+        throw new IllegalArgumentException("Invalid category type");
+    }
+}
+
 }
 
 

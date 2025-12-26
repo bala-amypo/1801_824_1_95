@@ -2,7 +2,6 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-
 @Entity
 public class BudgetSummary {
 
@@ -23,7 +22,6 @@ public class BudgetSummary {
 
     public BudgetSummary() {}
 
-    // REQUIRED BY TEST
     public BudgetSummary(Long id, BudgetPlan plan, double income,
                          double expense, String status, LocalDateTime time) {
         this.id = id;
@@ -33,6 +31,10 @@ public class BudgetSummary {
         this.status = status;
         this.generatedAt = time;
     }
+
+    public void setBudgetPlan(BudgetPlan plan) { this.budgetPlan = plan; }
+    public void setTotalIncome(double income) { this.totalIncome = income; }
+    public void setTotalExpense(double expense) { this.totalExpense = expense; }
 
     public BudgetPlan getBudgetPlan() { return budgetPlan; }
     public LocalDateTime getGeneratedAt() { return generatedAt; }
