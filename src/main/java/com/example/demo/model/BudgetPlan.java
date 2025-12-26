@@ -1,11 +1,7 @@
 package com.example.demo.model;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.Size;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
+
+import jakarta.persistence.*;
+
 @Entity
 public class BudgetPlan {
 
@@ -13,40 +9,35 @@ public class BudgetPlan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer month;
-    private Integer year;
-
-    private double totalAmount;   // ✅ MUST EXIST
-
     @ManyToOne
     private User user;
 
-    // ===== GETTERS & SETTERS =====
+    private int month;
+    private int year;
+    private double incomeTarget;
+    private double expenseLimit;
 
-    public double getTotalAmount() {   // ✅ REQUIRED
-        return totalAmount;
-    }
+    public BudgetPlan() {}
 
-    public void setTotalAmount(double totalAmount) {
-        this.totalAmount = totalAmount;
-    }
-
-    public Integer getMonth() {
-        return month;
-    }
-
-    public Integer getYear() {
-        return year;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
+    // REQUIRED BY TEST
+    public BudgetPlan(Long id, User user, int month, int year,
+                      double incomeTarget, double expenseLimit) {
+        this.id = id;
         this.user = user;
+        this.month = month;
+        this.year = year;
+        this.incomeTarget = incomeTarget;
+        this.expenseLimit = expenseLimit;
+    }
+
+    public void setId(Long id) { this.id = id; }
+
+    public void validate() {
+        if (month < 1 || month > 12)
+            throw new IllegalArgumentException("Invalid month");
     }
 }
+
 
 // package com.example.demo.model;
 // import jakarta.persistence.Entity;

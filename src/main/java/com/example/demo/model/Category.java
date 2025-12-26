@@ -12,28 +12,16 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
     private String name;
-
     private String type;
 
     public Category() {}
 
-    public Category(String name, String type) {
-        this.name = name;
-        this.type = type;
-    }
-
+    // REQUIRED BY TEST
     public Category(Long id, String name, String type) {
         this.id = id;
         this.name = name;
         this.type = type;
-    }
-
-    public void validateType() {
-        if (!TYPE_INCOME.equals(type) && !TYPE_EXPENSE.equals(type)) {
-            throw new IllegalArgumentException("Invalid category type");
-        }
     }
 
     public Long getId() { return id; }

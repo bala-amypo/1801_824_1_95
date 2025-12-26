@@ -1,12 +1,8 @@
 package com.example.demo.model;
-import com.example.demo.model.BudgetPlan;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Id;
+
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+
 @Entity
 public class BudgetSummary {
 
@@ -20,28 +16,28 @@ public class BudgetSummary {
     @OneToOne
     private BudgetPlan budgetPlan;
 
-    private double totalExpense;   // ✅ MUST EXIST
-
+    private double totalIncome;
+    private double totalExpense;
     private String status;
+    private LocalDateTime generatedAt;
 
-    // ===== GETTERS & SETTERS =====
+    public BudgetSummary() {}
 
-    public double getTotalExpense() {
-        return totalExpense;
-    }
-
-    public void setTotalExpense(double totalExpense) {   // ✅ REQUIRED
-        this.totalExpense = totalExpense;
-    }
-
-    public void setBudgetPlan(BudgetPlan budgetPlan) {
-        this.budgetPlan = budgetPlan;
-    }
-
-    public void setStatus(String status) {
+    // REQUIRED BY TEST
+    public BudgetSummary(Long id, BudgetPlan plan, double income,
+                         double expense, String status, LocalDateTime time) {
+        this.id = id;
+        this.budgetPlan = plan;
+        this.totalIncome = income;
+        this.totalExpense = expense;
         this.status = status;
+        this.generatedAt = time;
     }
+
+    public BudgetPlan getBudgetPlan() { return budgetPlan; }
+    public LocalDateTime getGeneratedAt() { return generatedAt; }
 }
+
 
 // package com.example.demo.model;
 // import com.example.demo.model.BudgetPlan;

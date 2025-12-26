@@ -22,6 +22,7 @@ public class TransactionLog {
 
     public TransactionLog() {}
 
+    // REQUIRED BY TEST
     public TransactionLog(Long id, User user, Category category,
                           double amount, String description, LocalDate date) {
         this.id = id;
@@ -32,36 +33,11 @@ public class TransactionLog {
         this.transactionDate = date;
     }
 
-    public void validate() {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("Amount must be positive");
-        }
-        if (transactionDate.isAfter(LocalDate.now())) {
-            throw new IllegalArgumentException("Future date not allowed");
-        }
-    }
-
-    // getters & setters
-    public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-
-    public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
-
-    public Category getCategory() { return category; }
-    public void setCategory(Category category) { this.category = category; }
-
-    public double getAmount() { return amount; }
     public void setAmount(double amount) { this.amount = amount; }
-
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-
-    public LocalDate getTransactionDate() { return transactionDate; }
-    public void setTransactionDate(LocalDate transactionDate) {
-        this.transactionDate = transactionDate;
-    }
+    public void setTransactionDate(LocalDate date) { this.transactionDate = date; }
 }
+
 
 
 // package com.example.demo.model;
