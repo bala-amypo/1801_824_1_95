@@ -24,14 +24,6 @@
 //     }
     
 // }
-package com.example.demo.controller;
-
-import com.example.demo.model.Category;
-import com.example.demo.service.CategoryService;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
 @RestController
 @RequestMapping("/Category")
 public class CategoryController {
@@ -43,12 +35,12 @@ public class CategoryController {
     }
 
     @PostMapping("/addcategory")
-    public Category addCategory(@RequestBody Category category) {
+    public Category add(@RequestBody Category category) {
         return service.addCategory(category);
     }
 
     @GetMapping("/getall")
-    public List<Category> getAllCategories() {
+    public List<Category> getAll() {
         return service.getAllCategories();
     }
 }

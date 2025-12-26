@@ -25,12 +25,6 @@
 //     }
     
 // }
-package com.example.demo.controller;
-
-import com.example.demo.model.User;
-import com.example.demo.service.UserService;
-import org.springframework.web.bind.annotation.*;
-
 @RestController
 @RequestMapping("/User")
 public class UserController {
@@ -48,6 +42,6 @@ public class UserController {
 
     @GetMapping("/{email}")
     public User getByEmail(@PathVariable String email) {
-        return service.getByEmail(email);
+        return service.findByEmail(email);
     }
 }

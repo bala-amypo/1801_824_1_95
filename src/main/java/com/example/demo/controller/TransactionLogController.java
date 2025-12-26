@@ -33,14 +33,6 @@
 //         return ts.getUserTransactions(user);
 //     }
 // }
-package com.example.demo.controller;
-
-import com.example.demo.model.TransactionLog;
-import com.example.demo.service.TransactionService;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
 @RestController
 @RequestMapping("/transactions")
 public class TransactionLogController {
@@ -52,15 +44,13 @@ public class TransactionLogController {
     }
 
     @PostMapping("/{userId}")
-    public TransactionLog addTransaction(
-            @PathVariable Long userId,
-            @RequestBody TransactionLog log
-    ) {
+    public TransactionLog add(@PathVariable Long userId,
+                              @RequestBody TransactionLog log) {
         return service.addTransaction(userId, log);
     }
 
-    @GetMapping("/{userId}")
-    public List<TransactionLog> getTransactions(@PathVariable Long userId) {
-        return service.getTransactions(userId);
+    @GetMapping("/user/{userId}")
+    public List<TransactionLog> get(@PathVariable Long userId) {
+        return service.getUserTransactions(userId);
     }
 }

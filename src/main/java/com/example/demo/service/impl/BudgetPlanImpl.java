@@ -45,6 +45,7 @@
 package com.example.demo.service.impl;
 
 import org.springframework.stereotype.Service;
+
 import com.example.demo.model.BudgetPlan;
 import com.example.demo.model.User;
 import com.example.demo.repository.BudgetPlanRepository;
@@ -52,27 +53,31 @@ import com.example.demo.repository.UserRepository;
 import com.example.demo.service.BudgetPlanService;
 
 @Service
-public class BudgetPlanImpl implements BudgetPlanService {
+public class BudgetPlanServiceImpl implements BudgetPlanService {
 
-    private final BudgetPlanRepository budgetRepo;
+    private final BudgetPlanRepository planRepo;
     private final UserRepository userRepo;
 
-    public BudgetPlanImpl(BudgetPlanRepository budgetRepo, UserRepository userRepo) {
-        this.budgetRepo = budgetRepo;
+    public BudgetPlanServiceImpl(BudgetPlanRepository planRepo,
+                                 UserRepository userRepo) {
+        this.planRepo = planRepo;
         this.userRepo = userRepo;
     }
 
     @Override
     public BudgetPlan createBudgetPlan(Long userId, BudgetPlan plan) {
-        User user = userRepo.findById(userId).orElseThrow();
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
         plan.setUser(user);
-        return budgetRepo.save(plan);
+        plan.validate();
+        return planRepo.save(plan);
     }
 
     @Override
     public BudgetPlan getBudgetPlan(Long userId, Integer month, Integer year) {
-        User user = userRepo.findById(userId).orElseThrow();
-        return budgetRepo.findByUserAndMonthAndYear(user, month, year)
-                .orElseThrow();
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return planRepo.findByUserAndMonthAndYear(user, month, year)
+                .orElseThrow(() -> new RuntimeException("BudgetPlan not found"));
     }
 }

@@ -21,29 +21,41 @@
 // }
 package com.example.demo.service.impl;
 
-import com.example.demo.model.TransactionLog;
-import com.example.demo.repository.TransactionLogRepository;
-import com.example.demo.service.TransactionService;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.example.demo.model.TransactionLog;
+import com.example.demo.model.User;
+import com.example.demo.repository.TransactionLogRepository;
+import com.example.demo.repository.UserRepository;
+import com.example.demo.service.TransactionService;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
 
     private final TransactionLogRepository repo;
+    private final UserRepository userRepo;
 
-    public TransactionServiceImpl(TransactionLogRepository repo) {
+    public TransactionServiceImpl(TransactionLogRepository repo,
+                                  UserRepository userRepo) {
         this.repo = repo;
+        this.userRepo = userRepo;
     }
 
     @Override
     public TransactionLog addTransaction(Long userId, TransactionLog log) {
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        log.setUser(user);
+        log.validate();
         return repo.save(log);
     }
 
     @Override
-    public List<TransactionLog> getTransactions(Long userId) {
-        return repo.findByUserId(userId);
+    public List<TransactionLog> getUserTransactions(Long userId) {
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return repo.findByUser(user);
     }
 }
+
