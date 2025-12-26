@@ -1,8 +1,8 @@
 package com.example.demo.model;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-import jakarta.persistence.*;
 @Entity
 public class BudgetSummary {
 
@@ -19,13 +19,18 @@ public class BudgetSummary {
     private double totalIncome;
     private double totalExpense;
     private String status;
+
     private LocalDateTime generatedAt;
 
     public BudgetSummary() {}
 
-    public BudgetSummary(Long id, BudgetPlan plan,
-                         double income, double expense,
-                         String status, LocalDateTime time) {
+    // ✅ CONSTRUCTOR EXPECTED BY TESTS
+    public BudgetSummary(Long id,
+                         BudgetPlan plan,
+                         double income,
+                         double expense,
+                         String status,
+                         LocalDateTime time) {
         this.id = id;
         this.budgetPlan = plan;
         this.totalIncome = income;
@@ -34,8 +39,27 @@ public class BudgetSummary {
         this.generatedAt = time;
     }
 
-    public void setBudgetPlan(BudgetPlan plan) {
-        this.budgetPlan = plan;
+    // ✅ REQUIRED GETTERS / SETTERS
+    public Long getId() { return id; }
+
+    public BudgetPlan getBudgetPlan() { return budgetPlan; }
+    public void setBudgetPlan(BudgetPlan plan) { this.budgetPlan = plan; }
+
+    public double getTotalIncome() { return totalIncome; }
+    public void setTotalIncome(double income) { this.totalIncome = income; }
+
+    public double getTotalExpense() { return totalExpense; }
+    public void setTotalExpense(double expense) { this.totalExpense = expense; }
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+
+    public LocalDateTime getGeneratedAt() { return generatedAt; }
+
+    // ✅ TEST EXPECTS THIS
+    @PrePersist
+    public void onCreate() {
+        this.generatedAt = LocalDateTime.now();
     }
 }
 
