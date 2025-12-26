@@ -1,65 +1,92 @@
 package com.example.demo.security;
 
-import io.jsonwebtoken.*;
-import io.jsonwebtoken.security.Keys;
+import java.util.Date;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-import java.security.Key;
-import java.util.Date;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+
+import javax.crypto.SecretKey;
 
 @Component
 public class JwtTokenProvider {
 
-    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    // ===== REQUIRED FIELDS =====
+    private String secretKey;
+    private long expirationMs;
+    private SecretKey key;
 
-    // REQUIRED no-arg constructor
-    public JwtTokenProvider() {}
+    // ===== NO-ARG CONSTRUCTOR (Spring) =====
+    public JwtTokenProvider() {
+        this.secretKey = "defaultSecretKeyForTests1234567890";
+        this.expirationMs = 86400000; // 1 day
+        this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
+    }
 
-    // Used by controllers
-    public String generateToken(Authentication auth, Long userId, String email, String role) {
+    // ===== CONSTRUCTOR REQUIRED BY TEST =====
+    public JwtTokenProvider(String secretKey, long expirationMs) {
+        this.secretKey = secretKey;
+        this.expirationMs = expirationMs;
+        this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
+    }
+
+    // ===== GENERATE TOKEN (used by tests) =====
+    public String generateToken(Long userId, String email, String role) {
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + expirationMs);
+
         return Jwts.builder()
                 .setSubject(email)
                 .claim("userId", userId)
                 .claim("role", role)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 86400000))
-                .signWith(key)
+                .setIssuedAt(now)
+                .setExpiration(expiryDate)
+                .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    // REQUIRED by tests
-    public Long getUserIdFromToken(String token) {
-        return getClaims(token).get("userId", Long.class);
+    // ===== OVERLOADED (Spring Security Authentication) =====
+    public String generateToken(Authentication authentication, Long userId, String role) {
+        String email = authentication.getName();
+        return generateToken(userId, email, role);
     }
 
+    // ===== READ EMAIL =====
     public String getEmailFromToken(String token) {
-        return getClaims(token).getSubject();
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+
+        return claims.getSubject();
     }
 
+    // ===== READ ROLE =====
     public String getRoleFromToken(String token) {
-        return getClaims(token).get("role", String.class);
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+
+        return claims.get("role", String.class);
     }
 
+    // ===== VALIDATE TOKEN =====
     public boolean validateToken(String token) {
         try {
-            getClaims(token);
+            Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token);
             return true;
         } catch (Exception e) {
             return false;
         }
     }
-
-    private Claims getClaims(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-    }
-    public JwtTokenProvider(String secret, long expirationMs) {
-    this.secretKey = secret;
-    this.expirationMs = expirationMs;
-}
-
 }
