@@ -94,7 +94,6 @@
 package com.example.demo.service.impl;
 
 import org.springframework.stereotype.Service;
-import java.time.LocalDateTime;
 
 import com.example.demo.model.BudgetPlan;
 import com.example.demo.model.BudgetSummary;
@@ -108,8 +107,9 @@ public class BudgetSummaryImpl implements BudgetSummaryService {
     private final BudgetSummaryRepository summaryRepo;
     private final BudgetPlanRepository planRepo;
 
-    public BudgetSummaryServiceImpl(BudgetSummaryRepository summaryRepo,
-                                    BudgetPlanRepository planRepo) {
+    // ✅ constructor name MUST match class name
+    public BudgetSummaryImpl(BudgetSummaryRepository summaryRepo,
+                             BudgetPlanRepository planRepo) {
         this.summaryRepo = summaryRepo;
         this.planRepo = planRepo;
     }
@@ -122,8 +122,8 @@ public class BudgetSummaryImpl implements BudgetSummaryService {
         BudgetSummary summary = new BudgetSummary();
         summary.setBudgetPlan(plan);
         summary.setStatus(BudgetSummary.STATUS_UNDER_LIMIT);
-        summaryRepo.save(summary);
-        return summary;
+
+        return summaryRepo.save(summary);
     }
 
     @Override

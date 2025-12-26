@@ -58,8 +58,9 @@ public class BudgetPlanImpl implements BudgetPlanService {
     private final BudgetPlanRepository planRepo;
     private final UserRepository userRepo;
 
-    public BudgetPlanServiceImpl(BudgetPlanRepository planRepo,
-                                 UserRepository userRepo) {
+    // ✅ constructor name MUST match class name
+    public BudgetPlanImpl(BudgetPlanRepository planRepo,
+                          UserRepository userRepo) {
         this.planRepo = planRepo;
         this.userRepo = userRepo;
     }
@@ -81,3 +82,4 @@ public class BudgetPlanImpl implements BudgetPlanService {
                 .orElseThrow(() -> new RuntimeException("BudgetPlan not found"));
     }
 }
+
