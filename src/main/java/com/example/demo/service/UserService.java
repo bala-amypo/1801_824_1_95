@@ -14,8 +14,7 @@ package com.example.demo.service;
 import com.example.demo.model.User;
 
 public interface UserService {
-
     User register(User user);
-
-    User getByEmail(String email);   // 🔥 REQUIRED by tests & controller
+    User getByEmail(String email);
 }
+
