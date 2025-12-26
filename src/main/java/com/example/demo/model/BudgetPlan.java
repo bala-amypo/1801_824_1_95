@@ -9,30 +9,83 @@ public class BudgetPlan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int month;
-    private int year;
-    private double income;
-
     @ManyToOne
     private User user;
 
+    private int month;
+    private int year;
+    private Double incomeTarget;
+    private Double expenseLimit;
+
+    // REQUIRED: no-arg constructor
     public BudgetPlan() {}
 
-    public BudgetPlan(User user, int month, int year, double income) {
+    // OPTIONAL constructor
+    public BudgetPlan(User user, int month, int year, Double incomeTarget, Double expenseLimit) {
         this.user = user;
         this.month = month;
         this.year = year;
-        this.income = income;
+        this.incomeTarget = incomeTarget;
+        this.expenseLimit = expenseLimit;
     }
 
-    public Long getId() { return id; }
-    public User getUser() { return user; }
-    public int getMonth() { return month; }
-    public int getYear() { return year; }
-    public double getIncome() { return income; }
+    // ===== GETTERS =====
+    public Long getId() {
+        return id;
+    }
 
+    public User getUser() {
+        return user;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public Double getIncomeTarget() {
+        return incomeTarget;
+    }
+
+    public Double getExpenseLimit() {
+        return expenseLimit;
+    }
+
+    // ===== SETTERS (REQUIRED BY TESTS) =====
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public void setIncomeTarget(Double incomeTarget) {
+        this.incomeTarget = incomeTarget;
+    }
+
+    public void setExpenseLimit(Double expenseLimit) {
+        this.expenseLimit = expenseLimit;
+    }
+
+    // ===== VALIDATION (TEST CALLS THIS) =====
     public void validate() {
-        // required by test
+        if (month < 1 || month > 12) {
+            throw new IllegalArgumentException("Month must be between 1 and 12");
+        }
+        if (incomeTarget != null && incomeTarget < 0) {
+            throw new IllegalArgumentException("Income target cannot be negative");
+        }
+        if (expenseLimit != null && expenseLimit < 0) {
+            throw new IllegalArgumentException("Expense limit cannot be negative");
+        }
     }
 }
 

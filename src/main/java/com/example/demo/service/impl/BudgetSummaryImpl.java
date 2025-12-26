@@ -93,7 +93,6 @@
 // // }
 package com.example.demo.service.impl;
 
-import com.example.demo.model.BudgetPlan;
 import com.example.demo.model.BudgetSummary;
 import com.example.demo.repository.BudgetSummaryRepository;
 import com.example.demo.service.BudgetSummaryService;
@@ -108,7 +107,13 @@ public class BudgetSummaryImpl implements BudgetSummaryService {
         this.repo = repo;
     }
 
-    public BudgetSummary generate(BudgetPlan plan) {
-        return repo.save(new BudgetSummary(plan));
+    @Override
+    public BudgetSummary generateSummary(Long budgetPlanId) {
+        return new BudgetSummary(); // logic later
+    }
+
+    @Override
+    public BudgetSummary getSummary(Long budgetPlanId) {
+        return repo.findById(budgetPlanId).orElse(null);
     }
 }
