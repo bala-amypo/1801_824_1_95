@@ -29,7 +29,7 @@ import com.example.demo.service.UserService;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import com.example.demo.exception.BadRequestException;
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -47,9 +47,8 @@ public class UserServiceImpl implements UserService {
     public User register(User user) {
 
         if (repo.existsByEmail(user.getEmail())) {
-            throw new RuntimeException("Email already exists");
-        }
-
+    throw new BadRequestException("Email already exists");
+}
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole("USER");
 
