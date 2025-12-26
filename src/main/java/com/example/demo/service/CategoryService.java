@@ -16,6 +16,5 @@ public interface CategoryService {
 
     Category addCategory(Category category);
 
-    // REQUIRED
     List<Category> getAllCategories();
 }

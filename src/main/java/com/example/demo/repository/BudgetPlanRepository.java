@@ -12,13 +12,20 @@
 // }
 package com.example.demo.repository;
 
-import com.example.demo.model.BudgetPlan;
-import com.example.demo.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.Optional;
 
-public interface BudgetPlanRepository extends JpaRepository<BudgetPlan, Long> {
+import org.springframework.data.jpa.repository.JpaRepository;
 
-    Optional<BudgetPlan> findByUserAndMonthAndYear(User user, int month, int year);
+import com.example.demo.model.BudgetPlan;
+import com.example.demo.model.User;
+
+public interface BudgetPlanRepository
+        extends JpaRepository<BudgetPlan, Long> {
+
+    // required by BudgetPlanService
+    Optional<BudgetPlan> findByUserAndMonthAndYear(
+            User user,
+            Integer month,
+            Integer year
+    );
 }

@@ -8,12 +8,24 @@
 // }
 package com.example.demo.repository;
 
+import java.time.LocalDate;
 import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+
 import com.example.demo.model.TransactionLog;
+import com.example.demo.model.User;
 
-public interface TransactionLogRepository extends JpaRepository<TransactionLog, Long> {
+public interface TransactionLogRepository
+        extends JpaRepository<TransactionLog, Long> {
 
-    // REQUIRED by TransactionServiceImpl
-    List<TransactionLog> findByUserId(Long userId);
+    // required by TransactionServiceImpl
+    List<TransactionLog> findByUser(User user);
+
+    // required by BudgetSummaryServiceImpl
+    List<TransactionLog> findByUserAndTransactionDateBetween(
+            User user,
+            LocalDate startDate,
+            LocalDate endDate
+    );
 }
