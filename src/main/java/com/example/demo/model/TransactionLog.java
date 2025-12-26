@@ -10,27 +10,24 @@ public class TransactionLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     private User user;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Category category;
 
     private double amount;
-
     private String description;
-
     private LocalDate transactionDate;
 
-    // ✅ Required by tests
     public TransactionLog() {}
 
-    // Getters & setters (tests USE these setters)
+    // ---------- getters & setters ----------
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {   // 🔥 test uses setId
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -38,7 +35,7 @@ public class TransactionLog {
         return user;
     }
 
-    public void setUser(User user) {   // 🔥 test uses setUser
+    public void setUser(User user) {
         this.user = user;
     }
 
@@ -54,7 +51,7 @@ public class TransactionLog {
         return amount;
     }
 
-    public void setAmount(double amount) {   // 🔥 test uses setAmount
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
@@ -70,11 +67,25 @@ public class TransactionLog {
         return transactionDate;
     }
 
-    public void setTransactionDate(LocalDate transactionDate) { // 🔥 test uses this
+    public void setTransactionDate(LocalDate transactionDate) {
         this.transactionDate = transactionDate;
     }
-}
 
+    // ---------- 🔥 REQUIRED BY TEST ----------
+    public void validate() {
+        if (amount <= 0) {
+            throw new RuntimeException("Amount must be greater than zero");
+        }
+
+        if (transactionDate == null) {
+            throw new RuntimeException("Transaction date is required");
+        }
+
+        if (transactionDate.isAfter(LocalDate.now())) {
+            throw new RuntimeException("Transaction date cannot be in the future");
+        }
+    }
+}
 
 // package com.example.demo.model;
 // import jakarta.persistence.Entity;
