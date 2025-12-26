@@ -57,4 +57,9 @@ public class JwtTokenProvider {
                 .parseClaimsJws(token)
                 .getBody();
     }
+    public JwtTokenProvider(String secret, long expirationMs) {
+    this.secretKey = secret;
+    this.expirationMs = expirationMs;
+}
+
 }

@@ -102,14 +102,13 @@ import com.example.demo.repository.BudgetSummaryRepository;
 import com.example.demo.service.BudgetSummaryService;
 
 @Service
-public class BudgetSummaryImpl implements BudgetSummaryService {
+public class BudgetSummaryServiceImpl implements BudgetSummaryService {
 
     private final BudgetSummaryRepository summaryRepo;
     private final BudgetPlanRepository planRepo;
 
-    // ✅ constructor name MUST match class name
-    public BudgetSummaryImpl(BudgetSummaryRepository summaryRepo,
-                             BudgetPlanRepository planRepo) {
+    public BudgetSummaryServiceImpl(BudgetSummaryRepository summaryRepo,
+                                    BudgetPlanRepository planRepo) {
         this.summaryRepo = summaryRepo;
         this.planRepo = planRepo;
     }
@@ -117,19 +116,18 @@ public class BudgetSummaryImpl implements BudgetSummaryService {
     @Override
     public BudgetSummary generateSummary(Long budgetPlanId) {
         BudgetPlan plan = planRepo.findById(budgetPlanId)
-                .orElseThrow(() -> new RuntimeException("BudgetPlan not found"));
+                .orElseThrow(() -> new RuntimeException("Plan not found"));
 
         BudgetSummary summary = new BudgetSummary();
         summary.setBudgetPlan(plan);
-        summary.setStatus(BudgetSummary.STATUS_UNDER_LIMIT);
-
+        summary.setStatus("UNDER_LIMIT");
         return summaryRepo.save(summary);
     }
 
     @Override
     public BudgetSummary getSummary(Long budgetPlanId) {
         BudgetPlan plan = planRepo.findById(budgetPlanId)
-                .orElseThrow(() -> new RuntimeException("BudgetPlan not found"));
+                .orElseThrow(() -> new RuntimeException("Plan not found"));
 
         return summaryRepo.findByBudgetPlan(plan)
                 .orElseThrow(() -> new RuntimeException("Summary not found"));

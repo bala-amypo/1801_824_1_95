@@ -53,14 +53,13 @@ import com.example.demo.repository.UserRepository;
 import com.example.demo.service.BudgetPlanService;
 
 @Service
-public class BudgetPlanImpl implements BudgetPlanService {
+public class BudgetPlanServiceImpl implements BudgetPlanService {
 
     private final BudgetPlanRepository planRepo;
     private final UserRepository userRepo;
 
-    // ✅ constructor name MUST match class name
-    public BudgetPlanImpl(BudgetPlanRepository planRepo,
-                          UserRepository userRepo) {
+    public BudgetPlanServiceImpl(BudgetPlanRepository planRepo,
+                                 UserRepository userRepo) {
         this.planRepo = planRepo;
         this.userRepo = userRepo;
     }
@@ -70,7 +69,6 @@ public class BudgetPlanImpl implements BudgetPlanService {
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         plan.setUser(user);
-        plan.validate();
         return planRepo.save(plan);
     }
 
@@ -79,7 +77,6 @@ public class BudgetPlanImpl implements BudgetPlanService {
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         return planRepo.findByUserAndMonthAndYear(user, month, year)
-                .orElseThrow(() -> new RuntimeException("BudgetPlan not found"));
+                .orElseThrow(() -> new RuntimeException("Budget plan not found"));
     }
 }
-
