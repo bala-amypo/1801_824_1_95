@@ -10,13 +10,12 @@
 package com.example.demo.service;
 
 import com.example.demo.model.TransactionLog;
-
 import java.util.List;
 
 public interface TransactionService {
 
     TransactionLog addTransaction(Long userId, TransactionLog log);
 
-    // 🔥 EXACT NAME EXPECTED BY TESTS
-    List<TransactionLog> getTransactions(Long userId);
+    // 🔥 THIS METHOD NAME MUST EXIST
+    List<TransactionLog> getUserTransactions(Long userId);
 }

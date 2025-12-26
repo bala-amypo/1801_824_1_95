@@ -29,7 +29,6 @@ import com.example.demo.service.TransactionService;
 
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -38,7 +37,6 @@ public class TransactionServiceImpl implements TransactionService {
     private final TransactionLogRepository repo;
     private final UserRepository userRepo;
 
-    // ✅ REQUIRED constructor
     public TransactionServiceImpl(TransactionLogRepository repo,
                                   UserRepository userRepo) {
         this.repo = repo;
@@ -47,31 +45,20 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public TransactionLog addTransaction(Long userId, TransactionLog log) {
-
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        if (log.getAmount() <= 0) {
-            throw new RuntimeException("Amount must be positive");
-        }
-
-        if (log.getTransactionDate() != null &&
-            log.getTransactionDate().isAfter(LocalDate.now())) {
-            throw new RuntimeException("Date cannot be in future");
-        }
-
         log.setUser(user);
+        log.validate();   // test expects validate()
 
         return repo.save(log);
     }
 
     @Override
-    public List<TransactionLog> getTransactions(Long userId) {
-
+    public List<TransactionLog> getUserTransactions(Long userId) {
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         return repo.findByUser(user);
     }
 }
-
