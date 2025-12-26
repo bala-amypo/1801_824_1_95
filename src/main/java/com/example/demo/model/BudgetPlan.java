@@ -38,6 +38,9 @@ public class BudgetPlan {
     public int getYear() { return year; }
     public double getIncomeTarget() { return incomeTarget; }
     public double getExpenseLimit() { return expenseLimit; }
+   public double getTotalAmount() {
+    return incomeTarget - expenseLimit;
+}
 
     // ----- Setters -----
     public void setId(Long id) { this.id = id; }
