@@ -32,11 +32,12 @@ public class BudgetSummaryServiceImpl implements BudgetSummaryService {
         double income = plan.getIncomeTarget();
         double expense = plan.getExpenseLimit();
 
-        String status = expense <= plan.getExpenseLimit()
+        String status = expense <= income
                 ? BudgetSummary.STATUS_UNDER_LIMIT
                 : BudgetSummary.STATUS_OVER_LIMIT;
 
         BudgetSummary summary = new BudgetSummary(
+                null,
                 plan,
                 income,
                 expense,
@@ -53,6 +54,7 @@ public class BudgetSummaryServiceImpl implements BudgetSummaryService {
         BudgetPlan plan = planRepo.findById(planId)
                 .orElseThrow(() -> new BadRequestException("Budget plan not found"));
 
-        return summaryRepo.findByBudgetPlan(plan).orElse(null);
+        return summaryRepo.findByBudgetPlan(plan)
+                .orElse(null);
     }
 }

@@ -23,9 +23,10 @@ public class BudgetSummary {
 
     public BudgetSummary() {}
 
-    public BudgetSummary(BudgetPlan plan, double income,
-                         double expense, String status,
-                         LocalDateTime time) {
+    // ✅ REQUIRED BY TESTS (WITH id)
+    public BudgetSummary(Long id, BudgetPlan plan, double income,
+                         double expense, String status, LocalDateTime time) {
+        this.id = id;
         this.budgetPlan = plan;
         this.totalIncome = income;
         this.totalExpense = expense;
@@ -33,11 +34,24 @@ public class BudgetSummary {
         this.generatedAt = time;
     }
 
+    // ✅ REQUIRED getters/setters
     public Long getId() { return id; }
-    public String getStatus() { return status; }
-    public LocalDateTime getGeneratedAt() { return generatedAt; }
+    public void setId(Long id) { this.id = id; }
+
     public BudgetPlan getBudgetPlan() { return budgetPlan; }
+    public void setBudgetPlan(BudgetPlan budgetPlan) {
+        this.budgetPlan = budgetPlan;
+    }
+
+    public double getTotalIncome() { return totalIncome; }
+    public double getTotalExpense() { return totalExpense; }
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+
+    public LocalDateTime getGeneratedAt() { return generatedAt; }
 }
+
 
 
 // package com.example.demo.model;
