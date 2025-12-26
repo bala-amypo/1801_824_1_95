@@ -24,15 +24,14 @@
 //     }
     
 // }
-
 package com.example.demo.controller;
 
-import org.springframework.web.bind.annotation.*;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/User")
 public class UserController {
 
     private final UserService service;
@@ -41,7 +40,11 @@ public class UserController {
         this.service = service;
     }
 
-    // GET /user/{email}
+    @PostMapping("/regiter")
+    public User register(@RequestBody User user) {
+        return service.register(user);
+    }
+
     @GetMapping("/{email}")
     public User getByEmail(@PathVariable String email) {
         return service.getByEmail(email);

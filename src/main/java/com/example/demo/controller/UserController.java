@@ -25,31 +25,30 @@
 //     }
     
 // }
+package com.example.demo.controller;
 
-package com.example.demo.service.impl;
-
-import org.springframework.stereotype.Service;
 import com.example.demo.model.User;
-import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
+import org.springframework.web.bind.annotation.*;
 
-@Service
-public class UserServiceImpl implements UserService {
+@RestController
+@RequestMapping("/User")
+public class UserController {
 
-    private final UserRepository repo;
+    private final UserService service;
 
-    public UserServiceImpl(UserRepository repo) {
-        this.repo = repo;
+    public UserController(UserService service) {
+        this.service = service;
     }
 
-    @Override
-    public User register(User user) {
-        return repo.save(user);
+    @PostMapping("/regiter")
+    public User register(@RequestBody User user) {
+        return service.register(user);
     }
 
-    @Override
-    public User getByEmail(String email) {
-        return repo.findByEmail(email).orElseThrow();
+    @GetMapping("/{email}")
+    public User getByEmail(@PathVariable String email) {
+        return service.getByEmail(email);
     }
 }
 
