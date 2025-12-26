@@ -9,10 +9,11 @@
 
 package com.example.demo.service;
 
-import com.example.demo.model.Category;
-import java.util.List;
+import com.example.demo.model.User;
 
-public interface CategoryService {
-    Category addCategory(Category category);
-    List<Category> getAllCategories();
+public interface UserService {
+
+    User register(User user);
+
+    User getByEmail(String email);   // 🔥 REQUIRED by tests & controller
 }

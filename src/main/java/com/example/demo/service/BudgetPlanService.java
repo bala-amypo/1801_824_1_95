@@ -9,8 +9,10 @@
 package com.example.demo.service;
 
 import com.example.demo.model.BudgetPlan;
-import com.example.demo.model.User;
 
 public interface BudgetPlanService {
-    BudgetPlan create(User user, int month, int year, double income);
+
+    BudgetPlan createBudgetPlan(Long userId, BudgetPlan plan);
+
+    BudgetPlan getBudgetPlan(Long userId, Integer month, Integer year);
 }

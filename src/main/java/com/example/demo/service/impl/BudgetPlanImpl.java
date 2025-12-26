@@ -44,22 +44,35 @@
 // }
 package com.example.demo.service.impl;
 
+import org.springframework.stereotype.Service;
 import com.example.demo.model.BudgetPlan;
 import com.example.demo.model.User;
 import com.example.demo.repository.BudgetPlanRepository;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.service.BudgetPlanService;
-import org.springframework.stereotype.Service;
 
 @Service
 public class BudgetPlanImpl implements BudgetPlanService {
 
-    private final BudgetPlanRepository repo;
+    private final BudgetPlanRepository budgetRepo;
+    private final UserRepository userRepo;
 
-    public BudgetPlanImpl(BudgetPlanRepository repo) {
-        this.repo = repo;
+    public BudgetPlanImpl(BudgetPlanRepository budgetRepo, UserRepository userRepo) {
+        this.budgetRepo = budgetRepo;
+        this.userRepo = userRepo;
     }
 
-    public BudgetPlan create(User user, int month, int year, double income) {
-        return repo.save(new BudgetPlan(user, month, year, income));
+    @Override
+    public BudgetPlan createBudgetPlan(Long userId, BudgetPlan plan) {
+        User user = userRepo.findById(userId).orElseThrow();
+        plan.setUser(user);
+        return budgetRepo.save(plan);
+    }
+
+    @Override
+    public BudgetPlan getBudgetPlan(Long userId, Integer month, Integer year) {
+        User user = userRepo.findById(userId).orElseThrow();
+        return budgetRepo.findByUserAndMonthAndYear(user, month, year)
+                .orElseThrow();
     }
 }
