@@ -23,10 +23,22 @@ public class BudgetSummary {
 
     public BudgetSummary() {}
 
-    // ✅ REQUIRED BY TESTS (WITH id)
-    public BudgetSummary(Long id, BudgetPlan plan, double income,
-                         double expense, String status, LocalDateTime time) {
+    // ✅ REQUIRED by tests
+    public BudgetSummary(Long id, BudgetPlan plan,
+                         double income, double expense,
+                         String status, LocalDateTime time) {
         this.id = id;
+        this.budgetPlan = plan;
+        this.totalIncome = income;
+        this.totalExpense = expense;
+        this.status = status;
+        this.generatedAt = time;
+    }
+
+    // ✅ REQUIRED by service
+    public BudgetSummary(BudgetPlan plan,
+                         double income, double expense,
+                         String status, LocalDateTime time) {
         this.budgetPlan = plan;
         this.totalIncome = income;
         this.totalExpense = expense;
@@ -39,9 +51,7 @@ public class BudgetSummary {
     public void setId(Long id) { this.id = id; }
 
     public BudgetPlan getBudgetPlan() { return budgetPlan; }
-    public void setBudgetPlan(BudgetPlan budgetPlan) {
-        this.budgetPlan = budgetPlan;
-    }
+    public void setBudgetPlan(BudgetPlan plan) { this.budgetPlan = plan; }
 
     public double getTotalIncome() { return totalIncome; }
     public double getTotalExpense() { return totalExpense; }
@@ -50,6 +60,12 @@ public class BudgetSummary {
     public void setStatus(String status) { this.status = status; }
 
     public LocalDateTime getGeneratedAt() { return generatedAt; }
+
+    // ✅ REQUIRED by test
+    @PrePersist
+    public void onCreate() {
+        this.generatedAt = LocalDateTime.now();
+    }
 }
 
 
