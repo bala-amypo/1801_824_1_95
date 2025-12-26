@@ -1,8 +1,3 @@
-package com.example.demo.model;
-
-import jakarta.persistence.*;
-import com.example.demo.exception.BadRequestException;
-
 @Entity
 public class BudgetPlan {
 
@@ -10,43 +5,40 @@ public class BudgetPlan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Integer month;
+    private Integer year;
+
+    private double totalAmount;   // ✅ MUST EXIST
+
     @ManyToOne
     private User user;
 
-    private Integer month;
-    private Integer year;
-    private Double incomeTarget;
-    private Double expenseLimit;
+    // ===== GETTERS & SETTERS =====
 
-    public BudgetPlan() {}
+    public double getTotalAmount() {   // ✅ REQUIRED
+        return totalAmount;
+    }
 
-    public BudgetPlan(Long id, User user, Integer month,
-                      Integer year, Double incomeTarget, Double expenseLimit) {
-        this.id = id;
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public Integer getMonth() {
+        return month;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
         this.user = user;
-        this.month = month;
-        this.year = year;
-        this.incomeTarget = incomeTarget;
-        this.expenseLimit = expenseLimit;
     }
-
-    public void validate() {
-        if (month < 1 || month > 12)
-            throw new BadRequestException("Invalid month");
-        if (incomeTarget < 0 || expenseLimit < 0)
-            throw new BadRequestException("Negative values not allowed");
-    }
-
-    public void setUser(User user) { this.user = user; }
-    public Long getId() { return id; }
-    public Integer getMonth() { return month; }
-    public Integer getYear() { return year; }
-    public User getUser() { return user; }
-    public void setId(Long id) {
-    this.id = id;
 }
-}
-
 
 // package com.example.demo.model;
 // import jakarta.persistence.Entity;

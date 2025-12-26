@@ -1,8 +1,3 @@
-package com.example.demo.model;
-
-import jakarta.persistence.*;
-import java.time.LocalDateTime;
-
 @Entity
 public class BudgetSummary {
 
@@ -16,34 +11,27 @@ public class BudgetSummary {
     @OneToOne
     private BudgetPlan budgetPlan;
 
-    private Double totalIncome;
-    private Double totalExpense;
+    private double totalExpense;   // ✅ MUST EXIST
+
     private String status;
-    private LocalDateTime generatedAt;
 
-    public BudgetSummary() {}
+    // ===== GETTERS & SETTERS =====
 
-    public BudgetSummary(Long id, BudgetPlan plan,
-                         Double income, Double expense,
-                         String status, LocalDateTime generatedAt) {
-        this.id = id;
-        this.budgetPlan = plan;
-        this.totalIncome = income;
-        this.totalExpense = expense;
+    public double getTotalExpense() {
+        return totalExpense;
+    }
+
+    public void setTotalExpense(double totalExpense) {   // ✅ REQUIRED
+        this.totalExpense = totalExpense;
+    }
+
+    public void setBudgetPlan(BudgetPlan budgetPlan) {
+        this.budgetPlan = budgetPlan;
+    }
+
+    public void setStatus(String status) {
         this.status = status;
-        this.generatedAt = generatedAt;
     }
-
-    @PrePersist
-    public void onCreate() {
-        generatedAt = LocalDateTime.now();
-    }
-
-    public void setBudgetPlan(BudgetPlan plan) { this.budgetPlan = plan; }
-    public BudgetPlan getBudgetPlan() { return budgetPlan; }
-    public void setStatus(String status) { this.status = status; }
-    public String getStatus() { return status; }
-    public LocalDateTime getGeneratedAt() { return generatedAt; }
 }
 
 // package com.example.demo.model;
