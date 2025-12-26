@@ -1,33 +1,16 @@
- package com.example.demo.security;
+package com.example.demo.config;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
-import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.security.Key;
-import java.util.Date;
+@Configuration
+public class SecurityConfig {
 
-@Component
-public class JwtTokenProvider {
-
-    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-
-    // REQUIRED by tests
-    public String generateToken(
-            Authentication authentication,
-            Long userId,
-            String email,
-            String role
-    ) {
-        return Jwts.builder()
-                .setSubject(email)
-                .claim("userId", userId)
-                .claim("role", role)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 1 day
-                .signWith(key)
-                .compact();
+    // REQUIRED by UserServiceImpl constructor
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

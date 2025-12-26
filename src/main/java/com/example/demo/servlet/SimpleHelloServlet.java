@@ -1,17 +1,18 @@
 package com.example.demo.servlet;
 
-import jakarta.servlet.http.*;
-import jakarta.servlet.*;
-import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 
-@WebServlet("/hello-servlet")
 public class SimpleHelloServlet extends HttpServlet {
 
+    // MUST be public (tests call it directly)
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
-        res.setContentType("text/plain");
-        res.getWriter().write("Hello from Simple Servlet");
+    public void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
+
+        resp.getWriter().write("Hello");
     }
 }
