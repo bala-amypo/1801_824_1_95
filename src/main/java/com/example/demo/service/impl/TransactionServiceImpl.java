@@ -23,7 +23,6 @@ package com.example.demo.service.impl;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.exception.BadRequestException;
 import com.example.demo.model.TransactionLog;
 import com.example.demo.repository.TransactionLogRepository;
 import com.example.demo.service.TransactionService;
@@ -40,10 +39,9 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public TransactionLog addTransaction(TransactionLog log) {
 
-        // 🔥 REQUIRED BY TESTS
+        // ✅ REQUIRED by tests
         log.validate();
 
         return logRepo.save(log);
     }
 }
-
