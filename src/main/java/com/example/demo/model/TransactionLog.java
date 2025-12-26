@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+
 import com.example.demo.exception.BadRequestException;
 
 @Entity
@@ -22,25 +23,50 @@ public class TransactionLog {
 
     public TransactionLog() {}
 
+    // ---------- REQUIRED GETTERS ----------
     public Long getId() { return id; }
     public User getUser() { return user; }
     public Category getCategory() { return category; }
     public double getAmount() { return amount; }
     public LocalDate getTransactionDate() { return transactionDate; }
 
+    // ---------- REQUIRED SETTERS ----------
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public void setTransactionDate(LocalDate transactionDate) {
+        this.transactionDate = transactionDate;
+    }
+
+    // ---------- REQUIRED BY TESTS ----------
     public void validate() {
+
         if (amount <= 0) {
             throw new BadRequestException("Transaction amount must be positive");
         }
-        if (transactionDate.isAfter(LocalDate.now())) {
+
+        if (transactionDate == null || transactionDate.isAfter(LocalDate.now())) {
             throw new BadRequestException("Future date not allowed");
         }
-        if (user == null || category == null) {
-            throw new BadRequestException("User and Category required");
+
+        if (user == null) {
+            throw new BadRequestException("User is required");
+        }
+
+        if (category == null) {
+            throw new BadRequestException("Category is required");
         }
     }
 }
-
 
 
 
