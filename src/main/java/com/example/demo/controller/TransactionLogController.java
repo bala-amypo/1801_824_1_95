@@ -35,10 +35,11 @@
 // }
 package com.example.demo.controller;
 
-import java.util.List;
-import org.springframework.web.bind.annotation.*;
 import com.example.demo.model.TransactionLog;
 import com.example.demo.service.TransactionService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/transactions")
@@ -50,18 +51,16 @@ public class TransactionLogController {
         this.service = service;
     }
 
-    // POST /transactions/{userId}
-    @PostMapping("/{userId}")
+    @PostMapping("/{user}")
     public TransactionLog addTransaction(
-            @PathVariable Long userId,
-            @RequestBody TransactionLog log) {
-
-        return service.addTransaction(userId, log);
+            @PathVariable Long user,
+            @RequestBody TransactionLog log
+    ) {
+        return service.addTransaction(user, log);
     }
 
-    // GET /transactions/{userId}
-    @GetMapping("/{userId}")
-    public List<TransactionLog> getTransactions(@PathVariable Long userId) {
-        return service.getTransactions(userId);
+    @GetMapping("/{user}")
+    public List<TransactionLog> getTransactions(@PathVariable Long user) {
+        return service.getTransactions(user);
     }
 }

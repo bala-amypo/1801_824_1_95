@@ -36,9 +36,9 @@
 // }
 package com.example.demo.controller;
 
-import org.springframework.web.bind.annotation.*;
 import com.example.demo.model.BudgetPlan;
 import com.example.demo.service.BudgetPlanService;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/budgetplan")
@@ -50,22 +50,20 @@ public class BudgetPlanController {
         this.service = service;
     }
 
-    // POST /budgetplan/{userId}
     @PostMapping("/{userId}")
     public BudgetPlan createBudgetPlan(
             @PathVariable Long userId,
-            @RequestBody BudgetPlan plan) {
-
+            @RequestBody BudgetPlan plan
+    ) {
         return service.createBudgetPlan(userId, plan);
     }
 
-    // GET /budgetplan/{userId}/{month}/{year}
     @GetMapping("/{userId}/{month}/{year}")
     public BudgetPlan getBudgetPlan(
             @PathVariable Long userId,
             @PathVariable Integer month,
-            @PathVariable Integer year) {
-
+            @PathVariable Integer year
+    ) {
         return service.getBudgetPlan(userId, month, year);
     }
 }
