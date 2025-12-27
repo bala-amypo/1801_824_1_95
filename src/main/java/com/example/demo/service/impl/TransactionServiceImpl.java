@@ -74,19 +74,22 @@ public class TransactionServiceImpl implements TransactionService {
 @Override
 public TransactionLog addTransaction(Long userId, TransactionLog log) {
 
-    // 🔥 THIS LINE IS THE ENTIRE FIX FOR t26
-    if (log.getAmount() <= 0) {
-        throw new BadRequestException("Transaction amount must be positive");
-    }
-
     User user = userRepo.findById(userId)
             .orElseThrow(() ->
                     new BadRequestException("User not found"));
 
     log.setUser(user);
 
+    // 🔥 REQUIRED FOR t26
+    try {
+        log.validate();
+    } catch (IllegalArgumentException e) {
+        throw new BadRequestException(e.getMessage());
+    }
+
     return logRepo.save(log);
 }
+
 
     @Override
     public List<TransactionLog> getUserTransactions(Long userId) {
