@@ -222,14 +222,23 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JwtTokenProvider {
 
-    // 🔑 MUST be constant & non-empty
-    private static final String SECRET_KEY = "secret-key-for-tests";
+    private String secretKey;
+    private long expirationMs;
 
-    // ⏱️ Token validity (1 hour)
-    private static final long EXPIRATION_MS = 60 * 60 * 1000;
+    // ✅ REQUIRED BY SPRING
+    public JwtTokenProvider() {
+        this.secretKey = "default-test-secret";
+        this.expirationMs = 3600000; // 1 hour
+    }
+
+    // ✅ REQUIRED BY TESTS
+    public JwtTokenProvider(String secretKey, long expirationMs) {
+        this.secretKey = secretKey;
+        this.expirationMs = expirationMs;
+    }
 
     // --------------------------------------------------
-    // 1️⃣ GENERATE TOKEN
+    // GENERATE TOKEN
     // --------------------------------------------------
     public String generateToken(Authentication authentication,
                                 Long userId,
@@ -237,32 +246,31 @@ public class JwtTokenProvider {
                                 String role) {
 
         Date now = new Date();
-        Date expiry = new Date(now.getTime() + EXPIRATION_MS);
+        Date expiry = new Date(now.getTime() + expirationMs);
 
         return Jwts.builder()
-                // ✅ SUBJECT MUST BE USER ID (STRING)
+                // ✅ subject = userId
                 .setSubject(String.valueOf(userId))
 
-                // ✅ REQUIRED CLAIMS
+                // ✅ claims
                 .addClaims(Map.of(
                         "email", email,
-                        "role", role   // ⚠️ NO "ROLE_" PREFIX
+                        "role", role // NO ROLE_ prefix
                 ))
 
                 .setIssuedAt(now)
                 .setExpiration(expiry)
-
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
 
     // --------------------------------------------------
-    // 2️⃣ VALIDATE TOKEN
+    // VALIDATE TOKEN
     // --------------------------------------------------
     public boolean validateToken(String token) {
         try {
             Jwts.parser()
-                .setSigningKey(SECRET_KEY)
+                .setSigningKey(secretKey)
                 .parseClaimsJws(token);
             return true;
         } catch (Exception e) {
@@ -271,11 +279,11 @@ public class JwtTokenProvider {
     }
 
     // --------------------------------------------------
-    // 3️⃣ GET USER ID (FROM SUBJECT)
+    // GET USER ID
     // --------------------------------------------------
     public Long getUserIdFromToken(String token) {
         Claims claims = Jwts.parser()
-                .setSigningKey(SECRET_KEY)
+                .setSigningKey(secretKey)
                 .parseClaimsJws(token)
                 .getBody();
 
@@ -283,11 +291,11 @@ public class JwtTokenProvider {
     }
 
     // --------------------------------------------------
-    // 4️⃣ GET EMAIL
+    // GET EMAIL
     // --------------------------------------------------
     public String getEmailFromToken(String token) {
         Claims claims = Jwts.parser()
-                .setSigningKey(SECRET_KEY)
+                .setSigningKey(secretKey)
                 .parseClaimsJws(token)
                 .getBody();
 
@@ -295,11 +303,11 @@ public class JwtTokenProvider {
     }
 
     // --------------------------------------------------
-    // 5️⃣ GET ROLE (NO PREFIX CHANGE)
+    // GET ROLE
     // --------------------------------------------------
     public String getRoleFromToken(String token) {
         Claims claims = Jwts.parser()
-                .setSigningKey(SECRET_KEY)
+                .setSigningKey(secretKey)
                 .parseClaimsJws(token)
                 .getBody();
 
