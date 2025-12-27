@@ -83,24 +83,24 @@ public BudgetPlan createBudgetPlan(Long userId, BudgetPlan plan) {
     return planRepo.save(plan);
 }
 
-    @Override
-    public BudgetPlan createBudgetPlan(Long userId, BudgetPlan plan) {
+    // @Override
+    // public BudgetPlan createBudgetPlan(Long userId, BudgetPlan plan) {
 
-        User user = userRepo.findById(userId)
-                .orElseThrow(() ->
-                        new BadRequestException("User not found"));
+    //     User user = userRepo.findById(userId)
+    //             .orElseThrow(() ->
+    //                     new BadRequestException("User not found"));
 
-        // ✅ test expects validation
-        plan.validate();
+    //     // ✅ test expects validation
+    //     plan.validate();
 
-        if (planRepo.existsByUserAndMonthAndYear(
-                user, plan.getMonth(), plan.getYear())) {
-            throw new BadRequestException("Budget plan already exists");
-        }
+    //     if (planRepo.existsByUserAndMonthAndYear(
+    //             user, plan.getMonth(), plan.getYear())) {
+    //         throw new BadRequestException("Budget plan already exists");
+    //     }
 
-        plan.setUser(user);
-        return planRepo.save(plan);
-    }
+    //     plan.setUser(user);
+    //     return planRepo.save(plan);
+    // }
 
     @Override
     public BudgetPlan getBudgetPlan(Long userId, Integer month, Integer year) {
