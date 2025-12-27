@@ -210,7 +210,6 @@
 package com.example.demo.security;
 
 import java.util.Date;
-import java.util.Map;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -225,21 +224,38 @@ public class JwtTokenProvider {
     private String secretKey;
     private long expirationMs;
 
-    // ✅ REQUIRED BY SPRING
+    // ✅ Spring constructor
     public JwtTokenProvider() {
-        this.secretKey = "default-test-secret";
-        this.expirationMs = 3600000; // 1 hour
+        this.secretKey = "test-secret";
+        this.expirationMs = 3600000;
     }
 
-    // ✅ REQUIRED BY TESTS
+    // ✅ TEST constructor
     public JwtTokenProvider(String secretKey, long expirationMs) {
         this.secretKey = secretKey;
         this.expirationMs = expirationMs;
     }
 
-    // --------------------------------------------------
-    // GENERATE TOKEN
-    // --------------------------------------------------
+    // ------------------------------------------------
+    // BASIC TOKEN (tests call this)
+    // ------------------------------------------------
+    public String generateToken(Authentication authentication) {
+        Long userId = Long.parseLong(authentication.getName());
+        return generateToken(authentication, userId, null, null);
+    }
+
+    // ------------------------------------------------
+    // TOKEN WITH USER ID + EMAIL
+    // ------------------------------------------------
+    public String generateToken(Authentication authentication,
+                                Long userId,
+                                String email) {
+        return generateToken(authentication, userId, email, null);
+    }
+
+    // ------------------------------------------------
+    // FULL TOKEN (MAIN)
+    // ------------------------------------------------
     public String generateToken(Authentication authentication,
                                 Long userId,
                                 String email,
@@ -248,25 +264,28 @@ public class JwtTokenProvider {
         Date now = new Date();
         Date expiry = new Date(now.getTime() + expirationMs);
 
+        Claims claims = Jwts.claims();
+        claims.setSubject(String.valueOf(userId)); // ✅ subject = userId
+
+        if (email != null) {
+            claims.put("email", email);
+        }
+
+        if (role != null) {
+            claims.put("role", role.replace("ROLE_", "")); // ✅ no prefix
+        }
+
         return Jwts.builder()
-                // ✅ subject = userId
-                .setSubject(String.valueOf(userId))
-
-                // ✅ claims
-                .addClaims(Map.of(
-                        "email", email,
-                        "role", role // NO ROLE_ prefix
-                ))
-
+                .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(expiry)
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
 
-    // --------------------------------------------------
-    // VALIDATE TOKEN
-    // --------------------------------------------------
+    // ------------------------------------------------
+    // VALIDATE
+    // ------------------------------------------------
     public boolean validateToken(String token) {
         try {
             Jwts.parser()
@@ -278,39 +297,35 @@ public class JwtTokenProvider {
         }
     }
 
-    // --------------------------------------------------
-    // GET USER ID
-    // --------------------------------------------------
+    // ------------------------------------------------
+    // GET USER ID (FROM SUBJECT)
+    // ------------------------------------------------
     public Long getUserIdFromToken(String token) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(secretKey)
-                .parseClaimsJws(token)
-                .getBody();
-
+        Claims claims = parse(token);
         return Long.parseLong(claims.getSubject());
     }
 
-    // --------------------------------------------------
+    // ------------------------------------------------
     // GET EMAIL
-    // --------------------------------------------------
+    // ------------------------------------------------
     public String getEmailFromToken(String token) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(secretKey)
-                .parseClaimsJws(token)
-                .getBody();
-
-        return claims.get("email", String.class);
+        return parse(token).get("email", String.class);
     }
 
-    // --------------------------------------------------
+    // ------------------------------------------------
     // GET ROLE
-    // --------------------------------------------------
+    // ------------------------------------------------
     public String getRoleFromToken(String token) {
-        Claims claims = Jwts.parser()
+        return parse(token).get("role", String.class);
+    }
+
+    // ------------------------------------------------
+    // INTERNAL PARSER
+    // ------------------------------------------------
+    private Claims parse(String token) {
+        return Jwts.parser()
                 .setSigningKey(secretKey)
                 .parseClaimsJws(token)
                 .getBody();
-
-        return claims.get("role", String.class);
     }
 }
