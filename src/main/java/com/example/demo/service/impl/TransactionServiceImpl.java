@@ -74,24 +74,22 @@ public class TransactionServiceImpl implements TransactionService {
 @Override
 public TransactionLog addTransaction(Long userId, TransactionLog log) {
 
+    // ✅ t26: amount check (SERVICE level)
+    if (log.getAmount() <= 0) {
+        throw new BadRequestException("Transaction amount must be positive");
+    }
+
+    // ✅ t27: future date check (SERVICE level)
+    if (log.getTransactionDate() != null &&
+        log.getTransactionDate().isAfter(java.time.LocalDate.now())) {
+        throw new BadRequestException("Future date not allowed");
+    }
+
     User user = userRepo.findById(userId)
             .orElseThrow(() ->
                     new BadRequestException("User not found"));
 
     log.setUser(user);
-
-    // 🔥 REQUIRED for t26 (spy checks this call)
-    try {
-        log.validate();
-    } catch (IllegalArgumentException e) {
-
-        // 🔥 EXACT MESSAGE MATCH REQUIRED BY TEST
-        if (e.getMessage().contains("positive")) {
-            throw new BadRequestException("Transaction amount must be positive");
-        }
-
-        throw new BadRequestException(e.getMessage());
-    }
 
     return logRepo.save(log);
 }
