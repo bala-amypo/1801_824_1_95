@@ -116,16 +116,21 @@ public class TransactionLog {
     public void setAmount(double amount) { this.amount = amount; }
     public void setTransactionDate(LocalDate date) { this.transactionDate = date; }
 
-    // ✅ FINAL validate() — matches ALL tests
     public void validate() {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("Transaction amount must be positive");
-        }
-        if (transactionDate != null && transactionDate.isAfter(LocalDate.now())) {
-            throw new IllegalArgumentException("Future date not allowed");
-        }
-        // ❌ DO NOT validate user/category here (service layer responsibility)
+
+    if (amount <= 0) {
+        throw new IllegalArgumentException("Transaction amount must be positive");
     }
+
+    if (transactionDate == null) {
+        throw new IllegalArgumentException("Transaction date required");
+    }
+
+    if (transactionDate.isAfter(LocalDate.now())) {
+        throw new IllegalArgumentException("Future date not allowed");
+    }
+}
+
 }
 
 
