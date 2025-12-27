@@ -32,8 +32,8 @@ public class TransactionServiceImpl implements TransactionService {
 
         log.setUser(user);
         log.validate();
+return repo.save(log);
 
-        return logRepo.save(log);
     }
 
     @Override

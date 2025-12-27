@@ -74,10 +74,13 @@ public BudgetPlan createBudgetPlan(Long userId, BudgetPlan plan) {
 
     plan.validate(); // REQUIRED by tests
 
-    if (planRepo.existsByUserAndMonthAndYear(
-            user, plan.getMonth(), plan.getYear())) {
-        throw new BadRequestException("Budget plan already exists");
-    }
+  planRepo.findByUserAndMonthAndYear(user, plan.getMonth(), plan.getYear())
+        .ifPresent(existing -> {
+            if (plan.getId() == null || !existing.getId().equals(plan.getId())) {
+                throw new BadRequestException("Budget plan already exists");
+            }
+        });
+
 
     plan.setUser(user);
     return planRepo.save(plan);
