@@ -1,5 +1,5 @@
 package com.example.demo.model;
-
+import com.example.demo.exception.BadRequestException;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
@@ -51,18 +51,22 @@ public class TransactionLog {
         this.transactionDate = transactionDate;
     }
 
-    // ✅ REQUIRED validation
-    public void validate() {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("Transaction amount must be positive");
-        }
-        if (transactionDate.isAfter(LocalDate.now())) {
-            throw new IllegalArgumentException("Future date not allowed");
-        }
-        if (user == null || category == null) {
-            throw new IllegalArgumentException("User and Category required");
-        }
+ 
+public void validate() {
+
+    if (amount <= 0) {
+        throw new BadRequestException("Transaction amount must be positive");
     }
+
+    if (transactionDate.isAfter(LocalDate.now())) {
+        throw new BadRequestException("Future date not allowed");
+    }
+
+    if (user == null || category == null) {
+        throw new BadRequestException("User and Category required");
+    }
+}
+
 }
 
 
