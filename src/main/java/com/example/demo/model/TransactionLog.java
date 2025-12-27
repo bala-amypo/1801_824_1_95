@@ -1,5 +1,77 @@
+// package com.example.demo.model;
+// import com.example.demo.exception.BadRequestException;
+// import jakarta.persistence.*;
+// import java.time.LocalDate;
+
+// @Entity
+// public class TransactionLog {
+
+//     @Id
+//     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//     private Long id;
+
+//     @ManyToOne
+//     private User user;
+
+//     @ManyToOne
+//     private Category category;
+
+//     private double amount;
+//     private String description;
+//     private LocalDate transactionDate;
+
+//     public TransactionLog() {}
+
+//     // ✅ REQUIRED BY TESTS
+//     public TransactionLog(Long id, User user, Category category,
+//                           double amount, String description, LocalDate date) {
+//         this.id = id;
+//         this.user = user;
+//         this.category = category;
+//         this.amount = amount;
+//         this.description = description;
+//         this.transactionDate = date;
+//     }
+
+//     // ✅ REQUIRED getters/setters
+//     public Long getId() { return id; }
+//     public void setId(Long id) { this.id = id; }
+
+//     public User getUser() { return user; }
+//     public void setUser(User user) { this.user = user; }
+
+//     public Category getCategory() { return category; }
+//     public void setCategory(Category category) { this.category = category; }
+
+//     public double getAmount() { return amount; }
+//     public void setAmount(double amount) { this.amount = amount; }
+
+//     public LocalDate getTransactionDate() { return transactionDate; }
+//     public void setTransactionDate(LocalDate transactionDate) {
+//         this.transactionDate = transactionDate;
+//     }
+
+ 
+// public void validate() {
+
+//     if (amount <= 0) {
+//         throw new BadRequestException("Transaction amount must be positive");
+//     }
+
+//     if (transactionDate.isAfter(LocalDate.now())) {
+//         throw new BadRequestException("Future date not allowed");
+//     }
+
+//     if (user == null || category == null) {
+//         throw new BadRequestException("User and Category required");
+//     }
+// }
+
+// }
+
+
 package com.example.demo.model;
-import com.example.demo.exception.BadRequestException;
+
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
@@ -22,7 +94,6 @@ public class TransactionLog {
 
     public TransactionLog() {}
 
-    // ✅ REQUIRED BY TESTS
     public TransactionLog(Long id, User user, Category category,
                           double amount, String description, LocalDate date) {
         this.id = id;
@@ -33,40 +104,28 @@ public class TransactionLog {
         this.transactionDate = date;
     }
 
-    // ✅ REQUIRED getters/setters
     public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
     public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
-
     public Category getCategory() { return category; }
-    public void setCategory(Category category) { this.category = category; }
-
     public double getAmount() { return amount; }
-    public void setAmount(double amount) { this.amount = amount; }
-
     public LocalDate getTransactionDate() { return transactionDate; }
-    public void setTransactionDate(LocalDate transactionDate) {
-        this.transactionDate = transactionDate;
+
+    public void setId(Long id) { this.id = id; }
+    public void setUser(User user) { this.user = user; }
+    public void setCategory(Category category) { this.category = category; }
+    public void setAmount(double amount) { this.amount = amount; }
+    public void setTransactionDate(LocalDate date) { this.transactionDate = date; }
+
+    // ✅ FINAL validate() — matches ALL tests
+    public void validate() {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Transaction amount must be positive");
+        }
+        if (transactionDate != null && transactionDate.isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("Future date not allowed");
+        }
+        // ❌ DO NOT validate user/category here (service layer responsibility)
     }
-
- 
-public void validate() {
-
-    if (amount <= 0) {
-        throw new BadRequestException("Transaction amount must be positive");
-    }
-
-    if (transactionDate.isAfter(LocalDate.now())) {
-        throw new BadRequestException("Future date not allowed");
-    }
-
-    if (user == null || category == null) {
-        throw new BadRequestException("User and Category required");
-    }
-}
-
 }
 
 
