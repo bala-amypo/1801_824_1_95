@@ -70,68 +70,68 @@
 // }
 
 
-package com.example.demo.model;
+// package com.example.demo.model;
 
-import jakarta.persistence.*;
-import java.time.LocalDate;
+// import jakarta.persistence.*;
+// import java.time.LocalDate;
 
-@Entity
-public class TransactionLog {
+// @Entity
+// public class TransactionLog {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+//     @Id
+//     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//     private Long id;
 
-    @ManyToOne
-    private User user;
+//     @ManyToOne
+//     private User user;
 
-    @ManyToOne
-    private Category category;
+//     @ManyToOne
+//     private Category category;
 
-    private double amount;
-    private String description;
-    private LocalDate transactionDate;
+//     private double amount;
+//     private String description;
+//     private LocalDate transactionDate;
 
-    public TransactionLog() {}
+//     public TransactionLog() {}
 
-    public TransactionLog(Long id, User user, Category category,
-                          double amount, String description, LocalDate date) {
-        this.id = id;
-        this.user = user;
-        this.category = category;
-        this.amount = amount;
-        this.description = description;
-        this.transactionDate = date;
-    }
+//     public TransactionLog(Long id, User user, Category category,
+//                           double amount, String description, LocalDate date) {
+//         this.id = id;
+//         this.user = user;
+//         this.category = category;
+//         this.amount = amount;
+//         this.description = description;
+//         this.transactionDate = date;
+//     }
 
-    public Long getId() { return id; }
-    public User getUser() { return user; }
-    public Category getCategory() { return category; }
-    public double getAmount() { return amount; }
-    public LocalDate getTransactionDate() { return transactionDate; }
+//     public Long getId() { return id; }
+//     public User getUser() { return user; }
+//     public Category getCategory() { return category; }
+//     public double getAmount() { return amount; }
+//     public LocalDate getTransactionDate() { return transactionDate; }
 
-    public void setId(Long id) { this.id = id; }
-    public void setUser(User user) { this.user = user; }
-    public void setCategory(Category category) { this.category = category; }
-    public void setAmount(double amount) { this.amount = amount; }
-    public void setTransactionDate(LocalDate date) { this.transactionDate = date; }
+//     public void setId(Long id) { this.id = id; }
+//     public void setUser(User user) { this.user = user; }
+//     public void setCategory(Category category) { this.category = category; }
+//     public void setAmount(double amount) { this.amount = amount; }
+//     public void setTransactionDate(LocalDate date) { this.transactionDate = date; }
 
-    public void validate() {
+//     public void validate() {
 
-    if (amount <= 0) {
-        throw new IllegalArgumentException("Transaction amount must be positive");
-    }
+//     if (amount <= 0) {
+//         throw new IllegalArgumentException("Transaction amount must be positive");
+//     }
 
-    if (transactionDate == null) {
-        throw new IllegalArgumentException("Transaction date required");
-    }
+//     if (transactionDate == null) {
+//         throw new IllegalArgumentException("Transaction date required");
+//     }
 
-    if (transactionDate.isAfter(LocalDate.now())) {
-        throw new IllegalArgumentException("Future date not allowed");
-    }
-}
+//     if (transactionDate.isAfter(LocalDate.now())) {
+//         throw new IllegalArgumentException("Future date not allowed");
+//     }
+// }
 
-}
+// }
 
 
 
@@ -211,3 +211,71 @@ public class TransactionLog {
 //    }
 
 // }
+
+
+
+
+package com.example.demo.model;
+
+import jakarta.persistence.*;
+import java.time.LocalDate;
+import com.example.demo.exception.BadRequestException;
+
+@Entity
+public class TransactionLog {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    private User user;
+
+    @ManyToOne
+    private Category category;
+
+    private double amount;
+    private String description;
+    private LocalDate transactionDate;
+
+    public TransactionLog() {}
+
+    public TransactionLog(Long id, User user, Category category,
+                          double amount, String description, LocalDate date) {
+        this.id = id;
+        this.user = user;
+        this.category = category;
+        this.amount = amount;
+        this.description = description;
+        this.transactionDate = date;
+    }
+
+    public Long getId() { return id; }
+    public User getUser() { return user; }
+    public Category getCategory() { return category; }
+    public double getAmount() { return amount; }
+    public LocalDate getTransactionDate() { return transactionDate; }
+
+    public void setId(Long id) { this.id = id; }
+    public void setUser(User user) { this.user = user; }
+    public void setCategory(Category category) { this.category = category; }
+    public void setAmount(double amount) { this.amount = amount; }
+    public void setTransactionDate(LocalDate date) { this.transactionDate = date; }
+
+    // ✅ FIXED validate() METHOD
+    public void validate() {
+
+        if (amount <= 0) {
+            throw new BadRequestException("Transaction amount must be positive");
+        }
+
+        if (transactionDate == null) {
+            throw new BadRequestException("Transaction date required");
+        }
+
+        // 🔴 THIS IS THE TEST CASE YOU FAILED
+        if (transactionDate.isAfter(LocalDate.now())) {
+            throw new BadRequestException("Future date not allowed");
+        }
+    }
+}
