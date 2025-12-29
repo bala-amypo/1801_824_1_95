@@ -26,7 +26,7 @@
     
 // }
 
-corect
+//corect
 package com.example.demo.controller;
 
 /* ===== REQUIRED SPRING IMPORTS ===== */
