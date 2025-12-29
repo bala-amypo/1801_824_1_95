@@ -43,37 +43,29 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+  @Bean
+public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    http
+        .csrf(csrf -> csrf.disable())
 
-        http
-            // ❌ disable CSRF (JWT is stateless)
-            .csrf(csrf -> csrf.disable())
+        .authorizeHttpRequests(auth -> auth
+            // ✅ PUBLIC APIs
+            .requestMatchers(
+                "/user/register",
+                "/auth/**",
+                "/swagger-ui/**",
+                "/v3/api-docs/**"
+            ).permitAll()
 
-            // ❌ disable form login popup
-            .formLogin(form -> form.disable())
+            // 🔒 Everything else needs JWT
+            .anyRequest().authenticated()
+        )
 
-            // ❌ disable basic auth popup
-            .httpBasic(basic -> basic.disable())
+        // ❌ Disable login popup
+        .httpBasic(httpBasic -> httpBasic.disable())
+        .formLogin(formLogin -> formLogin.disable());
 
-            // ✅ stateless session (JWT)
-            .sessionManagement(session ->
-                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            )
+    return http.build();
+}
 
-            // ✅ authorization rules
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**").permitAll()
-                .requestMatchers(
-                    "/swagger-ui/**",
-                    "/v3/api-docs/**"
-                ).permitAll()
-                .anyRequest().authenticated()
-            )
-
-            // ✅ JWT filter
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-
-        return http.build();
-    }
 }
