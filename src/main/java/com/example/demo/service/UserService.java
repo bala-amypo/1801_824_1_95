@@ -6,7 +6,7 @@ public interface UserService{
     public User register(User user);
 
     
-     public User findByEmails(String email);
+     public User getByEmail(String email);
     
 }
 // package com.example.demo.service;
