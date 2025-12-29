@@ -25,42 +25,19 @@
 //     }
     
 // }
-// package com.example.demo.controller;
+package com.example.demo.controller;
 
-// /* ===== REQUIRED SPRING IMPORTS ===== */
-// import org.springframework.web.bind.annotation.RestController;
-// import org.springframework.web.bind.annotation.RequestMapping;
-// import org.springframework.web.bind.annotation.PostMapping;
-// import org.springframework.web.bind.annotation.GetMapping;
-// import org.springframework.web.bind.annotation.PathVariable;
-// import org.springframework.web.bind.annotation.RequestBody;
+/* ===== REQUIRED SPRING IMPORTS ===== */
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
-// /* ===== PROJECT IMPORTS ===== */
-// import com.example.demo.model.User;
-// import com.example.demo.service.UserService;
-
-// @RestController
-// @RequestMapping("/user")
-// public class UserController {
-
-//     private final UserService service;
-
-//     public UserController(UserService service) {
-//         this.service = service;
-//     }
-
-//     @PostMapping("/register")
-//     public User register(@RequestBody User user) {
-//         return service.register(user);
-//     }
-
-//     @GetMapping("/{email}")
-//     public User getByEmail(@PathVariable String email) {
-//         return service.getByEmail(email);
-//     }
-// }
-
-
+/* ===== PROJECT IMPORTS ===== */
+import com.example.demo.model.User;
+import com.example.demo.service.UserService;
 
 @RestController
 @RequestMapping("/user")
@@ -72,15 +49,38 @@ public class UserController {
         this.service = service;
     }
 
-    // ✅ REGISTER (NO TOKEN)
     @PostMapping("/register")
     public User register(@RequestBody User user) {
         return service.register(user);
     }
 
-    // ✅ LOGIN (RETURNS TOKEN)
-    @PostMapping("/login")
-    public AuthResponse login(@RequestBody LoginRequest request) {
-        return service.login(request);
+    @GetMapping("/{email}")
+    public User getByEmail(@PathVariable String email) {
+        return service.getByEmail(email);
     }
 }
+
+
+
+// @RestController
+// @RequestMapping("/user")
+// public class UserController {
+
+//     private final UserService service;
+
+//     public UserController(UserService service) {
+//         this.service = service;
+//     }
+
+//     // ✅ REGISTER (NO TOKEN)
+//     @PostMapping("/register")
+//     public User register(@RequestBody User user) {
+//         return service.register(user);
+//     }
+
+//     // ✅ LOGIN (RETURNS TOKEN)
+//     @PostMapping("/login")
+//     public AuthResponse login(@RequestBody LoginRequest request) {
+//         return service.login(request);
+//     }
+// }
