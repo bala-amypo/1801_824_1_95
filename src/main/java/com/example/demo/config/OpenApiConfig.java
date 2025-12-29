@@ -47,12 +47,14 @@ public class OpenApiConfig {
                 .info(new Info()
                         .title("Personal Finance Budget Planner API")
                         .version("1.0")
-                        .description("JWT secured APIs with Swagger Authorize button"))
+                        .description("JWT secured APIs with Swagger Authorize button")
+                         .servers(List.of(
+//                         new Server().url("https://9004.32procr.amypo.ai/"))
 
                 // 🔐 Apply security globally (THIS enables Authorize button)
                 .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
 
                 .components(new Components()
-                        .addSecuritySchemes("bearerAuth", bearerScheme));
+                        .addSecuritySchemes("bearerAuth", bearerScheme)));
     }
 }
