@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService {
                            JwtTokenProvider jwtTokenProvider) {
         this.repo = repo;
         this.passwordEncoder = passwordEncoder;
-        this.jwtTokenProvider = jwtTokenProvider;
+       // this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @Override
