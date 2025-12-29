@@ -86,11 +86,11 @@ public class UserServiceImpl implements UserService {
     private final JwtTokenProvider jwtTokenProvider;
 
     public UserServiceImpl(UserRepository repo,
-                           PasswordEncoder passwordEncoder){
-                          // JwtTokenProvider jwtTokenProvider) {
+                           PasswordEncoder passwordEncoder,
+                           JwtTokenProvider jwtTokenProvider) {
         this.repo = repo;
         this.passwordEncoder = passwordEncoder;
-       // this.jwtTokenProvider = jwtTokenProvider;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @Override
