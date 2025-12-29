@@ -62,27 +62,36 @@
 //     }
 // }
 
+package com.example.demo.controller;
 
+import org.springframework.web.bind.annotation.*;
 
-// @RestController
-// @RequestMapping("/user")
-// public class UserController {
+import com.example.demo.model.User;
+import com.example.demo.service.UserService;
+import com.example.demo.dto.LoginRequest;
+import com.example.demo.dto.AuthResponse;
 
-//     private final UserService service;
+@RestController
+@RequestMapping("/user")
+public class UserController {
 
-//     public UserController(UserService service) {
-//         this.service = service;
-//     }
+    private final UserService service;
 
-//     // ✅ REGISTER (NO TOKEN)
-//     @PostMapping("/register")
-//     public User register(@RequestBody User user) {
-//         return service.register(user);
-//     }
+    public UserController(UserService service) {
+        this.service = service;
+    }
 
-//     // ✅ LOGIN (RETURNS TOKEN)
-//     @PostMapping("/login")
-//     public AuthResponse login(@RequestBody LoginRequest request) {
-//         return service.login(request);
-//     }
-// }
+    @PostMapping("/register")
+    public User register(@RequestBody User user) {
+        return service.register(user);
+    }
+
+    @PostMapping("/login")
+    public AuthResponse login(@RequestBody LoginRequest request) {
+        String token = service.login(
+                request.getEmail(),
+                request.getPassword()
+        );
+        return new AuthResponse(token);
+    }
+}
