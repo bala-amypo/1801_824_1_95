@@ -21,10 +21,13 @@ public class JwtTokenProvider {
     private final SecretKey key;
     private final long expirationMs;
 
-    // ✅ default constructor (Spring)
-    public JwtTokenProvider() {
-        this("test-secret-key-test-secret-key", 3600000L);
-    }
+    // // ✅ default constructor (Spring)
+    // public JwtTokenProvider() {
+    //     this("test-secret-key-test-secret-key", 3600000L);
+    // }
+public JwtTokenProvider() {
+    this("test-secret-key-test-secret-key-1234", 3600000L);
+}
 
     // ✅ constructor REQUIRED by tests
     public JwtTokenProvider(String secret, long expirationMs) {
