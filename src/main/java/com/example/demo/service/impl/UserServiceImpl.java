@@ -64,6 +64,66 @@
 // }
 
 
+// package com.example.demo.service.impl;
+
+// import com.example.demo.model.User;
+// import com.example.demo.repository.UserRepository;
+// import com.example.demo.service.UserService;
+// import com.example.demo.exception.BadRequestException;
+// import com.example.demo.security.JwtTokenProvider;
+
+// import org.springframework.security.crypto.password.PasswordEncoder;
+// import org.springframework.stereotype.Service;
+
+// @Service
+// public class UserServiceImpl implements UserService {
+
+//     private final UserRepository repo;
+//     private final PasswordEncoder passwordEncoder;
+//     private final JwtTokenProvider jwtTokenProvider;
+
+//     public UserServiceImpl(UserRepository repo,
+//                            PasswordEncoder passwordEncoder,
+//                            JwtTokenProvider jwtTokenProvider) {
+//         this.repo = repo;
+//         this.passwordEncoder = passwordEncoder;
+//         this.jwtTokenProvider = jwtTokenProvider;
+//     }
+
+//     @Override
+//     public User register(User user) {
+
+//         if (repo.existsByEmail(user.getEmail())) {
+//             throw new BadRequestException("Email already exists");
+//         }
+
+//         user.setPassword(passwordEncoder.encode(user.getPassword()));
+//         user.setRole("ROLE_USER");
+//         return repo.save(user);
+//     }
+
+//     @Override
+//     public String login(String email, String password) {
+
+//         User user = repo.findByEmail(email)
+//                 .orElseThrow(() ->
+//                         new BadRequestException("Invalid email or password"));
+
+//         if (!passwordEncoder.matches(password, user.getPassword())) {
+//             throw new BadRequestException("Invalid email or password");
+//         }
+
+//         // ✅ Generate JWT token
+//         return jwtTokenProvider.generateToken(
+//                 null,
+//                 user.getId(),
+//                 user.getEmail(),
+//                 user.getRole()
+//         );
+//     }
+// }
+
+
 package com.example.demo.service.impl;
 
 import com.example.demo.model.User;
@@ -82,9 +142,12 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
-    public UserServiceImpl(UserRepository repo,
-                           PasswordEncoder passwordEncoder,
-                           JwtTokenProvider jwtTokenProvider) {
+    // ✅ FIXED CONSTRUCTOR
+    public UserServiceImpl(
+            UserRepository repo,
+            PasswordEncoder passwordEncoder,
+            JwtTokenProvider jwtTokenProvider
+    ) {
         this.repo = repo;
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenProvider = jwtTokenProvider;
@@ -103,22 +166,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String login(String email, String password) {
-
-        User user = repo.findByEmail(email)
+    public User getByEmail(String email) {
+        return repo.findByEmail(email)
                 .orElseThrow(() ->
-                        new BadRequestException("Invalid email or password"));
-
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new BadRequestException("Invalid email or password");
-        }
-
-        // ✅ Generate JWT token
-        return jwtTokenProvider.generateToken(
-                null,
-                user.getId(),
-                user.getEmail(),
-                user.getRole()
-        );
+                        new BadRequestException("User not found"));
     }
 }
