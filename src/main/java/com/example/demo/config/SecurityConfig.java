@@ -15,7 +15,6 @@
 //     }
 // }
 
-
 package com.example.demo.config;
 
 import org.springframework.context.annotation.Bean;
@@ -24,9 +23,18 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.example.demo.security.JwtAuthenticationFilter;
 
 @Configuration
 public class SecurityConfig {
+
+    private final JwtAuthenticationFilter jwtFilter;
+
+    public SecurityConfig(JwtAuthenticationFilter jwtFilter) {
+        this.jwtFilter = jwtFilter;
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -38,23 +46,25 @@ public class SecurityConfig {
 
         http
             .csrf(csrf -> csrf.disable())
+            .httpBasic(httpBasic -> httpBasic.disable())
+            .formLogin(form -> form.disable())
 
-            // 🔓 AUTHORIZATION RULES
             .authorizeHttpRequests(auth -> auth
+                // 🔓 PUBLIC ENDPOINTS
                 .requestMatchers(
-                        "/auth/**",
-                        "/user/register",
-                        "/swagger-ui/**",
-                        "/v3/api-docs/**"
+                    "/user/register",
+                    "/user/login",
+                    "/swagger-ui/**",
+                    "/v3/api-docs/**"
                 ).permitAll()
+
+                // 🔒 ALL OTHERS NEED JWT
                 .anyRequest().authenticated()
             )
 
-            // ❌ disable popup
-            .formLogin(form -> form.disable())
-            .httpBasic(basic -> basic.disable());
+            // 🔐 JWT FILTER
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 }
-
