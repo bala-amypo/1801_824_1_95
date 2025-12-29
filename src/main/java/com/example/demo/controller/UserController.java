@@ -25,40 +25,42 @@
 //     }
     
 // }
-package com.example.demo.controller;
 
-/* ===== REQUIRED SPRING IMPORTS ===== */
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+//corect
+// package com.example.demo.controller;
 
-/* ===== PROJECT IMPORTS ===== */
-import com.example.demo.model.User;
-import com.example.demo.service.UserService;
+// /* ===== REQUIRED SPRING IMPORTS ===== */
+// import org.springframework.web.bind.annotation.RestController;
+// import org.springframework.web.bind.annotation.RequestMapping;
+// import org.springframework.web.bind.annotation.PostMapping;
+// import org.springframework.web.bind.annotation.GetMapping;
+// import org.springframework.web.bind.annotation.PathVariable;
+// import org.springframework.web.bind.annotation.RequestBody;
 
-@RestController
-@RequestMapping("/user")
-public class UserController {
+// /* ===== PROJECT IMPORTS ===== */
+// import com.example.demo.model.User;
+// import com.example.demo.service.UserService;
 
-    private final UserService service;
+// @RestController
+// @RequestMapping("/user")
+// public class UserController {
 
-    public UserController(UserService service) {
-        this.service = service;
-    }
+//     private final UserService service;
 
-    @PostMapping("/register")
-    public User register(@RequestBody User user) {
-        return service.register(user);
-    }
+//     public UserController(UserService service) {
+//         this.service = service;
+//     }
 
-    @GetMapping("/{email}")
-    public User getByEmail(@PathVariable String email) {
-        return service.getByEmail(email);
-    }
-}
+//     @PostMapping("/register")
+//     public User register(@RequestBody User user) {
+//         return service.register(user);
+//     }
+
+//     @GetMapping("/{email}")
+//     public User getByEmail(@PathVariable String email) {
+//         return service.getByEmail(email);
+//     }
+// }
 
 
 
